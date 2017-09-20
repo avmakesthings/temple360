@@ -1,3 +1,2 @@
-# gltf-viewer
-Boilerplate for GLTF view with A-frame
-supports GLTF 2.0
+# Temple-360
+A custom web viewer for 360 photos and other imagery of the 2017 Burning Man Temple.  
