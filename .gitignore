@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+npm-debug.log
+assets/**/*.jpg
+assets/**/*.png
+assets/**/*.gif
+assets/**/*.svg
+assets/**/*.bmp
+assets/**/*.mp4
+assets/**/*.obj
+assets/**/*.gltf
+dist
