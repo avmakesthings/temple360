@@ -3,7 +3,7 @@ var extras = require('aframe-extras');
 // Register a particular package, and its dependencies.
 extras.loaders.registerAll();
 
-//component to update the material of a model
+//wireframe material component that updates the material of a the visible model
 AFRAME.registerComponent('gltfpostprocessing', {
   	schema: {},
   	init: function () {
@@ -26,6 +26,7 @@ AFRAME.registerComponent('gltfpostprocessing', {
 	}
 });
 
+//phong material component to update material of visible gltf
 AFRAME.registerComponent('gltf-opaque', {
   	schema: {},
   	init: function () {
