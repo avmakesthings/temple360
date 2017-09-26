@@ -24,7 +24,7 @@ gulp.task('server', serve('dist'));
 gulp.task('convert-yaml',function(){
   gulp.src('./assets/*.yaml')
     .pipe(yaml({ schema: 'DEFAULT_SAFE_SCHEMA' }))
-    .pipe(gulp.dest('./dist/js/'))
+    .pipe(gulp.dest('./js'))
 });
 
 gulp.task('copy-assets', function() {

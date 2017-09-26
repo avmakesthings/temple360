@@ -12,7 +12,7 @@
 
   </head>
   <body >
-    <a-scene create-states gltfpostprocessing gltf-opaque update-sun fog="density:1.3; near:4.0;">
+    <a-scene  create-states gltfpostprocessing gltf-opaque update-sun fog="density:1.3; near:4.0;">
       <a-assets>
         <a-asset-item id="temple-gltf" src="/assets/17-02-temple.gltf"></a-asset-item>
       </a-assets>
@@ -23,7 +23,8 @@
       <a-entity id="loaded-model-opaque" gltf-model-next="#temple-gltf" ></a-entity>
       <!-- procedural environment-->
       <a-entity environment="preset: yavapai; seed: 5; skyColor: #cbdff7; horizonColor: #d8e0ae; shadow: true; shadowSize: 25.0; lightPosition: 10 40 30; fog: 0.91; playArea: 1; ground:hills; groundYScale: 4; groundColor: #c69c7b; groundColor2: #c1a582; dressingAmount: 0; dressingUniformScale: false; grid: crosses; gridColor: #bb9977"></a-entity>
-
+      <a-entity print-state bind__text="value: app.activeLocation" text="value:'some date'; color: #111; width: 3; align: center" geometry="primitive: plane" material="color: ##CCC" position="0 1 -3"></a-entity>
+      
       <a-entity light="type: ambient; color: #fffcf2; intensity: 0.6; "></a-entity>
 
     </a-scene>

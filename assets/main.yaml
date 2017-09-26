@@ -1,115 +1,115 @@
 --- 
   locations: 
-  - name: origin
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}
-  - name: ns-1
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}
-  - name: ns-2
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}      
-  - name: ns-3
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}
-  - name: ns-5
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}
-  - name: ns-5
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}  
-  - name: ew-1
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}
-  - name: ew-2
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}
-  - name: ew-3
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}
-  - name: ew-4
-    description: Centerpoint of interior
-    coord: {x: 0, y: 0, z: 0}   
+    origin:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}
+    ns-1:
+      description: Centerpoint of interior
+      coord: {x: 12, y: 0, z: 12}
+    ns-2:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}      
+    ns-3:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}
+    ns-5:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}
+    ns-6:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}  
+    ew-1:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}
+    ew-2:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}
+    ew-3:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}
+    ew-4:
+      description: Centerpoint of interior
+      coord: {x: 0, y: 0, z: 0}   
   dates:
-    - 2016-11-01:
+    2016-11-01:
       - type: model
         title: First forest model
         description: Initial 3D model
         location: origin
         source: 16-11-temple.gltf
-    - 2016-12-01 :
+    2016-12-01 :
       - type: model
         title: Design iteration model
         description: Initial 3D model
         location: origin
         source: 16-12-temple.gltf    
-    - 2017-01-01 :
+    2017-01-01 :
       - type: model
         title: Design iteration model
         description: Initial 3D model
         location: origin    
         source: somesorce.gltf
-    - 2017-04-01 :
+    2017-04-01 :
       - type: model
         title: Design iteration model
         description: Initial 3D model
         location: origin
         source: somesorce.gltf
-    - 2017-05-01 :
+    2017-05-01 :
       - type: model
         title: Design iteration model
         description: Initial 3D model
         location: origin
         source: somesorce.gltf
-    - 2017-06-01 :
+    2017-06-01 :
       - type: model
         title: Design iteration model
         description: Initial 3D model
         location: origin
         source: somesorce.gltf
-    - 2017-07-01 :
+    2017-07-01 :
       - type: model
         title: Design iteration model
         description: Initial 3D model
         location: origin
         source: somesorce.gltf
-    - 2017-08-01 :
+    2017-08-01 :
       - type: model
         title: Design iteration model
         description: Initial 3D model
         location: origin
         source: model/temple-blender-no-material.gltf
-    - 2017-08-15 :      
+    2017-08-15 :      
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin
         source: somesorce.jpg
-    - 2017-08-16 :     
+    2017-08-16 :     
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-17 :      
+    2017-08-17 :      
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-18 :     
+    2017-08-18 :     
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-19 :      
+    2017-08-19 :      
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-20 :
+    2017-08-20 :
       - type: model
         title: Design iteration model
         description: Initial 3D model
@@ -120,55 +120,55 @@
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-21 :     
+    2017-08-21 :     
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-22 :     
+    2017-08-22 :     
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-23 :      
+    2017-08-23 :      
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-24 :      
+    2017-08-24 :      
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-25 :     
+    2017-08-25 :     
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-26 :     
+    2017-08-26 :     
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-27 :     
+    2017-08-27 :     
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: origin        
         source: somesorce.jpg
-    - 2017-08-28 :     
+    2017-08-28 :     
       - type: 360
         title: Design iteration model
         description: Initial 3D model
         location: main01
         source: somesorce.jpg                                                                                                 
-    - 2017-09-03 :
+    2017-09-03 :
       - type: 360
         title: Design iteration model
         description: Initial 3D model
