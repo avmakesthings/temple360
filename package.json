@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/avmakesthings/gltf-viewer#readme",
   "dependencies": {
+    "aframe": "^0.7.0",
     "aframe-extras": "^3.12.1",
+    "aframe-state-component": "^1.1.2",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-connect": "^5.0.0",
@@ -27,6 +31,7 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
+    "gulp-yaml": "^1.0.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }

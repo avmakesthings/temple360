@@ -1,4 +1,35 @@
 --- 
+  locations: 
+  - name: origin
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}
+  - name: ns-1
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}
+  - name: ns-2
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}      
+  - name: ns-3
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}
+  - name: ns-5
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}
+  - name: ns-5
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}  
+  - name: ew-1
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}
+  - name: ew-2
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}
+  - name: ew-3
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}
+  - name: ew-4
+    description: Centerpoint of interior
+    coord: {x: 0, y: 0, z: 0}   
   dates:
     - 2016-11-01:
       - type: model
