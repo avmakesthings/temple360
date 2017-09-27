@@ -1,3 +1,9 @@
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Temple360 - An A-frame web viewer for the design
+& construction of the 2017 Burning Man temple
+Author: AV
++ + + + + + + + + + + + + + + + + + + + * * */ 
+
 require('aframe');
 require('aframe-state-component');
 
@@ -8,14 +14,16 @@ extras.loaders.registerAll();
 var mainData = require('./mainData.js'); //Get JSON data 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-State management
+State management --
+Based on K-frame Redux 'State' component  
+https://github.com/ngokevin/kframe/tree/master/components/state
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 AFRAME.registerReducer('app', {
 	initialState: {
 		locations: mainData.locations,
 		dates: mainData.dates,
-		activeLocation: mainData.locations.origin.description.toString(),
+		activeLocation: mainData.locations.origin,
 		activeDate: mainData.dates["Tue Aug 15 2017 17:00:00 GMT-0700 (PDT)"]
 	},
 
@@ -30,32 +38,49 @@ AFRAME.registerReducer('app', {
 		//change state when date event is emited
 		changeActiveDate: function (state,nextDate) {
 			//lookup key for nextDate
-
 			state.activeDate = mainData.dates[key];
 			//toggle data being 
-
 			return state;
 	  	},
 		  
 		changeActiveLocation: function (state,nextLocation) {
+			console.log(nextLocation);
+			state.activeLocation = nextLocation;
 			return state;
 		}  
 	},
 });
 
 
-//Helper to print state
+// Helper to print state
 AFRAME.registerComponent('print-state', {
 	schema: {},
 	init: function (){
 		var el = this.el;
 		el.addEventListener('loaded', function () {
-			console.log("loaded");
 			el.sceneEl.emit('printState');
 		});
 	}
 });
 
+// Test to change location
+AFRAME.registerComponent('change-location', {
+	schema: {},
+	init: function (){
+		var el = this.el;
+		var location1 = mainData.locations.ns2;
+		var location2 = mainData.locations.ns5;
+		var location = location1;
+		el.addEventListener('click', function () {
+			el.sceneEl.emit('changeActiveLocation',location);
+			if(location == location1){
+				location = location2;
+			}else{
+				location = location1;
+			}
+		});
+	}
+});
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Environment / view components
@@ -75,6 +100,7 @@ AFRAME.registerComponent('360-viewer', {
 	init: function (){
 	}
 });
+
 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
