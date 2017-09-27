@@ -6,12 +6,17 @@ Author: AV
 
 require('aframe');
 require('aframe-state-component');
+var isEqual = require('lodash.isequal');
 
 var extras = require('aframe-extras'); //fix for A-frame GLtf 2.0 issues
 // Register 'A-frame extras' Loaders package and its dependencies.
 extras.loaders.registerAll();
 
 var mainData = require('./mainData.js'); //Get JSON data 
+
+function getState(event, key){
+	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
+}
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 State management --
@@ -28,12 +33,6 @@ AFRAME.registerReducer('app', {
 	},
 
 	handlers: {
-		
-		printState: function(state) {
-			// console.log("this is working");
-			console.log(state);
-			return state;
-		},
 		
 		//change state when date event is emited
 		changeActiveDate: function (state,nextDate) {
@@ -54,13 +53,30 @@ AFRAME.registerReducer('app', {
 
 // Helper to print state
 AFRAME.registerComponent('print-state', {
-	schema: {},
 	init: function (){
-		var el = this.el;
-		el.addEventListener('loaded', function () {
-			el.sceneEl.emit('printState');
-		});
+		this.state = {
+			activeLocation: {}
+		}
+
+		window.addEventListener("statechanged", this.stateChanged.bind(this))
+	},
+
+	stateChanged: function(event){
+		var nextActiveLocation = getState(event, "activeLocation")
+
+		// If the state that we care about changed, do something
+		if (!isEqual(this.state.activeLocation, nextActiveLocation)){
+
+			console.log("activeLocationCopy before state change", this.state.activeLocation)
+
+			this.state.activeLocation = nextActiveLocation
+
+			console.log("activeLocationCopy after state change", this.state.activeLocation)
+
+			// Update the threejs geometry based on this new data here...
+		}
 	}
+
 });
 
 // Test to change location
