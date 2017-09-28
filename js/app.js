@@ -13,6 +13,7 @@ var extras = require('aframe-extras'); //fix for A-frame GLtf 2.0 issues
 extras.loaders.registerAll();
 
 var mainData = require('./mainData.js'); //Get JSON data 
+var sceneEl = document.querySelector('a-scene'); //Scene element
 
 function getState(event, key){
 	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
@@ -38,13 +39,14 @@ AFRAME.registerReducer('app', {
 		changeActiveDate: function (state,nextDate) {
 			//lookup key for nextDate
 			state.activeDate = mainData.dates[key];
-			//toggle data being 
+
 			return state;
 	  	},
 		  
 		changeActiveLocation: function (state,nextLocation) {
-			console.log(nextLocation);
 			state.activeLocation = nextLocation;
+			//emit custom event that has broadcasts which state has changed and includes location change data
+			AFRAME.scenes[0].emit('activeLocationHasChanged', {locationData: state.activeLocation});
 			return state;
 		}  
 	},
@@ -57,26 +59,20 @@ AFRAME.registerComponent('print-state', {
 		this.state = {
 			activeLocation: {}
 		}
-
-		window.addEventListener("statechanged", this.stateChanged.bind(this))
+		window.addEventListener("statechanged", this.stateChanged.bind(this));
 	},
 
 	stateChanged: function(event){
-		var nextActiveLocation = getState(event, "activeLocation")
+		var nextActiveLocation = getState(event, "activeLocation");
 
 		// If the state that we care about changed, do something
 		if (!isEqual(this.state.activeLocation, nextActiveLocation)){
-
-			console.log("activeLocationCopy before state change", this.state.activeLocation)
-
-			this.state.activeLocation = nextActiveLocation
-
-			console.log("activeLocationCopy after state change", this.state.activeLocation)
-
+			//console.log("activeLocationCopy before state change", this.state.activeLocation);
+			this.state.activeLocation = nextActiveLocation;
+			//console.log("activeLocationCopy after state change", this.state.activeLocation);
 			// Update the threejs geometry based on this new data here...
 		}
 	}
-
 });
 
 // Test to change location
@@ -97,6 +93,60 @@ AFRAME.registerComponent('change-location', {
 		});
 	}
 });
+
+//Test to see whether location change event has been emitted by app and
+//if data is available from the event 
+AFRAME.registerComponent('test-location-change', {
+	schema: {},
+	init: function (){
+		window.addEventListener('activeLocationHasChanged', function () {
+			console.log(event.detail.locationData.description);
+		});
+	}
+});
+
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Navigation
++ + + + + + + + + + + + + + + + + + + + * * */ 
+
+//create navigation-point-marker objects for each location
+
+AFRAME.registerComponent('nav-markers', {
+	schema: {},
+	init: function (){
+		var el = this.el;
+		var i =0;
+		document.querySelector('a-scene').addEventListener('loaded', function () {
+			for (var location in mainData.locations){
+				var thisLocation = mainData.locations[location];
+				var thisMarker = document.createElement('a-entity');
+				
+				thisMarker.setAttribute('id', "marker-" + location);
+				thisMarker.setAttribute('position', thisLocation.coord);
+				thisMarker.setAttribute('description', thisLocation.description);
+				thisMarker.setAttribute('ui-nav-pt-marker');
+				
+				//test geometry
+				thisMarker.setAttribute('geometry', {
+					primitive: 'box',
+					height: .5,
+					width: .5,
+					depth: .5
+				  });
+
+				el.appendChild(thisMarker); //add them to the scene
+
+				console.log(el);
+				i++;
+			}
+		})		
+	}
+});
+
+
+//set active marker
+
+//change active marker 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Environment / view components
@@ -123,29 +173,35 @@ AFRAME.registerComponent('360-viewer', {
 UI Components
 + + + + + + + + + + + + + + + + + + + + * * */   
 
-//A UI component to indicate where a user can teleport within the scene. Knows the users location
-AFRAME.registerComponent('ui-navigation-point-marker', {
-	schema: {},
+//UI component to indicate where a user can teleport within the scene.
+AFRAME.registerComponent('ui-nav-pt-marker', {
+	schema: {
+		collider: {type: 'asset'},	
+		activated: {type: 'boolean', default: false},
+		mesh: {type: 'asset'}
+	},
 	init: function (){
+		//when activated do this
+
 	}
 });  
 
 
-//UI component that shows a plan view of the scene. Knows the users location & how much conent is located at each nav-pt-marker
+//UI component to display a range of dates
+AFRAME.registerComponent('ui-timeline', {
+	schema: {},
+	init: function (){
+	}
+});
+
+
+//UI component that displays a top model view and the location of navigation markers
 AFRAME.registerComponent('ui-navigation-map', {
 	schema: {},
 	init: function (){
 	}
 });  
 
-
-//Allows user to switch between dates - knows state
-AFRAME.registerComponent('ui-timeline', {
-	schema: {},
-	init: function (){
-	}
-});
-  
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Materials
@@ -196,7 +252,7 @@ AFRAME.registerComponent('gltf-opaque', {
 		  model.object3D.traverse(function(item){
 			  item.material = phongMaterial;
 		  });
-	  });
+	});
   }
 });
 
@@ -209,5 +265,5 @@ update: function (){
 	mySun = env.components.environment.sunlight.components.light;
 	mySun.light.shadow.mapSize.x = 4000;
 	mySun.light.shadow.mapSize.y = 4000;
-}
+	}
 });

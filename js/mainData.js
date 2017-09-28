@@ -11,17 +11,17 @@ module.exports = {
         "ns1": {
             "description": "Furthest most north point",
             "coord": {
-                "x": 12,
+                "x": 2,
                 "y": 0,
-                "z": 12
+                "z": 2
             }
         },
         "ns2": {
             "description": "Secons furthest north point",
             "coord": {
-                "x": 0,
+                "x": -2,
                 "y": 0,
-                "z": 0
+                "z": -2
             }
         },
         "ns3": {
@@ -35,9 +35,9 @@ module.exports = {
         "ns4": {
             "description": "Centerpoint of interior",
             "coord": {
-                "x": 0,
+                "x": -4,
                 "y": 0,
-                "z": 0
+                "z": 7
             }
         },
         "ns5": {
@@ -51,9 +51,9 @@ module.exports = {
         "ew1": {
             "description": "Centerpoint of interior",
             "coord": {
-                "x": 0,
+                "x": 3,
                 "y": 0,
-                "z": 0
+                "z": 6
             }
         },
         "ew2": {
