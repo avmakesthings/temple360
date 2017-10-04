@@ -148,6 +148,8 @@ AFRAME.registerComponent('nav-manager', {
 		var el = this.el;
 		var i =0;
 
+
+
 		//create nav markers
 		document.querySelector('a-scene').addEventListener('loaded', function () {
 			for (var location in mainData.locations){
@@ -162,6 +164,17 @@ AFRAME.registerComponent('nav-manager', {
 				});
 				el.appendChild(thisMarker); //add them to the scene
 				i++;
+
+				//change position when new location is selected
+				this.activeCamera = document.querySelector('a-camera');	
+				window.addEventListener('activeLocationChanged', (e)=>{
+					var l = e.detail.activeLocation.coord;
+					this.activeCamera.setAttribute("position",{
+						x: l.x, y: l.y+3, z: l.z
+					});
+				});
+
+
 			}
 			//debug tools
 			document.querySelector('a-entity[ui-nav-pt-marker]').flushToDOM();
