@@ -3,7 +3,7 @@ UI Components
 These have the display logic 
 + + + + + + + + + + + + + + + + + + + + * * */   
 var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
-var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFA433 } );
+var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
 var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
 
 function setMaterial (geom, material){
@@ -12,9 +12,22 @@ function setMaterial (geom, material){
     });
 };
 
+// AFRAME.registerComponent('ui-nav-pt-marker', {
+// 	schema: {
+//         location: {
+//             default: "{}",
+//             parse: function (value) {
+//                 return JSON.parse(value)
+//             }
+//         },
+//         active: {default: false},
+// 		src: {type: 'asset', default: 'url(/assets/ui-nav-pt-base.obj)'}
+//     },
+//     init: {}
+// });
+
 //Marker to indicate where a user can teleport within the scene
 AFRAME.registerComponent('ui-nav-pt-marker', {
-    // multiple: true,
 	schema: {
         location: {
             default: "{}",
@@ -24,7 +37,7 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         },
         active: {default: false},
         hover: {default:false},
-		src: {type: 'asset', default: 'url(/assets/ui-nav-pt-marker.obj)'}
+		src: {type: 'asset', default: 'url(/assets/ui-nav-pt-top.obj)'}
 		// collider: {type: 'asset'}
 	},
 	init: function (){
@@ -70,7 +83,7 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         
         this.el.addEventListener('model-loaded', ()=>{
             setMaterial(this.getGeometry(),inactiveMaterial);
-            this.el.removeEventListener('model-loaded')
+            //this.el.removeEventListener('model-loaded')
         });
     },
     getGeometry: function(){

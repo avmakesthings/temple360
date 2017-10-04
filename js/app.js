@@ -28,7 +28,7 @@ AFRAME.registerReducer('app', {
 	initialState: {
 		locations: mainData.locations,
 		dates: mainData.dates,
-		activeLocation: mainData.locations.origin,
+		activeLocation: mainData.locations["00"],
 		activeDate: mainData.dates["Tue Aug 15 2017 17:00:00 GMT-0700 (PDT)"],
 		activeModel: {}
 	},
@@ -89,7 +89,7 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveLocation', {
-			activeLocation: mainData.locations.origin
+			activeLocation: mainData.locations["00"]
 		});
 
 		AFRAME.scenes[0].emit('changeActiveDate', {
@@ -104,23 +104,23 @@ window.onload = function() {
 
 
 // Test to change location
-AFRAME.registerComponent('change-location', {
-	schema: {},
-	init: function (){
-		var el = this.el;
-		var location1 = mainData.locations.ns2;
-		var location2 = mainData.locations.ns5;
-		var activeLocation = location1;
-		el.addEventListener('click', function () {
-			el.emit('changeActiveLocation', {activeLocation});
-			if(activeLocation == location1){
-				activeLocation = location2;
-			}else{
-				activeLocation = location1;
-			}
-		});
-	}
-});
+// AFRAME.registerComponent('change-location', {
+// 	schema: {},
+// 	init: function (){
+// 		var el = this.el;
+// 		var location1 = mainData.locations.ns2;
+// 		var location2 = mainData.locations.ns5;
+// 		var activeLocation = location1;
+// 		el.addEventListener('click', function () {
+// 			el.emit('changeActiveLocation', {activeLocation});
+// 			if(activeLocation == location1){
+// 				activeLocation = location2;
+// 			}else{
+// 				activeLocation = location1;
+// 			}
+// 		});
+// 	}
+// });
 
 
 //Test to see whether location change event has been emitted by app and
@@ -162,6 +162,9 @@ AFRAME.registerComponent('nav-manager', {
 				thisMarker.setAttribute('ui-nav-pt-marker', {
 					location: JSON.stringify(thisLocation)
 				});
+				// thisMarker.setAttribute('ui-nav-pt-base', {
+				// 	location: JSON.stringify(thisLocation)
+				// });
 				el.appendChild(thisMarker); //add them to the scene
 				i++;
 
@@ -170,7 +173,7 @@ AFRAME.registerComponent('nav-manager', {
 				window.addEventListener('activeLocationChanged', (e)=>{
 					var l = e.detail.activeLocation.coord;
 					this.activeCamera.setAttribute("position",{
-						x: l.x, y: l.y+3, z: l.z
+						x: l.x, y: l.y+1.7, z: l.z
 					});
 				});
 

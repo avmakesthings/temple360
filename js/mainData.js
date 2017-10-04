@@ -1,85 +1,193 @@
 module.exports = {
     "locations": {
-        "origin": {
-            "description": "Centerpoint of interior",
+        "00": {
+            "name": "Origin",
+            "description": "A hole to see the sky through",
             "coord": {
                 "x": 0,
                 "y": 0,
                 "z": 0
             }
         },
-        "ns1": {
-            "description": "Furthest most north point",
+        "01": {
+            "name": "South",
+            "description": "The path to civilization",
             "coord": {
-                "x": 1,
-                "y": 0.5,
-                "z": 1
+                "x": 0,
+                "y": 0,
+                "z": -6
             }
         },
-        "ns2": {
-            "description": "Secons furthest north point",
+        "02": {
+            "name": "East",
+            "description": "The sun rises",
             "coord": {
-                "x": 2,
-                "y": 0.5,
-                "z": 2
+                "x": 6,
+                "y": 0,
+                "z": 0
             }
         },
-        "ns3": {
-            "description": "Rarrrrrrr!",
+        "03": {
+            "name": "North",
+            "description": "To eternity",
             "coord": {
-                "x": 3,
-                "y": 0.5,
-                "z": 3
+                "x": 0,
+                "y": 0,
+                "z": 6
             }
         },
-        "ns4": {
-            "description": "Centerpoint of interior",
+        "04": {
+            "name": "West",
+            "description": "Dusk over mountains",
             "coord": {
-                "x": 4,
-                "y": 0.5,
-                "z": 4
+                "x": -6,
+                "y": 0,
+                "z": 0
             }
         },
-        "ns5": {
-            "description": "Centerpoint of interior",
+
+
+
+        "10": {
+            "name": "South Gate",
+            // "description": "",
             "coord": {
-                "x": 5,
-                "y": 0.5,
-                "z": 5
+                "x": 0,
+                "y": 0,
+                "z": -34
+            }
+        },             
+        "11": {
+            "name": "Into the fold",
+            // "description": "",
+            "coord": {
+                "x": 0,
+                "y": 0,
+                "z": -24
             }
         },
-        "ew1": {
-            "description": "Centerpoint of interior",
+        "12": {
+            "name": "First Contact",
+            // "description": "",
             "coord": {
-                "x": -1,
-                "y": 0.5,
-                "z": -1
+                "x": 0,
+                "y": 0,
+                "z": -14
             }
         },
-        "ew2": {
-            "description": "Centerpoint of interior",
+        "13": {
+            "name": "South Entry",
+            // "description": "",
             "coord": {
-                "x": -2,
-                "y": 0.5,
-                "z": -2
+                "x": 0,
+                "y": 0,
+                "z": -9
             }
         },
-        "ew3": {
-            "description": "Centerpoint of interior",
+        "14": {
+            "name": "North Entry",
+            // "description": "",
             "coord": {
-                "x": -3,
-                "y": 0.5,
-                "z": -3
+                "x": 0,
+                "y": 0,
+                "z": 9
             }
         },
-        "ew4": {
-            "description": "Centerpoint of interior",
+        "15": {
+            "name": "The Edge of Civilization",
+            // "description": "",
             "coord": {
-                "x": -4,
-                "y": 0.5,
-                "z": -4
+                "x": 0,
+                "y": 0,
+                "z": 14
+            }
+        },         
+        "16": {
+            "name": "North Gate",
+            // "description": "",
+            "coord": {
+                "x": 0,
+                "y": 0,
+                "z": 24
+            }
+        },
+
+
+
+        "20": {
+            "name": "West Gate",
+            // "description": "",
+            "coord": {
+                "x": -29,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "21": {
+            "name": "Ritual",
+            // "description": "",
+            "coord": {
+                "x": -20,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "22": {
+            "name": "Sunset Through the Trees",
+            // "description": "",
+            "coord": {
+                "x": -14,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "23": {
+            "name": "West Entry",
+            // "description": "",
+            "coord": {
+                "x": -9,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "24": {
+            "name": "East Entry",
+            // "description": "",
+            "coord": {
+                "x": 9,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "25": {
+            "name": "Dawn in the Forest",
+            // "description": "",
+            "coord": {
+                "x": 14,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "26": {
+            "name": "Introspection",
+            // "description": "",
+            "coord": {
+                "x": 20,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "27": {
+            "name": "East Gate",
+            // "description": "",
+            "coord": {
+                "x": 29,
+                "y": 0,
+                "z": 0
             }
         }
+
+
     },
     "dates": {
         "1477958400": [
