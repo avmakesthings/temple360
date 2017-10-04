@@ -11,73 +11,73 @@ module.exports = {
         "ns1": {
             "description": "Furthest most north point",
             "coord": {
-                "x": 2,
-                "y": 0,
-                "z": 2
+                "x": 1,
+                "y": 0.5,
+                "z": 1
             }
         },
         "ns2": {
             "description": "Secons furthest north point",
             "coord": {
-                "x": -2,
-                "y": 0,
-                "z": -2
+                "x": 2,
+                "y": 0.5,
+                "z": 2
             }
         },
         "ns3": {
             "description": "Rarrrrrrr!",
             "coord": {
-                "x": 0,
-                "y": 0,
-                "z": 0
+                "x": 3,
+                "y": 0.5,
+                "z": 3
             }
         },
         "ns4": {
             "description": "Centerpoint of interior",
             "coord": {
-                "x": -4,
-                "y": 0,
-                "z": 7
+                "x": 4,
+                "y": 0.5,
+                "z": 4
             }
         },
         "ns5": {
             "description": "Centerpoint of interior",
             "coord": {
-                "x": 0,
-                "y": 0,
-                "z": 0
+                "x": 5,
+                "y": 0.5,
+                "z": 5
             }
         },
         "ew1": {
             "description": "Centerpoint of interior",
             "coord": {
-                "x": 3,
-                "y": 0,
-                "z": 6
+                "x": -1,
+                "y": 0.5,
+                "z": -1
             }
         },
         "ew2": {
             "description": "Centerpoint of interior",
             "coord": {
-                "x": 0,
-                "y": 0,
-                "z": 0
+                "x": -2,
+                "y": 0.5,
+                "z": -2
             }
         },
         "ew3": {
             "description": "Centerpoint of interior",
             "coord": {
-                "x": 0,
-                "y": 0,
-                "z": 0
+                "x": -3,
+                "y": 0.5,
+                "z": -3
             }
         },
         "ew4": {
             "description": "Centerpoint of interior",
             "coord": {
-                "x": 0,
-                "y": 0,
-                "z": 0
+                "x": -4,
+                "y": 0.5,
+                "z": -4
             }
         }
     },
