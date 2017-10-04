@@ -4,7 +4,7 @@ These have the display logic
 + + + + + + + + + + + + + + + + + + + + * * */   
 var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
 var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFA433 } );
-var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0xFFA433 } );
+var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
 
 //Marker to indicate where a user can teleport within the scene
 AFRAME.registerComponent('ui-nav-pt-marker', {
@@ -30,6 +30,19 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
                 activeLocation: this.data.location
             });
         });
+
+        el.addEventListener('mouseenter', ()=>{
+            if(!this.data.active){
+                this.getGeometry().material = hoverMaterial;
+            }
+        });
+
+        el.addEventListener('mouseleave', ()=>{
+            if(!this.data.active){
+                this.getGeometry().material = inactiveMaterial;
+            }
+        });
+
 
         window.addEventListener('activeLocationChanged', (e)=>{
             activeLocation = e.detail.activeLocation
