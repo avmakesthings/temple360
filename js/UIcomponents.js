@@ -6,6 +6,12 @@ var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
 var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFA433 } );
 var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
 
+function setMaterial (geom, material){
+    geom.traverse(function(item){
+        item.material = material;
+    });
+};
+
 //Marker to indicate where a user can teleport within the scene
 AFRAME.registerComponent('ui-nav-pt-marker', {
     // multiple: true,
@@ -18,12 +24,16 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         },
         active: {default: false},
         hover: {default:false},
-		src: {type: 'asset'}
+		src: {type: 'asset', default: 'url(/assets/ui-nav-pt-marker.obj)'}
 		// collider: {type: 'asset'}
 	},
 	init: function (){
-        var el = this.el
-        this.setGeometry()
+        var el = this.el;
+        this.setGeometry();
+        var callback = ()=>{}
+       
+        setTimeout(callback,0);
+        
 
         el.addEventListener('click', ()=>{
             el.emit('changeActiveLocation', {
@@ -33,13 +43,14 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
 
         el.addEventListener('mouseenter', ()=>{
             if(!this.data.active){
-                this.getGeometry().material = hoverMaterial;
+                //this.getGeometry().material = hoverMaterial;
+                setMaterial(this.getGeometry(),hoverMaterial);
             }
         });
 
         el.addEventListener('mouseleave', ()=>{
             if(!this.data.active){
-                this.getGeometry().material = inactiveMaterial;
+                setMaterial(this.getGeometry(),inactiveMaterial);
             }
         });
 
@@ -55,9 +66,12 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         
     },
     setGeometry: function(){
-		var geometry = new THREE.BoxGeometry(0.2,0.2,0.2);
-        var cube = new THREE.Mesh( geometry, inactiveMaterial );
-        this.el.setObject3D('geometry', cube)
+        this.el.setAttribute('obj-model', {obj: this.data.src});
+        
+        this.el.addEventListener('model-loaded', ()=>{
+            setMaterial(this.getGeometry(),inactiveMaterial);
+            this.el.removeEventListener('model-loaded')
+        });
     },
     getGeometry: function(){
         if(this.el.object3D && this.el.object3D.children.length > 0){
@@ -69,9 +83,11 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         var geom = this.getGeometry()
         if(geom){
             if(this.data.active){
-                geom.material = activeMaterial;
+                setMaterial(geom,activeMaterial);
+                //geom.material = activeMaterial;
             } else {
-                geom.material = inactiveMaterial;
+                //geom.material = inactiveMaterial;
+                setMaterial(geom,inactiveMaterial);
             }
         }
     }
