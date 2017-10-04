@@ -2,41 +2,67 @@
 UI Components 
 These have the display logic 
 + + + + + + + + + + + + + + + + + + + + * * */   
+var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
+var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFA433 } );
+var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0xFFA433 } );
 
-//UI component to indicate where a user can teleport within the scene.
-//knows if it's active or not 
+//Marker to indicate where a user can teleport within the scene
 AFRAME.registerComponent('ui-nav-pt-marker', {
+    // multiple: true,
 	schema: {
-		// collider: {type: 'asset'},	
-		active: {default: false},
-		src: {type: 'asset'},
-		//geometry: {default:'box'},
-		description: {default: "foo"}
+        location: {
+            default: "{}",
+            parse: function (value) {
+                return JSON.parse(value)
+            }
+        },
+        active: {default: false},
+        hover: {default:false},
+		src: {type: 'asset'}
+		// collider: {type: 'asset'}
 	},
 	init: function (){
+        var el = this.el
+        this.setGeometry()
 
-		//
-		// trying to initialize this component with a box
-		var geometry = new THREE.BoxGeometry(1, 1, 1);
-		var material = new THREE.MeshBasicMaterial( { color: 0xFFA433 } );
-        var cube = new THREE.Mesh( geometry, material );
-        this.el.object3D.add(cube);
+        el.addEventListener('click', ()=>{
+            el.emit('changeActiveLocation', {
+                activeLocation: this.data.location
+            });
+        });
 
-		// document.querySelector('a-scene').addEventListener('loaded', function () {
-			
-		// 	//this.el.createObject3D();
-		// 	this.el.setObject3D(cube);
-		// });
+        window.addEventListener('activeLocationChanged', (e)=>{
+            activeLocation = e.detail.activeLocation
+            if(activeLocation === this.data.location){
+                this.el.setAttribute("ui-nav-pt-marker", "active: true")
+            } else {
+                this.el.setAttribute("ui-nav-pt-marker", "active: false")
+            }
+        });
+        
+    },
+    setGeometry: function(){
+		var geometry = new THREE.BoxGeometry(0.2,0.2,0.2);
+        var cube = new THREE.Mesh( geometry, inactiveMaterial );
+        this.el.setObject3D('geometry', cube)
+    },
+    getGeometry: function(){
+        if(this.el.object3D && this.el.object3D.children.length > 0){
+            return this.el.object3D.children[0]
+        }
+        return null
+    },
+    update: function(){
+        var geom = this.getGeometry()
+        if(geom){
+            if(this.data.active){
+                geom.material = activeMaterial;
+            } else {
+                geom.material = inactiveMaterial;
+            }
+        }
+    }
 
-
-		//if active  -- do this animation and change this color
-
-		//else
-
-
-
-
-	}
 });  
 
 

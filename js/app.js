@@ -8,7 +8,6 @@ require('aframe');
 require('aframe-state-component');
 require('./materials.js');
 require('./UIcomponents.js');
-require('./manager.js');
 
 var isEqual = require('lodash.isequal');
 var extras = require('aframe-extras'); //fix for A-frame GLtf 2.0 issues
@@ -21,9 +20,8 @@ function getState(event, key){
 }
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-State management --
+State manager --
 Based on K-frame Redux 'State' component  
-https://github.com/ngokevin/kframe/tree/master/components/state
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 AFRAME.registerReducer('app', {
@@ -140,9 +138,50 @@ AFRAME.registerComponent('test-location-change', {
 });
 
 
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Nav Manager
++ + + + + + + + + + + + + + + + + + + + * * */ 
+//creates, locates, activates & deactivates navigation-point-marker objects
+AFRAME.registerComponent('nav-manager', {
+	schema: {},
+	init: function (){
+		var el = this.el;
+		var i =0;
+
+		//create nav markers
+		document.querySelector('a-scene').addEventListener('loaded', function () {
+			for (var location in mainData.locations){
+				var thisLocation = mainData.locations[location];
+				var thisMarker = document.createElement('a-entity');
+
+				thisMarker.setAttribute('position', thisLocation.coord);
+				thisMarker.setAttribute('id', "marker-" + location);
+
+				thisMarker.setAttribute('ui-nav-pt-marker', {
+					location: JSON.stringify(thisLocation)
+				});
+				el.appendChild(thisMarker); //add them to the scene
+				i++;
+			}
+			//debug tools
+			document.querySelector('a-entity[ui-nav-pt-marker]').flushToDOM();
+
+
+		})
+
+	},
+	// update: function(){
+	// 			//toggle active when a user selects - emit event, 	change active, change camera position
+				
+	// 			//pass state to child when location change is called
+	// 			el.addEventListener('activeLocationChanged', function () {
+	// 				event.detail.locationData
+	// 			});
+	// }
+});
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Environment / view components
+Model manager
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 //Changes the model being viewed based on date change state
