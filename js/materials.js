@@ -35,7 +35,7 @@ AFRAME.registerComponent('gltf-opaque', {
 		  var model = myScene.querySelector( "#loaded-model-opaque" );
 
 		  phongMaterial = new THREE.MeshPhongMaterial( { 
-			  ambient: 0x555555, 
+			  //ambient: 0x555555, 
 			  color: 0x555555,
 			  specular: 0xffffff, 
 			  shininess: 50, 

@@ -214,7 +214,7 @@ module.exports = {
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
-                "source": "somesorce.gltf"
+                "source": "17-01-temple.gltf"
             }
         ],
         "Fri Mar 31 2017 17:00:00 GMT-0700 (PDT)": [
@@ -223,14 +223,14 @@ module.exports = {
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
-                "source": "somesorce.gltf"
+                "source": "17-02-temple.gltf"
             }
         ],
         "Sun Apr 30 2017 17:00:00 GMT-0700 (PDT)": [
             {
                 "type": "model",
                 "title": "Design iteration model",
-                "description": "Initial 3D model",
+                "description": "test2",
                 "location": "origin",
                 "source": "somesorce.gltf"
             }
@@ -239,7 +239,7 @@ module.exports = {
             {
                 "type": "model",
                 "title": "Design iteration model",
-                "description": "Initial 3D model",
+                "description": "test3",
                 "location": "origin",
                 "source": "somesorce.gltf"
             }
@@ -248,7 +248,7 @@ module.exports = {
             {
                 "type": "model",
                 "title": "Design iteration model",
-                "description": "Initial 3D model",
+                "description": "test4",
                 "location": "origin",
                 "source": "somesorce.gltf"
             }
@@ -257,50 +257,50 @@ module.exports = {
             {
                 "type": "model",
                 "title": "Design iteration model",
-                "description": "Initial 3D model",
+                "description": "test5",
                 "location": "origin",
-                "source": "model/temple-blender-no-material.gltf"
+                "source": "17-08-temple.gltf"
             }
         ],
         "Mon Aug 14 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
-                "description": "Initial 3D model",
+                "description": "test6",
                 "location": "origin",
                 "source": "somesorce.jpg"
             }
         ],
         "Tue Aug 15 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
-                "description": "Initial 3D model",
+                "description": "test7",
                 "location": "origin",
                 "source": "somesorce.jpg"
             }
         ],
         "Wed Aug 16 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
-                "description": "Initial 3D model",
+                "description": "test8",
                 "location": "origin",
                 "source": "somesorce.jpg"
             }
         ],
         "Thu Aug 17 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
-                "description": "Initial 3D model",
+                "description": "test9",
                 "location": "origin",
                 "source": "somesorce.jpg"
             }
         ],
         "Fri Aug 18 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -316,7 +316,7 @@ module.exports = {
                 "source": "somesorce.gltf"
             },
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -325,7 +325,7 @@ module.exports = {
         ],
         "Sun Aug 20 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -334,7 +334,7 @@ module.exports = {
         ],
         "Mon Aug 21 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -343,7 +343,7 @@ module.exports = {
         ],
         "Tue Aug 22 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -352,7 +352,7 @@ module.exports = {
         ],
         "Wed Aug 23 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -361,7 +361,7 @@ module.exports = {
         ],
         "Thu Aug 24 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -370,7 +370,7 @@ module.exports = {
         ],
         "Fri Aug 25 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -379,7 +379,7 @@ module.exports = {
         ],
         "Sat Aug 26 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",
@@ -388,7 +388,7 @@ module.exports = {
         ],
         "Sun Aug 27 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "main01",
@@ -397,7 +397,7 @@ module.exports = {
         ],
         "Sat Sep 02 2017 17:00:00 GMT-0700 (PDT)": [
             {
-                "type": 360,
+                "type": "360",
                 "title": "Design iteration model",
                 "description": "Initial 3D model",
                 "location": "origin",

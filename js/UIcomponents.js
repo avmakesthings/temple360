@@ -6,6 +6,7 @@ var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
 var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
 var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
 
+//a function to recursively set the material of all mesh objects in a given model
 function setMaterial (geom, material){
     geom.traverse(function(item){
         item.material = material;
@@ -38,7 +39,6 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         active: {default: false},
         hover: {default:false},
 		src: {type: 'asset', default: 'url(/assets/ui-nav-pt-top.obj)'}
-		// collider: {type: 'asset'}
 	},
 	init: function (){
         var el = this.el;
@@ -56,7 +56,6 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
 
         el.addEventListener('mouseenter', ()=>{
             if(!this.data.active){
-                //this.getGeometry().material = hoverMaterial;
                 setMaterial(this.getGeometry(),hoverMaterial);
             }
         });
@@ -97,9 +96,7 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         if(geom){
             if(this.data.active){
                 setMaterial(geom,activeMaterial);
-                //geom.material = activeMaterial;
             } else {
-                //geom.material = inactiveMaterial;
                 setMaterial(geom,inactiveMaterial);
             }
         }

@@ -29,7 +29,7 @@ AFRAME.registerReducer('app', {
 		locations: mainData.locations,
 		dates: mainData.dates,
 		activeLocation: mainData.locations["00"],
-		activeDate: mainData.dates["Tue Aug 15 2017 17:00:00 GMT-0700 (PDT)"],
+		activeDate: mainData.dates["1477958400"],
 		activeModel: {}
 	},
 
@@ -103,52 +103,16 @@ window.onload = function() {
 }
 
 
-// Test to change location
-// AFRAME.registerComponent('change-location', {
-// 	schema: {},
-// 	init: function (){
-// 		var el = this.el;
-// 		var location1 = mainData.locations.ns2;
-// 		var location2 = mainData.locations.ns5;
-// 		var activeLocation = location1;
-// 		el.addEventListener('click', function () {
-// 			el.emit('changeActiveLocation', {activeLocation});
-// 			if(activeLocation == location1){
-// 				activeLocation = location2;
-// 			}else{
-// 				activeLocation = location1;
-// 			}
-// 		});
-// 	}
-// });
-
-
-//Test to see whether location change event has been emitted by app and
-//if data is available from the event 
-AFRAME.registerComponent('test-location-change', {
-	schema: {},
-	init: function (){
-		window.addEventListener('activeLocationChanged', function (event) {
-			console.log(
-				"Test responding to activeLocationChanged in JS",
-				event.detail.activeLocation
-			);
-		});
-	}
-});
-
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Nav Manager
 + + + + + + + + + + + + + + + + + + + + * * */ 
-//creates, locates, activates & deactivates navigation-point-marker objects
+//creates & locates nav-pt-marker objects, moves camera on location change
 AFRAME.registerComponent('nav-manager', {
 	schema: {},
 	init: function (){
 		var el = this.el;
 		var i =0;
-
-
 
 		//create nav markers
 		document.querySelector('a-scene').addEventListener('loaded', function () {
@@ -168,7 +132,7 @@ AFRAME.registerComponent('nav-manager', {
 				el.appendChild(thisMarker); //add them to the scene
 				i++;
 
-				//change position when new location is selected
+				//change camera position when new location is selected
 				this.activeCamera = document.querySelector('a-camera');	
 				window.addEventListener('activeLocationChanged', (e)=>{
 					var l = e.detail.activeLocation.coord;
@@ -177,24 +141,14 @@ AFRAME.registerComponent('nav-manager', {
 					});
 				});
 
-
 			}
-			//debug tools
+			//A-frame debug tools
 			document.querySelector('a-entity[ui-nav-pt-marker]').flushToDOM();
-
-
 		})
-
 	},
-	// update: function(){
-	// 			//toggle active when a user selects - emit event, 	change active, change camera position
-				
-	// 			//pass state to child when location change is called
-	// 			el.addEventListener('activeLocationChanged', function () {
-	// 				event.detail.locationData
-	// 			});
-	// }
 });
+
+
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Model manager
@@ -212,5 +166,76 @@ AFRAME.registerComponent('model-viewer', {
 AFRAME.registerComponent('360-viewer', {
 	schema: {},
 	init: function (){
+	}
+});
+
+
+
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Tests
++ + + + + + + + + + + + + + + + + + + + * * */ 
+//Test location change -is event emitted by app?
+//is data is available from the event? 
+// AFRAME.registerComponent('test-location-change', {
+// 	schema: {},
+// 	init: function (){
+// 		window.addEventListener('activeLocationChanged', function (event) {
+// 			console.log(
+// 				"Test responding to activeLocationChanged in JS",
+// 				event.detail.activeLocation
+// 			);
+// 		});
+// 	}
+// });
+
+
+// Test to location change on click event
+// AFRAME.registerComponent('change-location', {
+// 	schema: {},
+// 	init: function (){
+// 		var el = this.el;
+// 		var location1 = mainData.locations.ns2;
+// 		var location2 = mainData.locations.ns5;
+// 		var activeLocation = location1;
+// 		el.addEventListener('click', function () {
+// 			el.emit('changeActiveLocation', {activeLocation});
+// 			if(activeLocation == location1){
+// 				activeLocation = location2;
+// 			}else{
+// 				activeLocation = location1;
+// 			}
+// 		});
+// 	}
+// });
+
+
+//Test date change
+AFRAME.registerComponent('test-date-change', {
+	schema: {},
+	init: function (){
+		window.addEventListener('activeDateChanged', function (event) {
+			console.log(
+				"Test responding to activeDateChanged in JS",
+				event.detail.activeDate
+			);
+		});
+	}
+});
+
+//Test date change on-click event
+AFRAME.registerComponent('change-date', {
+	schema: {},
+	init: function (){
+		var el = this.el;
+		var activeDate;
+		
+		//initialize to the correct date
+		window.addEventListener('activeDateChanged', (e)=>{
+			activeDate = e.detail.activeDate;
+		});
+		//if clicked emit a change active date event
+		el.addEventListener('click', function () {
+			el.emit('changeActiveDate', {activeDate});
+		});
 	}
 });
