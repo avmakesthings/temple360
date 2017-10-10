@@ -109,7 +109,7 @@ Timeline
 + + + + + + + + + + + + + + + + + + + + * * */  
 
 // //UI component to display a range of dates
-AFRAME.registerComponent('ui-timeline', {
+AFRAME.registerComponent('ui-time-mark', {
 	schema: {
         textposition: {type:'vec3', default:{x:0,y:0,z:0}},
         date: {
@@ -146,7 +146,44 @@ AFRAME.registerComponent('ui-timeline', {
                 activeDate: this.data.date
             });
         });
-	}
+
+        el.addEventListener('mouseenter', ()=>{
+            if(!this.data.active){
+                setMaterial(this.getGeometry(),hoverMaterial);
+            }
+        });
+
+        el.addEventListener('mouseleave', ()=>{
+            if(!this.data.active){
+                setMaterial(this.getGeometry(),inactiveMaterial);
+            }
+        });
+
+        window.addEventListener('activeDateChanged', (e)=>{
+            activeDate = e.detail.activeDate
+            if(activeDate === this.data.date){
+                this.el.setAttribute("ui-time-mark", "active: true")
+            } else {
+                this.el.setAttribute("ui-time-mark", "active: false")
+            }
+        });
+    },//TO-DO -rewrite to be global
+    getGeometry: function(){
+        if(this.el.object3D && this.el.object3D.children.length > 0){
+            return this.el.object3D.children[0]
+        }
+        return null
+    },
+    update: function(){
+        var geom = this.getGeometry()
+        if(geom){
+            if(this.data.active){
+                setMaterial(geom,activeMaterial);
+            } else {
+                setMaterial(geom,inactiveMaterial);
+            }
+        }
+    }
 });
 
 

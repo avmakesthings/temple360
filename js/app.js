@@ -156,42 +156,42 @@ AFRAME.registerComponent('timeline-manger', {
 
 		
 		document.querySelector('a-scene').addEventListener('loaded', function () {
-			
 			var myScene = document.querySelector('a-scene');
 			var thisModel = myScene.querySelector("#loaded-model");
 			var thisModelOpaque = myScene.querySelector("#loaded-model-opaque");
-			var basePosition = {x:-1, y:1,z:-1};
-
+			var basePosition = {x:-1, y:1.5,z:-1};
+			var timeline = document.createElement('a-entity');
+			timeline.setAttribute('id',"timeline");
+			
 			for(var date in mainData.dates){
 				console.log(moment(date));
 				var thisDate = mainData.dates[date];
-				var timeline = document.createElement('a-entity');
-				timeline.setAttribute('position', basePosition);
-				//timeline.setAttribute('id', "date-" + moment(date)._d);
-
-				timeline.setAttribute('ui-timeline', {
-					date: JSON.stringify(thisDate),
-					textposition: basePosition
-				});
-				
-				el.appendChild(timeline); //add to the scene
-				
-				basePosition.x += 0.1;
-				
-				//A-frame debug tools
-				document.querySelector('a-entity[ui-timeline]').flushToDOM();
-
+				if(thisDate[0].type == "model"){
+					
+					var timeMarker = document.createElement('a-entity');
+					timeMarker.setAttribute('position', basePosition);
+					timeMarker.setAttribute('id', moment(date)._d);
+	
+					timeMarker.setAttribute('ui-time-mark', {
+						date: JSON.stringify(thisDate),
+						textposition: basePosition
+					});
+					
+					timeline.appendChild(timeMarker);
+					el.appendChild(timeline); //add to the scene
+					basePosition.x += 0.05;
+					
+					//A-frame debug tools
+					document.querySelector('a-entity[ui-time-mark]').flushToDOM();
+				}
 			}
 			
+
 			window.addEventListener('activeDateChanged', function (event) {
 				thisModel.setAttribute('gltf-model', "url(./assets/" + event.detail.activeDate[0].source + ")");
 				thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + event.detail.activeDate[0].source + ")");
 			});
-		
 		});
-
-
-
 	},
 });
 
