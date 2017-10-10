@@ -11,6 +11,10 @@ AFRAME.registerComponent('gltfpostprocessing', {
 		  var myScene = document.querySelector('a-scene');
 		  var model = myScene.querySelector( "#loaded-model" );
 
+		  if(!model.object3D){
+			return
+			}
+
 		  basicMaterial = new THREE.MeshBasicMaterial( { 
 			  color: 0xffffff, 
 			  opacity: 1,
@@ -20,6 +24,9 @@ AFRAME.registerComponent('gltfpostprocessing', {
 		  model.object3D.traverse(function(item){
 			  item.material = basicMaterial;
 		  });
+
+
+
 	  });
   }
 });
@@ -34,6 +41,9 @@ AFRAME.registerComponent('gltf-opaque', {
 		  var myScene = document.querySelector('a-scene');
 		  var model = myScene.querySelector( "#loaded-model-opaque" );
 
+		  if(!model.object3D){
+			return
+			}
 		  phongMaterial = new THREE.MeshPhongMaterial( { 
 			  //ambient: 0x555555, 
 			  color: 0x555555,

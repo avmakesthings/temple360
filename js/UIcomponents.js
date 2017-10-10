@@ -2,6 +2,9 @@
 UI Components 
 These have the display logic 
 + + + + + + + + + + + + + + + + + + + + * * */   
+
+var moment = require('moment');
+
 var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
 var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
 var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
@@ -13,19 +16,10 @@ function setMaterial (geom, material){
     });
 };
 
-// AFRAME.registerComponent('ui-nav-pt-marker', {
-// 	schema: {
-//         location: {
-//             default: "{}",
-//             parse: function (value) {
-//                 return JSON.parse(value)
-//             }
-//         },
-//         active: {default: false},
-// 		src: {type: 'asset', default: 'url(/assets/ui-nav-pt-base.obj)'}
-//     },
-//     init: {}
-// });
+
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Navigation Markers
++ + + + + + + + + + + + + + + + + + + + * * */  
 
 //Marker to indicate where a user can teleport within the scene
 AFRAME.registerComponent('ui-nav-pt-marker', {
@@ -47,7 +41,6 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
        
         setTimeout(callback,0);
         
-
         el.addEventListener('click', ()=>{
             el.emit('changeActiveLocation', {
                 activeLocation: this.data.location
@@ -65,7 +58,6 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
                 setMaterial(this.getGeometry(),inactiveMaterial);
             }
         });
-
 
         window.addEventListener('activeLocationChanged', (e)=>{
             activeLocation = e.detail.activeLocation
@@ -106,24 +98,63 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
 
 
 //UI component to display content available 
-AFRAME.registerComponent('ui-nav-pt-content', {
-	schema: {},
-	init: function (){
-	}
-});
+// AFRAME.registerComponent('ui-nav-pt-content', {
+// 	schema: {},
+// 	init: function (){
+// 	}
+// });
 
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Timeline
++ + + + + + + + + + + + + + + + + + + + * * */  
 
-//UI component to display a range of dates
+// //UI component to display a range of dates
 AFRAME.registerComponent('ui-timeline', {
-	schema: {},
+	schema: {
+        textposition: {type:'vec3', default:{x:0,y:0,z:0}},
+        date: {
+            default: "{}",
+            parse: function (value) {
+                return JSON.parse(value)
+            }
+        },
+        active: {default: false},
+        hover: {default:false}
+    },
 	init: function (){
+        var el = this.el;
+        var geometry;
+        var timelineMark;
+        var textPosition;
+    
+        //create timeline marker
+        geometry = new THREE.BoxGeometry(0.01,.1,0.01);
+        timelineMark = new THREE.Mesh( geometry, inactiveMaterial );
+        el.setObject3D('mesh', timelineMark);
+
+        //add date label
+        // textPosition = this.data.textposition;
+        // textPosition.y = textPosition.y-0.2;
+        // el.setAttribute('text', {
+        //     value: "some text",
+        //     height: .2,
+        //     letterSpacing: .01
+        // } );
+        
+        el.addEventListener('click', ()=>{
+            el.emit('changeActiveDate', {
+                activeDate: this.data.date
+            });
+        });
 	}
 });
+
+
 
 
 //UI component that displays a top model view and the location of navigation markers
-AFRAME.registerComponent('ui-navigation-map', {
-	schema: {},
-	init: function (){
-	}
-});  
+// AFRAME.registerComponent('ui-navigation-map', {
+// 	schema: {},
+// 	init: function (){
+// 	}
+// });  

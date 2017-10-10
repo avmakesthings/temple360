@@ -10,6 +10,7 @@ require('./materials.js');
 require('./UIcomponents.js');
 
 var isEqual = require('lodash.isequal');
+var moment = require('moment');
 var extras = require('aframe-extras'); //fix for A-frame GLtf 2.0 issues
 extras.loaders.registerAll(); //Register 'A-frame extras' Loaders package and its dependencies.
 var mainData = require('./mainData.js'); //Get JSON data 
@@ -29,7 +30,7 @@ AFRAME.registerReducer('app', {
 		locations: mainData.locations,
 		dates: mainData.dates,
 		activeLocation: mainData.locations["00"],
-		activeDate: mainData.dates["1477958400"],
+		activeDate: mainData.dates["2016-11-01"],
 		activeModel: {}
 	},
 
@@ -93,7 +94,7 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveDate', {
-			activeDate: mainData.dates["Tue Aug 15 2017 17:00:00 GMT-0700 (PDT)"]
+			activeDate: mainData.dates["2016-11-01"]
 		});
 
 		AFRAME.scenes[0].emit('changeActiveModel', {
@@ -112,7 +113,6 @@ AFRAME.registerComponent('nav-manager', {
 	schema: {},
 	init: function (){
 		var el = this.el;
-		var i =0;
 
 		//create nav markers
 		document.querySelector('a-scene').addEventListener('loaded', function () {
@@ -122,15 +122,10 @@ AFRAME.registerComponent('nav-manager', {
 
 				thisMarker.setAttribute('position', thisLocation.coord);
 				thisMarker.setAttribute('id', "marker-" + location);
-
 				thisMarker.setAttribute('ui-nav-pt-marker', {
 					location: JSON.stringify(thisLocation)
 				});
-				// thisMarker.setAttribute('ui-nav-pt-base', {
-				// 	location: JSON.stringify(thisLocation)
-				// });
-				el.appendChild(thisMarker); //add them to the scene
-				i++;
+				el.appendChild(thisMarker); //add to the scene
 
 				//change camera position when new location is selected
 				this.activeCamera = document.querySelector('a-camera');	
@@ -149,25 +144,75 @@ AFRAME.registerComponent('nav-manager', {
 });
 
 
-
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Model manager
+Timeline manager
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 //Changes the model being viewed based on date change state
-AFRAME.registerComponent('model-viewer', {
+AFRAME.registerComponent('timeline-manger', {
 	schema: {},
 	init: function (){
-	}
+		var el = this.el;
+
+		
+		document.querySelector('a-scene').addEventListener('loaded', function () {
+			
+			var myScene = document.querySelector('a-scene');
+			var thisModel = myScene.querySelector("#loaded-model");
+			var thisModelOpaque = myScene.querySelector("#loaded-model-opaque");
+			var basePosition = {x:-1, y:1,z:-1};
+
+			for(var date in mainData.dates){
+				console.log(moment(date));
+				var thisDate = mainData.dates[date];
+				var timeline = document.createElement('a-entity');
+				timeline.setAttribute('position', basePosition);
+				//timeline.setAttribute('id', "date-" + moment(date)._d);
+
+				timeline.setAttribute('ui-timeline', {
+					date: JSON.stringify(thisDate),
+					textposition: basePosition
+				});
+				
+				el.appendChild(timeline); //add to the scene
+				
+				basePosition.x += 0.1;
+				
+				//A-frame debug tools
+				document.querySelector('a-entity[ui-timeline]').flushToDOM();
+
+			}
+			
+			window.addEventListener('activeDateChanged', function (event) {
+				thisModel.setAttribute('gltf-model', "url(./assets/" + event.detail.activeDate[0].source + ")");
+				thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + event.detail.activeDate[0].source + ")");
+			});
+		
+		});
+
+
+
+	},
 });
 
 
-//Changes the 360s that are loaded viewed based location state
-AFRAME.registerComponent('360-viewer', {
+
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Model manager 
++ + + + + + + + + + + + + + + + + + + + * * */ 
+
+//Knows whether to render a model view or a 360 
+AFRAME.registerComponent('model-manager', {
 	schema: {},
 	init: function (){
+		//initialize in model view with camera in activeLocation
+
+		//if switch, toggle 360 view
+
+
 	}
 });
+
 
 
 
@@ -213,29 +258,32 @@ Tests
 AFRAME.registerComponent('test-date-change', {
 	schema: {},
 	init: function (){
-		window.addEventListener('activeDateChanged', function (event) {
-			console.log(
-				"Test responding to activeDateChanged in JS",
-				event.detail.activeDate
-			);
+		document.querySelector('a-scene').addEventListener('loaded', function () {
+			window.addEventListener('activeDateChanged', function (event) {
+				console.log(
+					"Test responding to activeDateChanged in JS",
+					event.detail.activeDate[0].title
+				);
+			});
 		});
+
 	}
 });
 
 //Test date change on-click event
-AFRAME.registerComponent('change-date', {
-	schema: {},
-	init: function (){
-		var el = this.el;
-		var activeDate;
+// AFRAME.registerComponent('change-date', {
+// 	schema: {},
+// 	init: function (){
+// 		var el = this.el;
+// 		var activeDate;
 		
-		//initialize to the correct date
-		window.addEventListener('activeDateChanged', (e)=>{
-			activeDate = e.detail.activeDate;
-		});
-		//if clicked emit a change active date event
-		el.addEventListener('click', function () {
-			el.emit('changeActiveDate', {activeDate});
-		});
-	}
-});
+// 		//initialize to the correct date
+// 		window.addEventListener('activeDateChanged', (e)=>{
+// 			activeDate = e.detail.activeDate;
+// 		});
+// 		//if clicked emit a change active date event
+// 		el.addEventListener('click', function () {
+// 			el.emit('changeActiveDate', {activeDate});
+// 		});
+// 	}
+// });
