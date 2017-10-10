@@ -190,7 +190,7 @@ module.exports = {
 
     },
     "dates": {
-        "1477958400": [
+        "2016-11-01": [
             {
                 "type": "model",
                 "title": "First forest model",
@@ -199,7 +199,7 @@ module.exports = {
                 "source": "16-11-temple.gltf"
             }
         ],
-        "1480550400": [
+        "2016-12-01": [
             {
                 "type": "model",
                 "title": "Design iteration model",
@@ -208,7 +208,7 @@ module.exports = {
                 "source": "16-12-temple.gltf"
             }
         ],
-        "1483228800": [
+        "2017-01-01": [
             {
                 "type": "model",
                 "title": "Design iteration model",
@@ -217,7 +217,7 @@ module.exports = {
                 "source": "17-01-temple.gltf"
             }
         ],
-        "Fri Mar 31 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-02-01": [
             {
                 "type": "model",
                 "title": "Design iteration model",
@@ -226,7 +226,7 @@ module.exports = {
                 "source": "17-02-temple.gltf"
             }
         ],
-        "Sun Apr 30 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-05-01": [
             {
                 "type": "model",
                 "title": "Design iteration model",
@@ -235,7 +235,7 @@ module.exports = {
                 "source": "somesorce.gltf"
             }
         ],
-        "Wed May 31 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-06-01": [
             {
                 "type": "model",
                 "title": "Design iteration model",
@@ -244,7 +244,7 @@ module.exports = {
                 "source": "somesorce.gltf"
             }
         ],
-        "Fri Jun 30 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-07-01": [
             {
                 "type": "model",
                 "title": "Design iteration model",
@@ -253,7 +253,7 @@ module.exports = {
                 "source": "somesorce.gltf"
             }
         ],
-        "Mon Jul 31 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-01": [
             {
                 "type": "model",
                 "title": "Design iteration model",
@@ -262,7 +262,7 @@ module.exports = {
                 "source": "17-08-temple.gltf"
             }
         ],
-        "Mon Aug 14 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-15": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -271,7 +271,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Tue Aug 15 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-16": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -280,7 +280,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Wed Aug 16 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-17": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -289,7 +289,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Thu Aug 17 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-18": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -298,7 +298,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Fri Aug 18 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-19": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -307,7 +307,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Sat Aug 19 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-20": [
             {
                 "type": "model",
                 "title": "Design iteration model",
@@ -323,7 +323,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Sun Aug 20 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-21": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -332,7 +332,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Mon Aug 21 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-22": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -341,7 +341,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Tue Aug 22 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-23": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -350,7 +350,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Wed Aug 23 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-24": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -359,7 +359,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Thu Aug 24 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-25": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -368,7 +368,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Fri Aug 25 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-26": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -377,7 +377,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Sat Aug 26 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-27": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -386,7 +386,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Sun Aug 27 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-08-28": [
             {
                 "type": "360",
                 "title": "Design iteration model",
@@ -395,7 +395,7 @@ module.exports = {
                 "source": "somesorce.jpg"
             }
         ],
-        "Sat Sep 02 2017 17:00:00 GMT-0700 (PDT)": [
+        "2017-09-02": [
             {
                 "type": "360",
                 "title": "Design iteration model",

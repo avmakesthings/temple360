@@ -8,7 +8,7 @@ var gutil = require('gulp-util');
 
 //Data
 var rename = require('gulp-rename');
-var yaml = require('gulp-yaml');
+// var yaml = require('gulp-yaml');
 //Server
 var connect = require('gulp-connect');
 var serve = require('gulp-serve');
