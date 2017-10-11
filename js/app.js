@@ -6,6 +6,7 @@ Author: AV
 
 require('aframe');
 require('aframe-state-component');
+require('aframe-text-geometry-component');
 require('./materials.js');
 require('./UIcomponents.js');
 
@@ -15,6 +16,7 @@ var extras = require('aframe-extras'); //fix for A-frame GLtf 2.0 issues
 extras.loaders.registerAll(); //Register 'A-frame extras' Loaders package and its dependencies.
 var mainData = require('./mainData.js'); //Get JSON data 
 var sceneEl = document.querySelector('a-scene'); //Scene element
+
 
 function getState(event, key){
 	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
@@ -149,47 +151,61 @@ Timeline manager
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 //Changes the model being viewed based on date change state
-AFRAME.registerComponent('timeline-manger', {
+AFRAME.registerComponent('timeline-manager', {
 	schema: {},
 	init: function (){
 		var el = this.el;
 
-		
 		document.querySelector('a-scene').addEventListener('loaded', function () {
 			var myScene = document.querySelector('a-scene');
 			var thisModel = myScene.querySelector("#loaded-model");
 			var thisModelOpaque = myScene.querySelector("#loaded-model-opaque");
-			var basePosition = {x:-1, y:1.5,z:-1};
+			var basePosition = {x:-0.3, y:1.5,z:-1};
 			var timeline = document.createElement('a-entity');
 			timeline.setAttribute('id',"timeline");
+
 			
 			for(var date in mainData.dates){
-				console.log(moment(date));
+				//console.log(moment(date));
 				var thisDate = mainData.dates[date];
 				if(thisDate[0].type == "model"){
 					
-					var timeMarker = document.createElement('a-entity');
-					timeMarker.setAttribute('position', basePosition);
-					timeMarker.setAttribute('id', moment(date)._d);
-	
-					timeMarker.setAttribute('ui-time-mark', {
+					//create markers
+					var tMarker = document.createElement('a-entity');
+					tMarker.setAttribute('position', basePosition);
+					tMarker.setAttribute('id', moment(date)._d);
+
+					//create marker geometry
+					var tGeometry = document.createElement('a-entity');	
+					tGeometry.setAttribute('id', "t-mesh");
+					tGeometry.setAttribute('ui-time-mark', {
+						date: JSON.stringify(thisDate)
+					});
+					
+					//create text labels
+					var tText = document.createElement('a-entity');
+					tText.setAttribute('id', "t-label");
+					tText.setAttribute('ui-time-text', {
 						date: JSON.stringify(thisDate),
 						textposition: basePosition
 					});
 					
-					timeline.appendChild(timeMarker);
+					tMarker.appendChild(tGeometry);
+					tMarker.appendChild(tText);					
+					timeline.appendChild(tMarker);
 					el.appendChild(timeline); //add to the scene
-					basePosition.x += 0.05;
-					
-					//A-frame debug tools
-					document.querySelector('a-entity[ui-time-mark]').flushToDOM();
+					basePosition.x += 0.06;
+
+					//document.querySelector('a-entity[ui-time-mark]').flushToDOM();
 				}
 			}
 			
-
 			window.addEventListener('activeDateChanged', function (event) {
-				thisModel.setAttribute('gltf-model', "url(./assets/" + event.detail.activeDate[0].source + ")");
-				thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + event.detail.activeDate[0].source + ")");
+				var nextModelPath = event.detail.activeDate[0].source;
+				if(nextModelPath){
+					thisModel.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+					thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+				}
 			});
 		});
 	},

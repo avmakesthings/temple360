@@ -111,7 +111,6 @@ Timeline
 // //UI component to display a range of dates
 AFRAME.registerComponent('ui-time-mark', {
 	schema: {
-        textposition: {type:'vec3', default:{x:0,y:0,z:0}},
         date: {
             default: "{}",
             parse: function (value) {
@@ -125,23 +124,14 @@ AFRAME.registerComponent('ui-time-mark', {
         var el = this.el;
         var geometry;
         var timelineMark;
-        var textPosition;
     
         //create timeline marker
-        geometry = new THREE.BoxGeometry(0.01,.1,0.01);
+        geometry = new THREE.BoxGeometry(0.02,.1,0.01);
         timelineMark = new THREE.Mesh( geometry, inactiveMaterial );
         el.setObject3D('mesh', timelineMark);
-
-        //add date label
-        // textPosition = this.data.textposition;
-        // textPosition.y = textPosition.y-0.2;
-        // el.setAttribute('text', {
-        //     value: "some text",
-        //     height: .2,
-        //     letterSpacing: .01
-        // } );
         
-        el.addEventListener('click', ()=>{
+        el.addEventListener('click', (e)=>{
+            e.stopImmediatePropagation(); //fix for event firing twice
             el.emit('changeActiveDate', {
                 activeDate: this.data.date
             });
@@ -166,6 +156,9 @@ AFRAME.registerComponent('ui-time-mark', {
             } else {
                 this.el.setAttribute("ui-time-mark", "active: false")
             }
+
+        // el.flushToDOM();
+
         });
     },//TO-DO -rewrite to be global
     getGeometry: function(){
@@ -185,6 +178,40 @@ AFRAME.registerComponent('ui-time-mark', {
         }
     }
 });
+
+
+AFRAME.registerComponent('ui-time-text', {
+	schema: {
+        textposition: {type:'vec3', default:{x:0,y:0,z:0}},
+        date: {
+            default: "{}",
+            parse: function (value) {
+                return JSON.parse(value)
+            }
+        },
+        active: {default: false},
+        hover: {default:false}
+    },
+    init: function (){
+        var el = this.el;
+
+        //date label for marker
+        textPosition = this.data.textposition;
+        textPosition.y -= 0.1;
+        el.setAttribute('position',textPosition );
+        el.setAttribute('text', {
+            align: "center",
+            baseline: "top",
+            value: 'T',
+            width: 1.3,
+            color: 0xd742f4
+        });
+
+        //expanded view title & description
+
+    }
+});
+
 
 
 
