@@ -118,6 +118,10 @@ AFRAME.registerComponent('nav-manager', {
 
 		//create nav markers
 		document.querySelector('a-scene').addEventListener('loaded', function () {
+			
+			var navMarkers = document.createElement('a-entity');
+			navMarkers.setAttribute('id', "teleport-markers");
+			
 			for (var location in mainData.locations){
 				var thisLocation = mainData.locations[location];
 				var thisMarker = document.createElement('a-entity');
@@ -127,7 +131,7 @@ AFRAME.registerComponent('nav-manager', {
 				thisMarker.setAttribute('ui-nav-pt-marker', {
 					location: JSON.stringify(thisLocation)
 				});
-				el.appendChild(thisMarker); //add to the scene
+				navMarkers.appendChild(thisMarker); //add to the scene
 
 				//change camera position when new location is selected
 				this.activeCamera = document.querySelector('a-camera');	
@@ -139,6 +143,7 @@ AFRAME.registerComponent('nav-manager', {
 				});
 
 			}
+			el.appendChild(navMarkers); 
 			//A-frame debug tools
 			document.querySelector('a-entity[ui-nav-pt-marker]').flushToDOM();
 		})
@@ -219,14 +224,101 @@ Model manager
 
 //Knows whether to render a model view or a 360 
 AFRAME.registerComponent('model-manager', {
-	schema: {},
+	schema: {
+		activeModel: {default:'model'}
+	},
 	init: function (){
 		//initialize in model view with camera in activeLocation
+		var el = this.el;
 
-		//if switch, toggle 360 view
+		document.querySelector('a-scene').addEventListener('loaded', function () {
+			
+			var bgContainer = document.createElement('a-entity');
+			var img_tsixty = document.createElement('a-sky');
+			var video_tsixty = document.createElement('a-videosphere');
 
+			//test buttons to toggle between different content types
+			var testButtons = document.createElement('a-entity');
+			var imgButton = document.createElement('a-triangle');
+			var vidButton = document.createElement('a-triangle');
+			var modelButton = document.createElement('a-plane');
+			var testPosition = {x:0, y:1,z:2};
+			var testRotation = {x:0, y:180 ,z:0 };
+			var testScale = {x:0.2, y:0.2 ,z:0.2 };
+			
+			img_tsixty.setAttribute('id','360-image');
+			video_tsixty.setAttribute('id','360-video');
 
-	}
+			testButtons.setAttribute('position',testPosition);
+			testButtons.setAttribute('rotation',testRotation);
+			testButtons.setAttribute('scale',testScale);
+
+			bgContainer.setAttribute('id',"view-toggle");
+			testButtons.appendChild(imgButton);
+			testButtons.appendChild(vidButton);
+			testButtons.appendChild(modelButton);
+			bgContainer.appendChild(testButtons);
+
+			var buttons = testButtons.getChildren();
+			console.log(buttons);
+			var j = 0;
+			//set button positions
+			for(var i =0; i<buttons.length; i++){
+				buttons[i].setAttribute('position', {x:0,y:j,j:0});
+				j+= 1.5;
+			};
+
+			imgButton.setAttribute('text',{value:'image', color: 'red', width:4, align:'center'});
+			vidButton.setAttribute('text',{value:'video',color: 'red', width:4, align:'center'});
+			modelButton.setAttribute('text',{value:'model',color: 'red', width:4, align:'center'});
+			
+			bgContainer.appendChild(img_tsixty);
+			bgContainer.appendChild(video_tsixty);
+			el.appendChild(bgContainer);
+
+			imgButton.addEventListener('click',(e)=> {
+				console.log("image clicked");
+				//el.emit('activeModelChanged');
+				//toggleView('image');
+			});
+
+			vidButton.addEventListener('click',(e)=> {
+
+				//toggleView('video');
+			});
+
+			modelButton.addEventListener('click',(extras)=> {
+				console.log("model clicked");
+
+				//toggleView('model');
+			});
+
+		});
+
+	},
+	// toggleView: function(view){
+	// 	currentView = this.data.activeModel;
+	// 	imgEl = document.getElementById('#360-image');
+	// 	vidEl = document.getElementById('#360-video');
+	// 	if(view =='model'){
+	// 		if(currentView == 'image'){
+	// 			imgEl.removeAttribute('src');
+	// 		}else if(currentView == 'video'){
+	// 			vidEl.removeAttribute('src');
+	// 		}
+	// 	}if(view == 'video'){
+	// 		if(currentView == 'image'){
+	// 			imgEl.removeAttribute('src');	
+	// 		}
+	// 		vidEl.setAttribute('src','../assets/360-video.mp4');		
+	// 	}if(view == 'image'){
+	// 		if(currentView == 'video'){
+	// 			vidEl.removeAttribute('src');
+	// 		}
+	// 		imgEl.setAttribute('src','../assets/360-photo.jpg');
+	// 	}
+	// 	this.data.activeModel = view;
+	// }
 });
 
 

@@ -200,8 +200,8 @@ AFRAME.registerComponent('ui-time-text', {
         textPosition.y -= 0.1;
         el.setAttribute('position',textPosition );
         el.setAttribute('text', {
-            align: "center",
-            baseline: "top",
+            align: 'center',
+            baseline: 'top',
             value: 'T',
             width: 1.3,
             color: 0xd742f4
@@ -213,12 +213,7 @@ AFRAME.registerComponent('ui-time-text', {
 });
 
 
+/* * * + + + + + + + + + + + + + + + + + + + + 
+360 View Components
++ + + + + + + + + + + + + + + + + + + + * * */  
 
-
-
-//UI component that displays a top model view and the location of navigation markers
-// AFRAME.registerComponent('ui-navigation-map', {
-// 	schema: {},
-// 	init: function (){
-// 	}
-// });  
