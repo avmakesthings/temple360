@@ -22,6 +22,7 @@ function getState(event, key){
 	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
 }
 
+
 /* * * + + + + + + + + + + + + + + + + + + + + 
 State manager --
 Based on K-frame Redux 'State' component  
@@ -77,6 +78,13 @@ AFRAME.registerReducer('app', {
 			AFRAME.scenes[0].emit('activeModelChanged', {activeModel});
 			return state;
 		},  
+		changeActiveScene: function (state, action) {
+			var activeScene = action.activeScene;
+			state.activeScene = activeScene;
+			console.log('activeSceneChanged', activeScene)
+			AFRAME.scenes[0].emit('activeSceneChanged', {activeScene});
+			return state;
+		},  
 	},
 });
 
@@ -102,15 +110,58 @@ window.onload = function() {
 		AFRAME.scenes[0].emit('changeActiveModel', {
 			activeModel: {}
 		});
+
+		AFRAME.scenes[0].emit('changeActiveScene', {
+			activeScene: 'sceneHome'
+		});
+
 	})
 }
 
 
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Scene Manager - currently not working for
+scenes with a-sky 360 images
++ + + + + + + + + + + + + + + + + + + + * * */ 
+AFRAME.registerComponent('scene-manager', {
+	schema: {
+	},
+	init: function (){
+		var self = this
+		var el = this.el;
+		window.addEventListener('activeSceneChanged',(e)=> {
+			nextScene = e.detail.activeScene;
+			self.setScene(nextScene)
+		});
+	}, 
+	setScene: function(nextScene){
+		var sceneHome = document.getElementById('sceneHome');
+		var scene360 = document.getElementById('scene360');
+		var scene3DModel = document.getElementById('scene3DModel');	
+		
+		//stupid version of swapping logic
+		if(nextScene == 'sceneHome'){
+			scene360.setAttribute('visible', 'false');
+			scene3DModel.setAttribute('visible', 'false');
+			sceneHome.setAttribute('visible', 'true');
+		}if(nextScene == 'scene360'){
+			sceneHome.setAttribute('visible', 'false');
+			scene3DModel.setAttribute('visible', 'false');
+			scene360.setAttribute('visible', 'true');
+		}if(nextScene == 'scene3DModel'){
+			sceneHome.setAttribute('visible', 'false');
+			scene360.setAttribute('visible', 'false');
+			scene3DModel.setAttribute('visible', 'true');
+		}
+	}
+});
+
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Nav Manager
+Nav Manager : creates & locates nav-pt-marker 
+objects, moves camera on location change
 + + + + + + + + + + + + + + + + + + + + * * */ 
-//creates & locates nav-pt-marker objects, moves camera on location change
+
 AFRAME.registerComponent('nav-manager', {
 	schema: {},
 	init: function (){
@@ -152,10 +203,9 @@ AFRAME.registerComponent('nav-manager', {
 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Timeline manager
+Timeline manager :: Changes the model being viewed based on date change state
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
-//Changes the model being viewed based on date change state
 AFRAME.registerComponent('timeline-manager', {
 	schema: {},
 	init: function (){
@@ -219,179 +269,27 @@ AFRAME.registerComponent('timeline-manager', {
 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Model manager 
+Tests
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
-//Knows whether to render a model view or a 360 
-AFRAME.registerComponent('model-manager', {
+//Add basic ui buttons to test scene toggle
+AFRAME.registerComponent('test-manager', {
 	schema: {
 		activeModel: {default:'model'}
 	},
 	init: function (){
-		//initialize in model view with camera in activeLocation
 		var el = this.el;
-
 		document.querySelector('a-scene').addEventListener('loaded', function () {
 			
+			var sceneEl = document.querySelector('a-scene');
 			var bgContainer = document.createElement('a-entity');
-			var img_tsixty = document.createElement('a-sky');
-			var video_tsixty = document.createElement('a-videosphere');
 
-			//test buttons to toggle between different content types
-			var testButtons = document.createElement('a-entity');
-			var imgButton = document.createElement('a-triangle');
-			var vidButton = document.createElement('a-triangle');
-			var modelButton = document.createElement('a-plane');
-			var testPosition = {x:0, y:1,z:2};
-			var testRotation = {x:0, y:180 ,z:0 };
-			var testScale = {x:0.2, y:0.2 ,z:0.2 };
-			
-			img_tsixty.setAttribute('id','360-image');
-			video_tsixty.setAttribute('id','360-video');
-
-			testButtons.setAttribute('position',testPosition);
-			testButtons.setAttribute('rotation',testRotation);
-			testButtons.setAttribute('scale',testScale);
-
+			bgContainer.setAttribute('view-toggle-test', {
+				activeButton: 'this'
+			});
 			bgContainer.setAttribute('id',"view-toggle");
-			testButtons.appendChild(imgButton);
-			testButtons.appendChild(vidButton);
-			testButtons.appendChild(modelButton);
-			bgContainer.appendChild(testButtons);
-
-			var buttons = testButtons.getChildren();
-			console.log(buttons);
-			var j = 0;
-			//set button positions
-			for(var i =0; i<buttons.length; i++){
-				buttons[i].setAttribute('position', {x:0,y:j,j:0});
-				j+= 1.5;
-			};
-
-			imgButton.setAttribute('text',{value:'image', color: 'red', width:4, align:'center'});
-			vidButton.setAttribute('text',{value:'video',color: 'red', width:4, align:'center'});
-			modelButton.setAttribute('text',{value:'model',color: 'red', width:4, align:'center'});
-			
-			bgContainer.appendChild(img_tsixty);
-			bgContainer.appendChild(video_tsixty);
 			el.appendChild(bgContainer);
-
-			imgButton.addEventListener('click',(e)=> {
-				console.log("image clicked");
-				//el.emit('activeModelChanged');
-				//toggleView('image');
-			});
-
-			vidButton.addEventListener('click',(e)=> {
-
-				//toggleView('video');
-			});
-
-			modelButton.addEventListener('click',(extras)=> {
-				console.log("model clicked");
-
-				//toggleView('model');
-			});
-
 		});
-
-	},
-	// toggleView: function(view){
-	// 	currentView = this.data.activeModel;
-	// 	imgEl = document.getElementById('#360-image');
-	// 	vidEl = document.getElementById('#360-video');
-	// 	if(view =='model'){
-	// 		if(currentView == 'image'){
-	// 			imgEl.removeAttribute('src');
-	// 		}else if(currentView == 'video'){
-	// 			vidEl.removeAttribute('src');
-	// 		}
-	// 	}if(view == 'video'){
-	// 		if(currentView == 'image'){
-	// 			imgEl.removeAttribute('src');	
-	// 		}
-	// 		vidEl.setAttribute('src','../assets/360-video.mp4');		
-	// 	}if(view == 'image'){
-	// 		if(currentView == 'video'){
-	// 			vidEl.removeAttribute('src');
-	// 		}
-	// 		imgEl.setAttribute('src','../assets/360-photo.jpg');
-	// 	}
-	// 	this.data.activeModel = view;
-	// }
-});
-
-
-
-
-/* * * + + + + + + + + + + + + + + + + + + + + 
-Tests
-+ + + + + + + + + + + + + + + + + + + + * * */ 
-//Test location change -is event emitted by app?
-//is data is available from the event? 
-// AFRAME.registerComponent('test-location-change', {
-// 	schema: {},
-// 	init: function (){
-// 		window.addEventListener('activeLocationChanged', function (event) {
-// 			console.log(
-// 				"Test responding to activeLocationChanged in JS",
-// 				event.detail.activeLocation
-// 			);
-// 		});
-// 	}
-// });
-
-
-// Test to location change on click event
-// AFRAME.registerComponent('change-location', {
-// 	schema: {},
-// 	init: function (){
-// 		var el = this.el;
-// 		var location1 = mainData.locations.ns2;
-// 		var location2 = mainData.locations.ns5;
-// 		var activeLocation = location1;
-// 		el.addEventListener('click', function () {
-// 			el.emit('changeActiveLocation', {activeLocation});
-// 			if(activeLocation == location1){
-// 				activeLocation = location2;
-// 			}else{
-// 				activeLocation = location1;
-// 			}
-// 		});
-// 	}
-// });
-
-
-//Test date change
-AFRAME.registerComponent('test-date-change', {
-	schema: {},
-	init: function (){
-		document.querySelector('a-scene').addEventListener('loaded', function () {
-			window.addEventListener('activeDateChanged', function (event) {
-				console.log(
-					"Test responding to activeDateChanged in JS",
-					event.detail.activeDate[0].title
-				);
-			});
-		});
-
 	}
-});
 
-//Test date change on-click event
-// AFRAME.registerComponent('change-date', {
-// 	schema: {},
-// 	init: function (){
-// 		var el = this.el;
-// 		var activeDate;
-		
-// 		//initialize to the correct date
-// 		window.addEventListener('activeDateChanged', (e)=>{
-// 			activeDate = e.detail.activeDate;
-// 		});
-// 		//if clicked emit a change active date event
-// 		el.addEventListener('click', function () {
-// 			el.emit('changeActiveDate', {activeDate});
-// 		});
-// 	}
-// });
+});
