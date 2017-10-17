@@ -109,9 +109,8 @@ Timeline
 + + + + + + + + + + + + + + + + + + + + * * */  
 
 // //UI component to display a range of dates
-AFRAME.registerComponent('ui-timeline', {
+AFRAME.registerComponent('ui-time-mark', {
 	schema: {
-        textposition: {type:'vec3', default:{x:0,y:0,z:0}},
         date: {
             default: "{}",
             parse: function (value) {
@@ -125,36 +124,154 @@ AFRAME.registerComponent('ui-timeline', {
         var el = this.el;
         var geometry;
         var timelineMark;
-        var textPosition;
     
         //create timeline marker
-        geometry = new THREE.BoxGeometry(0.01,.1,0.01);
+        geometry = new THREE.BoxGeometry(0.02,.1,0.01);
         timelineMark = new THREE.Mesh( geometry, inactiveMaterial );
         el.setObject3D('mesh', timelineMark);
-
-        //add date label
-        // textPosition = this.data.textposition;
-        // textPosition.y = textPosition.y-0.2;
-        // el.setAttribute('text', {
-        //     value: "some text",
-        //     height: .2,
-        //     letterSpacing: .01
-        // } );
         
-        el.addEventListener('click', ()=>{
+        el.addEventListener('click', (e)=>{
+            e.stopImmediatePropagation(); //fix for event firing twice
             el.emit('changeActiveDate', {
                 activeDate: this.data.date
             });
         });
-	}
+
+        el.addEventListener('mouseenter', ()=>{
+            if(!this.data.active){
+                setMaterial(this.getGeometry(),hoverMaterial);
+            }
+        });
+
+        el.addEventListener('mouseleave', ()=>{
+            if(!this.data.active){
+                setMaterial(this.getGeometry(),inactiveMaterial);
+            }
+        });
+
+        window.addEventListener('activeDateChanged', (e)=>{
+            activeDate = e.detail.activeDate
+            if(activeDate === this.data.date){
+                this.el.setAttribute("ui-time-mark", "active: true")
+            } else {
+                this.el.setAttribute("ui-time-mark", "active: false")
+            }
+
+        // el.flushToDOM();
+
+        });
+    },//TO-DO -rewrite to be global
+    getGeometry: function(){
+        if(this.el.object3D && this.el.object3D.children.length > 0){
+            return this.el.object3D.children[0]
+        }
+        return null
+    },
+    update: function(){
+        var geom = this.getGeometry()
+        if(geom){
+            if(this.data.active){
+                setMaterial(geom,activeMaterial);
+            } else {
+                setMaterial(geom,inactiveMaterial);
+            }
+        }
+    }
 });
 
 
+AFRAME.registerComponent('ui-time-text', {
+	schema: {
+        textposition: {type:'vec3', default:{x:0,y:0,z:0}},
+        date: {
+            default: "{}",
+            parse: function (value) {
+                return JSON.parse(value)
+            }
+        },
+        active: {default: false},
+        hover: {default:false}
+    },
+    init: function (){
+        var el = this.el;
+
+        //date label for marker
+        textPosition = this.data.textposition;
+        textPosition.y -= 0.1;
+        el.setAttribute('position',textPosition );
+        el.setAttribute('text', {
+            align: 'center',
+            baseline: 'top',
+            value: 'T',
+            width: 1.3,
+            color: 0xd742f4
+        });
+
+        //expanded view title & description
+
+    }
+});
 
 
-//UI component that displays a top model view and the location of navigation markers
-// AFRAME.registerComponent('ui-navigation-map', {
-// 	schema: {},
-// 	init: function (){
-// 	}
-// });  
+/* * * + + + + + + + + + + + + + + + + + + + + 
+360 View Components
++ + + + + + + + + + + + + + + + + + + + * * */  
+AFRAME.registerComponent('view-toggle-test',{
+    schema:{
+        activeButton: {default: 'home'}
+    },
+    init: function(){
+        var el = this.el;
+        var testPosition = {x:0, y:1,z:2};
+        var testRotation = {x:0, y:180 ,z:0 };
+        var testScale = {x:0.2, y:0.2 ,z:0.2 };
+
+        el.setAttribute('position',testPosition);
+        el.setAttribute('rotation',testRotation);
+        el.setAttribute('scale',testScale);
+
+        var imgButton = document.createElement('a-triangle');
+        var homeButton = document.createElement('a-triangle');
+        var modelButton = document.createElement('a-plane');
+
+        el.appendChild(imgButton);
+        el.appendChild(homeButton);
+        el.appendChild(modelButton);
+
+        var buttons = el.getChildren();
+        var j = 0;
+        //set button positions
+        for(var i =0; i<buttons.length; i++){
+            buttons[i].setAttribute('position', {x:0,y:j,j:0});
+            j+= 1.5;
+        };
+
+        imgButton.setAttribute('text',{value:'image', color: 'red', width:4, align:'center'});
+        homeButton.setAttribute('text',{value:'home',color: 'red', width:4, align:'center'});
+        modelButton.setAttribute('text',{value:'model',color: 'red', width:4, align:'center'});
+
+        //el.flushToDOM();
+
+        imgButton.addEventListener('click',()=> {
+            console.log("image clicked");
+            this.el.emit('activeSceneChanged',{ 
+                activeScene: 'scene360' 
+            });
+        });
+
+        homeButton.addEventListener('click',()=> {
+            console.log("home clicked");
+            this.el.emit('activeSceneChanged',{ 
+                activeScene: 'sceneHome' 
+            });
+        });
+
+        modelButton.addEventListener('click',()=> {
+            console.log("model clicked");
+            this.el.emit('activeSceneChanged',{ 
+                activeScene: 'scene3DModel' 
+            });
+        });
+
+    }
+});

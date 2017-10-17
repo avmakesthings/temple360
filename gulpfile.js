@@ -8,7 +8,7 @@ var gutil = require('gulp-util');
 
 //Data
 var rename = require('gulp-rename');
-// var yaml = require('gulp-yaml');
+
 //Server
 var connect = require('gulp-connect');
 var serve = require('gulp-serve');
@@ -20,12 +20,6 @@ var uglify = require('gulp-uglify');
 
 
 gulp.task('server', serve('dist'));
-
-// gulp.task('convert-yaml',function(){
-//   gulp.src('./assets/*.yaml')
-//     .pipe(yaml({ schema: 'DEFAULT_SAFE_SCHEMA' }))
-//     .pipe(gulp.dest('./js'))
-// });
 
 gulp.task('copy-assets', function() {
     gulp.src('./assets/**/*.{png,jpg,gif,svg,mp4,obj,gltf}')

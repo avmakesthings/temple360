@@ -6,6 +6,7 @@ Author: AV
 
 require('aframe');
 require('aframe-state-component');
+require('aframe-text-geometry-component');
 require('./materials.js');
 require('./UIcomponents.js');
 
@@ -16,9 +17,11 @@ extras.loaders.registerAll(); //Register 'A-frame extras' Loaders package and it
 var mainData = require('./mainData.js'); //Get JSON data 
 var sceneEl = document.querySelector('a-scene'); //Scene element
 
+
 function getState(event, key){
 	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
 }
+
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 State manager --
@@ -75,6 +78,13 @@ AFRAME.registerReducer('app', {
 			AFRAME.scenes[0].emit('activeModelChanged', {activeModel});
 			return state;
 		},  
+		changeActiveScene: function (state, action) {
+			var activeScene = action.activeScene;
+			state.activeScene = activeScene;
+			console.log('activeSceneChanged', activeScene)
+			AFRAME.scenes[0].emit('activeSceneChanged', {activeScene});
+			return state;
+		},  
 	},
 });
 
@@ -100,15 +110,58 @@ window.onload = function() {
 		AFRAME.scenes[0].emit('changeActiveModel', {
 			activeModel: {}
 		});
+
+		AFRAME.scenes[0].emit('changeActiveScene', {
+			activeScene: 'sceneHome'
+		});
+
 	})
 }
 
 
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Scene Manager - currently not working for
+scenes with a-sky 360 images
++ + + + + + + + + + + + + + + + + + + + * * */ 
+AFRAME.registerComponent('scene-manager', {
+	schema: {
+	},
+	init: function (){
+		var self = this
+		var el = this.el;
+		window.addEventListener('activeSceneChanged',(e)=> {
+			nextScene = e.detail.activeScene;
+			self.setScene(nextScene)
+		});
+	}, 
+	setScene: function(nextScene){
+		var sceneHome = document.getElementById('sceneHome');
+		var scene360 = document.getElementById('scene360');
+		var scene3DModel = document.getElementById('scene3DModel');	
+		
+		//stupid version of swapping logic
+		if(nextScene == 'sceneHome'){
+			scene360.setAttribute('visible', 'false');
+			scene3DModel.setAttribute('visible', 'false');
+			sceneHome.setAttribute('visible', 'true');
+		}if(nextScene == 'scene360'){
+			sceneHome.setAttribute('visible', 'false');
+			scene3DModel.setAttribute('visible', 'false');
+			scene360.setAttribute('visible', 'true');
+		}if(nextScene == 'scene3DModel'){
+			sceneHome.setAttribute('visible', 'false');
+			scene360.setAttribute('visible', 'false');
+			scene3DModel.setAttribute('visible', 'true');
+		}
+	}
+});
+
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Nav Manager
+Nav Manager : creates & locates nav-pt-marker 
+objects, moves camera on location change
 + + + + + + + + + + + + + + + + + + + + * * */ 
-//creates & locates nav-pt-marker objects, moves camera on location change
+
 AFRAME.registerComponent('nav-manager', {
 	schema: {},
 	init: function (){
@@ -116,6 +169,10 @@ AFRAME.registerComponent('nav-manager', {
 
 		//create nav markers
 		document.querySelector('a-scene').addEventListener('loaded', function () {
+			
+			var navMarkers = document.createElement('a-entity');
+			navMarkers.setAttribute('id', "teleport-markers");
+			
 			for (var location in mainData.locations){
 				var thisLocation = mainData.locations[location];
 				var thisMarker = document.createElement('a-entity');
@@ -125,7 +182,7 @@ AFRAME.registerComponent('nav-manager', {
 				thisMarker.setAttribute('ui-nav-pt-marker', {
 					location: JSON.stringify(thisLocation)
 				});
-				el.appendChild(thisMarker); //add to the scene
+				navMarkers.appendChild(thisMarker); //add to the scene
 
 				//change camera position when new location is selected
 				this.activeCamera = document.querySelector('a-camera');	
@@ -137,6 +194,7 @@ AFRAME.registerComponent('nav-manager', {
 				});
 
 			}
+			el.appendChild(navMarkers); 
 			//A-frame debug tools
 			document.querySelector('a-entity[ui-nav-pt-marker]').flushToDOM();
 		})
@@ -145,145 +203,93 @@ AFRAME.registerComponent('nav-manager', {
 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Timeline manager
+Timeline manager :: Changes the model being viewed based on date change state
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
-//Changes the model being viewed based on date change state
-AFRAME.registerComponent('timeline-manger', {
+AFRAME.registerComponent('timeline-manager', {
 	schema: {},
 	init: function (){
 		var el = this.el;
 
-		
 		document.querySelector('a-scene').addEventListener('loaded', function () {
-			
 			var myScene = document.querySelector('a-scene');
 			var thisModel = myScene.querySelector("#loaded-model");
 			var thisModelOpaque = myScene.querySelector("#loaded-model-opaque");
-			var basePosition = {x:-1, y:1,z:-1};
+			var basePosition = {x:-0.3, y:1.5,z:-1};
+			var timeline = document.createElement('a-entity');
+			timeline.setAttribute('id',"timeline");
 
+			
 			for(var date in mainData.dates){
-				console.log(moment(date));
+				//console.log(moment(date));
 				var thisDate = mainData.dates[date];
-				var timeline = document.createElement('a-entity');
-				timeline.setAttribute('position', basePosition);
-				//timeline.setAttribute('id', "date-" + moment(date)._d);
+				if(thisDate[0].type == "model"){
+					
+					//create markers
+					var tMarker = document.createElement('a-entity');
+					tMarker.setAttribute('position', basePosition);
+					tMarker.setAttribute('id', moment(date)._d);
 
-				timeline.setAttribute('ui-timeline', {
-					date: JSON.stringify(thisDate),
-					textposition: basePosition
-				});
-				
-				el.appendChild(timeline); //add to the scene
-				
-				basePosition.x += 0.1;
-				
-				//A-frame debug tools
-				document.querySelector('a-entity[ui-timeline]').flushToDOM();
+					//create marker geometry
+					var tGeometry = document.createElement('a-entity');	
+					tGeometry.setAttribute('id', "t-mesh");
+					tGeometry.setAttribute('ui-time-mark', {
+						date: JSON.stringify(thisDate)
+					});
+					
+					//create text labels
+					var tText = document.createElement('a-entity');
+					tText.setAttribute('id', "t-label");
+					tText.setAttribute('ui-time-text', {
+						date: JSON.stringify(thisDate),
+						textposition: basePosition
+					});
+					
+					tMarker.appendChild(tGeometry);
+					tMarker.appendChild(tText);					
+					timeline.appendChild(tMarker);
+					el.appendChild(timeline); //add to the scene
+					basePosition.x += 0.06;
 
+					//document.querySelector('a-entity[ui-time-mark]').flushToDOM();
+				}
 			}
 			
 			window.addEventListener('activeDateChanged', function (event) {
-				thisModel.setAttribute('gltf-model', "url(./assets/" + event.detail.activeDate[0].source + ")");
-				thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + event.detail.activeDate[0].source + ")");
+				var nextModelPath = event.detail.activeDate[0].source;
+				if(nextModelPath){
+					thisModel.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+					thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+				}
 			});
-		
 		});
-
-
-
 	},
 });
 
 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Model manager 
-+ + + + + + + + + + + + + + + + + + + + * * */ 
-
-//Knows whether to render a model view or a 360 
-AFRAME.registerComponent('model-manager', {
-	schema: {},
-	init: function (){
-		//initialize in model view with camera in activeLocation
-
-		//if switch, toggle 360 view
-
-
-	}
-});
-
-
-
-
-/* * * + + + + + + + + + + + + + + + + + + + + 
 Tests
 + + + + + + + + + + + + + + + + + + + + * * */ 
-//Test location change -is event emitted by app?
-//is data is available from the event? 
-// AFRAME.registerComponent('test-location-change', {
-// 	schema: {},
-// 	init: function (){
-// 		window.addEventListener('activeLocationChanged', function (event) {
-// 			console.log(
-// 				"Test responding to activeLocationChanged in JS",
-// 				event.detail.activeLocation
-// 			);
-// 		});
-// 	}
-// });
 
-
-// Test to location change on click event
-// AFRAME.registerComponent('change-location', {
-// 	schema: {},
-// 	init: function (){
-// 		var el = this.el;
-// 		var location1 = mainData.locations.ns2;
-// 		var location2 = mainData.locations.ns5;
-// 		var activeLocation = location1;
-// 		el.addEventListener('click', function () {
-// 			el.emit('changeActiveLocation', {activeLocation});
-// 			if(activeLocation == location1){
-// 				activeLocation = location2;
-// 			}else{
-// 				activeLocation = location1;
-// 			}
-// 		});
-// 	}
-// });
-
-
-//Test date change
-AFRAME.registerComponent('test-date-change', {
-	schema: {},
+//Add basic ui buttons to test scene toggle
+AFRAME.registerComponent('test-manager', {
+	schema: {
+		activeModel: {default:'model'}
+	},
 	init: function (){
+		var el = this.el;
 		document.querySelector('a-scene').addEventListener('loaded', function () {
-			window.addEventListener('activeDateChanged', function (event) {
-				console.log(
-					"Test responding to activeDateChanged in JS",
-					event.detail.activeDate[0].title
-				);
+			
+			var sceneEl = document.querySelector('a-scene');
+			var bgContainer = document.createElement('a-entity');
+
+			bgContainer.setAttribute('view-toggle-test', {
+				activeButton: 'this'
 			});
+			bgContainer.setAttribute('id',"view-toggle");
+			el.appendChild(bgContainer);
 		});
-
 	}
-});
 
-//Test date change on-click event
-// AFRAME.registerComponent('change-date', {
-// 	schema: {},
-// 	init: function (){
-// 		var el = this.el;
-// 		var activeDate;
-		
-// 		//initialize to the correct date
-// 		window.addEventListener('activeDateChanged', (e)=>{
-// 			activeDate = e.detail.activeDate;
-// 		});
-// 		//if clicked emit a change active date event
-// 		el.addEventListener('click', function () {
-// 			el.emit('changeActiveDate', {activeDate});
-// 		});
-// 	}
-// });
+});

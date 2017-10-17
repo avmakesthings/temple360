@@ -20,6 +20,7 @@
     "aframe": "^0.7.0",
     "aframe-extras": "^3.12.1",
     "aframe-state-component": "^1.1.2",
+    "aframe-text-geometry-component": "^0.5.1",
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
     "gulp": "^3.9.1",
