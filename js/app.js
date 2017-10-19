@@ -34,7 +34,8 @@ AFRAME.registerReducer('app', {
 		dates: mainData.dates,
 		activeLocation: mainData.locations["00"],
 		activeDate: mainData.dates["2016-11-01"],
-		activeModel: {}
+		activeModel: {},
+		activeScene: {}
 	},
 
 	handlers: {

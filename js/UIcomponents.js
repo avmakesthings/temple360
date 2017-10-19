@@ -108,7 +108,7 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
 Timeline
 + + + + + + + + + + + + + + + + + + + + * * */  
 
-// //UI component to display a range of dates
+// Marker geometry for UI component to display a range of dates
 AFRAME.registerComponent('ui-time-mark', {
 	schema: {
         date: {
@@ -179,7 +179,7 @@ AFRAME.registerComponent('ui-time-mark', {
     }
 });
 
-
+//Text labels for UI component to display a range of dates
 AFRAME.registerComponent('ui-time-text', {
 	schema: {
         textposition: {type:'vec3', default:{x:0,y:0,z:0}},
