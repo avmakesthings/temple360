@@ -8,8 +8,9 @@ require('aframe');
 require('aframe-state-component');
 require('aframe-text-geometry-component');
 require('aframe-template-component');
+require('./globals.js');
 require('./materials.js');
-require('./UIcomponents.js');
+require('./userInterface.js');
 
 var isEqual = require('lodash.isequal');
 var moment = require('moment');
