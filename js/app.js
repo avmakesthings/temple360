@@ -7,6 +7,7 @@ Author: AV
 require('aframe');
 require('aframe-state-component');
 require('aframe-text-geometry-component');
+require('aframe-template-component');
 require('./materials.js');
 require('./UIcomponents.js');
 
@@ -121,11 +122,14 @@ window.onload = function() {
 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Scene Manager - currently not working for
-scenes with a-sky 360 images
+Scene Manager 
 + + + + + + + + + + + + + + + + + + + + * * */ 
+//if # of scenes is more than 4, they should be moved to a dictionary
 AFRAME.registerComponent('scene-manager', {
 	schema: {
+		sceneHome: {type: 'asset', default: 'templates/scene_home.html'},
+		scene360: {type: 'asset', default: 'templates/scene_360.html'},
+		scene3DModel: {type: 'asset', default: 'templates/scene_model.html'}
 	},
 	init: function (){
 		var self = this
@@ -136,24 +140,28 @@ AFRAME.registerComponent('scene-manager', {
 		});
 	}, 
 	setScene: function(nextScene){
-		var sceneHome = document.getElementById('sceneHome');
-		var scene360 = document.getElementById('scene360');
-		var scene3DModel = document.getElementById('scene3DModel');	
-		
-		//stupid version of swapping logic
+		var scene = document.querySelector('a-scene');
+		var sceneTemplate = document.getElementById('scene-template');
+		var currentTemplate = sceneTemplate.getAttribute('template').src;
+
 		if(nextScene == 'sceneHome'){
-			scene360.setAttribute('visible', 'false');
-			scene3DModel.setAttribute('visible', 'false');
-			sceneHome.setAttribute('visible', 'true');
+			if(currentTemplate == this.data.scene3DModel){
+				this.resetEnv();
+			}
+			sceneTemplate.setAttribute('template', 'src:' + this.data.sceneHome);
 		}if(nextScene == 'scene360'){
-			sceneHome.setAttribute('visible', 'false');
-			scene3DModel.setAttribute('visible', 'false');
-			scene360.setAttribute('visible', 'true');
+			if(currentTemplate == this.data.scene3DModel){
+				this.resetEnv();
+			}
+			sceneTemplate.setAttribute('template', 'src:' + this.data.scene360);
 		}if(nextScene == 'scene3DModel'){
-			sceneHome.setAttribute('visible', 'false');
-			scene360.setAttribute('visible', 'false');
-			scene3DModel.setAttribute('visible', 'true');
+			sceneTemplate.setAttribute('template', 'src:' + this.data.scene3DModel);
 		}
+	},
+	resetEnv: function(){
+		var modScene = document.getElementById('scene3DModel');
+		var env = modScene.querySelector('[environment]');
+		env.setAttribute('environment', {active:false});
 	}
 });
 
@@ -204,7 +212,7 @@ AFRAME.registerComponent('nav-manager', {
 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Timeline manager :: Changes the model being viewed based on date change state
+Timeline manager :: ==
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 AFRAME.registerComponent('timeline-manager', {

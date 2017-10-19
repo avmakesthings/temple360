@@ -35,6 +35,13 @@ gulp.task('copy-html', function() {
     .pipe(gulp.dest('./dist'));
 });
 
+gulp.task('copy-templates', function() {
+    gulp.src('./templates/**/*.html')
+    // Perform minification tasks, etc here
+    .pipe(flatten())
+    .pipe(gulp.dest('./dist/templates'));
+});
+
 gulp.task('js', function(){
  var b = browserify({
     entries: './js/app.js',
@@ -53,5 +60,5 @@ gulp.task('watch', function(){
   gulp.watch('./js/*.js', ['js']);
 });
 
-gulp.task('build', ['copy-assets', 'copy-html','js']);
-gulp.task('default', ['server','copy-assets', 'copy-html','js', 'watch']);
+gulp.task('build', ['copy-assets', 'copy-html','copy-templates','js']);
+gulp.task('default', ['server','copy-assets', 'copy-html','copy-templates','js', 'watch']);
