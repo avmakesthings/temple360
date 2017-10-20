@@ -1,4 +1,26 @@
 <a-entity id="sceneHome">
-    <a-sky color="#6EBAA7"></a-sky>
+    <!-- current environment is a placeholder, will update tree dressing meshes to look more like pines -->
+    <a-entity id = "home-env" environment = "preset: forest;" ></a-entity>
+
     <a-light id="ambient1" type="ambient" color="#4f6487" ></a-light>
+    <!-- add heading text, description text, enter and exit buttons -->
+    <a-entity id="heading"
+    position= "0 1.9 -1.5"
+    geometry="primitive: plane; height: auto; width: 2;"
+    material="color:#fff7e3; transparent:true; "
+    text="align: center; width: 4; value: A FOREST IN THE DESERT.; letterSpacing: 1.25;"></a-entity>
+    
+    <a-entity id="button_enter"
+    ui-button-scene-nav="nextScene: scene3DModel;"
+    position= "-0.5 1.4 -1.5"
+    geometry="primitive: plane; width: 0.28; height: 0.143"
+    material="color: blue"
+    text="value: Enter; align:center; width: 1.3"></a-entity>
+
+    <a-entity id="button_exit"
+    position= "0.5 1.4 -1.5"
+    geometry="primitive: plane; width: 0.28; height: 0.143"
+    material="color: yellow"
+    text="value: Exit; align:center; width: 1.3"></a-entity>
+
 </entity>

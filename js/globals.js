@@ -1,13 +1,13 @@
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Globals -- WIP
 + + + + + + + + + + + + + + + + + + + + * * */  
-
 //fonts
 
 
 //colors
 
 
+//basic materials
 var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
 var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
 var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
@@ -18,3 +18,4 @@ function setMaterial (geom, material){
         item.material = material;
     });
 };
+
