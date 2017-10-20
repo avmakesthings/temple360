@@ -150,6 +150,7 @@ AFRAME.registerComponent('scene-manager', {
 		if(nextScene == 'sceneHome'){
 			if(currentTemplate == this.data.scene3DModel){
 				this.resetEnv('scene3DModel');
+				this.removeTestUI();
 			}
 			managers.removeAttribute('nav-manager');
 			managers.removeAttribute('timeline-manager');
@@ -159,6 +160,7 @@ AFRAME.registerComponent('scene-manager', {
 		}if(nextScene == 'scene360'){
 			if(currentTemplate == this.data.scene3DModel){
 				this.resetEnv('scene3DModel');
+				this.removeTestUI();
 			}
 			managers.removeAttribute('nav-manager');
 			managers.removeAttribute('timeline-manager');
@@ -183,6 +185,12 @@ AFRAME.registerComponent('scene-manager', {
 			var env = document.querySelector('#home-env') 
 		}
 		env.setAttribute('environment', {active:false});
+	},
+	removeTestUI: function(){
+		var telmark = document.querySelector('#teleport-markers');
+		var timeline = document.querySelector('#timeline');
+		telmark.parentNode.removeChild(telmark);
+		timeline.parentNode.removeChild(timeline);
 	}
 });
 
