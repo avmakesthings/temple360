@@ -9,7 +9,7 @@
   </head>
 
   <body>
-    <a-scene debug app create-states scene-manager>
+    <a-scene  app create-states scene-manager>
       <a-assets>        
         <a-asset-item id="temple-gltf" src="/assets/17-02-temple.gltf"></a-asset-item>
         <img id="360-test" src="assets/360-photo.jpg">
@@ -18,7 +18,7 @@
       <a-entity id="scene-template" template="src:templates/scene_home.html">
       </a-entity> 
       <!-- managers--> 
-      <a-entity nav-manager timeline-manager scene-manager test-manager></a-entity>
+      <a-entity id="managers" ></a-entity>
       <!-- camera--> 
       <a-camera >
         <a-entity cursor="fuse: true; fuseTimeout: 1000"

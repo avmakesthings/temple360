@@ -8,6 +8,7 @@ require('aframe');
 require('aframe-state-component');
 require('aframe-text-geometry-component');
 require('aframe-template-component');
+require('aframe-layout-component');
 require('./globals.js');
 require('./materials.js');
 require('./userInterface.js');
@@ -142,26 +143,45 @@ AFRAME.registerComponent('scene-manager', {
 	}, 
 	setScene: function(nextScene){
 		var scene = document.querySelector('a-scene');
+		var managers = document.getElementById('managers');
 		var sceneTemplate = document.getElementById('scene-template');
 		var currentTemplate = sceneTemplate.getAttribute('template').src;
 
 		if(nextScene == 'sceneHome'){
 			if(currentTemplate == this.data.scene3DModel){
-				this.resetEnv();
+				this.resetEnv('scene3DModel');
 			}
+			managers.removeAttribute('nav-manager');
+			managers.removeAttribute('timeline-manager');
+			managers.removeAttribute('test-manager');
 			sceneTemplate.setAttribute('template', 'src:' + this.data.sceneHome);
+			
 		}if(nextScene == 'scene360'){
 			if(currentTemplate == this.data.scene3DModel){
-				this.resetEnv();
+				this.resetEnv('scene3DModel');
 			}
+			managers.removeAttribute('nav-manager');
+			managers.removeAttribute('timeline-manager');
+			managers.setAttribute('test-manager', true);
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene360);
+
 		}if(nextScene == 'scene3DModel'){
+			if(currentTemplate == this.data.sceneHome){
+				this.resetEnv('sceneHome');
+			}
+			managers.setAttribute('nav-manager',true);
+			managers.setAttribute('timeline-manager',true);
+			managers.setAttribute('test-manager', true);
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene3DModel);
 		}
 	},
-	resetEnv: function(){
-		var modScene = document.getElementById('scene3DModel');
-		var env = modScene.querySelector('[environment]');
+	resetEnv: function(currentTemplate){
+		var env;
+		if (currentTemplate == 'scene3DModel'){
+			var env = document.querySelector('#model-env') 
+		}else{
+			var env = document.querySelector('#home-env') 
+		}
 		env.setAttribute('environment', {active:false});
 	}
 });
@@ -178,7 +198,7 @@ AFRAME.registerComponent('nav-manager', {
 		var el = this.el;
 
 		//create nav markers
-		document.querySelector('a-scene').addEventListener('loaded', function () {
+		// document.querySelector('a-scene').addEventListener('loaded', function () {
 			
 			var navMarkers = document.createElement('a-entity');
 			navMarkers.setAttribute('id', "teleport-markers");
@@ -206,8 +226,8 @@ AFRAME.registerComponent('nav-manager', {
 			}
 			el.appendChild(navMarkers); 
 			//A-frame debug tools
-			document.querySelector('a-entity[ui-nav-pt-marker]').flushToDOM();
-		})
+			//document.querySelector('a-entity[ui-nav-pt-marker]').flushToDOM();
+		// })
 	},
 });
 
@@ -221,7 +241,7 @@ AFRAME.registerComponent('timeline-manager', {
 	init: function (){
 		var el = this.el;
 
-		document.querySelector('a-scene').addEventListener('loaded', function () {
+		// document.querySelector('a-scene').addEventListener('loaded', function () {
 			var myScene = document.querySelector('a-scene');
 			var thisModel = myScene.querySelector("#loaded-model");
 			var thisModelOpaque = myScene.querySelector("#loaded-model-opaque");
@@ -272,7 +292,7 @@ AFRAME.registerComponent('timeline-manager', {
 					thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
 				}
 			});
-		});
+		// });
 	},
 });
 
@@ -289,7 +309,7 @@ AFRAME.registerComponent('test-manager', {
 	},
 	init: function (){
 		var el = this.el;
-		document.querySelector('a-scene').addEventListener('loaded', function () {
+		// document.querySelector('a-scene').addEventListener('loaded', function () {
 			
 			var sceneEl = document.querySelector('a-scene');
 			var bgContainer = document.createElement('a-entity');
@@ -299,7 +319,7 @@ AFRAME.registerComponent('test-manager', {
 			});
 			bgContainer.setAttribute('id',"view-toggle");
 			el.appendChild(bgContainer);
-		});
+		// });
 	}
 
 });

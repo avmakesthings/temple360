@@ -5,6 +5,7 @@ Layout for UI?? need to rethink this
 
 require('./components/ui_nav-pt-marker.js');
 require('./components/ui_timeline.js');
+require('./components/ui_buttons.js');
 var moment = require('moment');
 
 
@@ -70,3 +71,8 @@ AFRAME.registerComponent('view-toggle-test',{
 
     }
 });
+
+
+/* * * + + + + + + + + + + + + + + + + + + + + 
+Buttons
++ + + + + + + + + + + + + + + + + + + + * * */  

@@ -2,8 +2,7 @@
 Timeline
 + + + + + + + + + + + + + + + + + + + + * * */  
 
-// require('./../globals.js'); -- need to fix
-
+// var globals = require('./../js');
 var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
 var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
 var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
