@@ -2,17 +2,8 @@
 Timeline
 + + + + + + + + + + + + + + + + + + + + * * */  
 
-// var globals = require('./../js');
-var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
-var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
-var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
+//require('./../globals.js');
 
-//a function to recursively set the material of all mesh objects in a given model
-function setMaterial (geom, material){
-    geom.traverse(function(item){
-        item.material = material;
-    });
-};
 
 // Marker geometry for UI component to display a range of dates
 AFRAME.registerComponent('ui-time-mark', {
@@ -33,7 +24,7 @@ AFRAME.registerComponent('ui-time-mark', {
     
         //create timeline marker
         geometry = new THREE.BoxGeometry(0.02,.1,0.01);
-        timelineMark = new THREE.Mesh( geometry, inactiveMaterial );
+        timelineMark = new THREE.Mesh( geometry, globals.inactiveMaterial );
         el.setObject3D('mesh', timelineMark);
         
         el.addEventListener('click', (e)=>{
@@ -45,13 +36,13 @@ AFRAME.registerComponent('ui-time-mark', {
 
         el.addEventListener('mouseenter', ()=>{
             if(!this.data.active){
-                setMaterial(this.getGeometry(),hoverMaterial);
+                globals.setMaterial(this.getGeometry(),globals.hoverMaterial);
             }
         });
 
         el.addEventListener('mouseleave', ()=>{
             if(!this.data.active){
-                setMaterial(this.getGeometry(),inactiveMaterial);
+                globals.setMaterial(this.getGeometry(),globals.inactiveMaterial);
             }
         });
 
@@ -77,9 +68,9 @@ AFRAME.registerComponent('ui-time-mark', {
         var geom = this.getGeometry()
         if(geom){
             if(this.data.active){
-                setMaterial(geom,activeMaterial);
+                globals.setMaterial(geom,globals.activeMaterial);
             } else {
-                setMaterial(geom,inactiveMaterial);
+                globals.setMaterial(geom,globals.inactiveMaterial);
             }
         }
     }

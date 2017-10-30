@@ -2,18 +2,6 @@
 Navigation Markers
 + + + + + + + + + + + + + + + + + + + + * * */  
 
-// require('./../globals.js'); -- need to fix
-
-var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
-var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
-var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
-
-//a function to recursively set the material of all mesh objects in a given model
-function setMaterial (geom, material){
-    geom.traverse(function(item){
-        item.material = material;
-    });
-};
 //Marker to indicate where a user can teleport within the scene
 AFRAME.registerComponent('ui-nav-pt-marker', {
 	schema: {
@@ -42,13 +30,13 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
 
         el.addEventListener('mouseenter', ()=>{
             if(!this.data.active){
-                setMaterial(this.getGeometry(),hoverMaterial);
+                globals.setMaterial(this.getGeometry(),globals.hoverMaterial);
             }
         });
 
         el.addEventListener('mouseleave', ()=>{
             if(!this.data.active){
-                setMaterial(this.getGeometry(),inactiveMaterial);
+                globals.setMaterial(this.getGeometry(),globals.inactiveMaterial);
             }
         });
 
@@ -66,7 +54,7 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         this.el.setAttribute('obj-model', {obj: this.data.src});
         
         this.el.addEventListener('model-loaded', ()=>{
-            setMaterial(this.getGeometry(),inactiveMaterial);
+            globals.setMaterial(this.getGeometry(),globals.inactiveMaterial);
             //this.el.removeEventListener('model-loaded')
         });
     },
@@ -80,9 +68,9 @@ AFRAME.registerComponent('ui-nav-pt-marker', {
         var geom = this.getGeometry()
         if(geom){
             if(this.data.active){
-                setMaterial(geom,activeMaterial);
+                globals.setMaterial(geom,globals.activeMaterial);
             } else {
-                setMaterial(geom,inactiveMaterial);
+                globals.setMaterial(geom,globals.inactiveMaterial);
             }
         }
     }
