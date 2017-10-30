@@ -26,8 +26,8 @@ AFRAME.registerComponent('view-toggle-test',{
         el.setAttribute('rotation',testRotation);
         el.setAttribute('scale',testScale);
 
-        var imgButton = document.createElement('a-triangle');
-        var homeButton = document.createElement('a-triangle');
+        var imgButton = document.createElement('a-plane');
+        var homeButton = document.createElement('a-plane');
         var modelButton = document.createElement('a-plane');
 
         el.appendChild(imgButton);

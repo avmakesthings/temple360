@@ -249,17 +249,14 @@ AFRAME.registerComponent('timeline-manager', {
 	init: function (){
 		var el = this.el;
 
-		// document.querySelector('a-scene').addEventListener('loaded', function () {
 			var myScene = document.querySelector('a-scene');
-			var thisModel = myScene.querySelector("#loaded-model");
-			var thisModelOpaque = myScene.querySelector("#loaded-model-opaque");
+
 			var basePosition = {x:-0.3, y:1.5,z:-1};
 			var timeline = document.createElement('a-entity');
 			timeline.setAttribute('id',"timeline");
 
 			
 			for(var date in mainData.dates){
-				//console.log(moment(date));
 				var thisDate = mainData.dates[date];
 				if(thisDate[0].type == "model"){
 					
@@ -294,13 +291,15 @@ AFRAME.registerComponent('timeline-manager', {
 			}
 			
 			window.addEventListener('activeDateChanged', function (event) {
+				var thisModel = myScene.querySelector("#loaded-model");
+				var thisModelOpaque = myScene.querySelector("#loaded-model-opaque");
 				var nextModelPath = event.detail.activeDate[0].source;
+				console.log("about to change model");
 				if(nextModelPath){
 					thisModel.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
 					thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
 				}
 			});
-		// });
 	},
 });
 
