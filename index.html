@@ -13,6 +13,7 @@
       <a-assets>        
         <a-asset-item id="temple-gltf" src="/assets/17-02-temple.gltf"></a-asset-item>
         <a-asset-item id="scene-home" src="/assets/scene_home.gltf"></a-asset-item>
+        <a-asset-item id="scene-model" src="/assets/scene_model.gltf"></a-asset-item>
         <img id="360-test" src="assets/360-photo.jpg">
       </a-assets>
       <!-- scene--> 
@@ -21,7 +22,7 @@
       <!-- managers--> 
       <a-entity id="managers" ></a-entity>
       <!-- camera--> 
-      <a-camera >
+      <a-camera rotataion="0 180 0">
         <a-entity cursor="fuse: true; fuseTimeout: 1000"
         position="0 0 -1"
         geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
