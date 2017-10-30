@@ -1,21 +1,32 @@
 /* * * + + + + + + + + + + + + + + + + + + + + 
-Globals -- WIP
+Globals -- 
 + + + + + + + + + + + + + + + + + + + + * * */  
-//fonts
+window.globals = window.globals || {
+
+    //FONTS
 
 
-//colors
+    //COLORS
 
 
-//basic materials
-var activeMaterial = new THREE.MeshBasicMaterial( { color: 0xF333FF } );
-var inactiveMaterial = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
-var hoverMaterial = new THREE.MeshBasicMaterial( { color: 0x4286f4 } );
+    //BASIC MATERIALS
+    activeMaterial : new THREE.MeshBasicMaterial( { color: 0xF333FF } ),
+    inactiveMaterial : new THREE.MeshBasicMaterial( { color: 0xFFFFFF } ),
+    hoverMaterial : new THREE.MeshBasicMaterial( { color: 0x4286f4 } ),
 
-//a function to recursively set the material of all mesh objects in a given model
-function setMaterial (geom, material){
-    geom.traverse(function(item){
-        item.material = material;
-    });
+    //FUNCTIONS
+    //a function to recursively set the material of all mesh objects in a given model
+    setMaterial : function(geom, material){
+        geom.traverse(function(item){
+            item.material = material;
+        })
+    }
+
 };
+
+
+
+
+
+
 

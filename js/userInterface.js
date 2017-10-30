@@ -3,6 +3,7 @@ UI Components
 Layout for UI?? need to rethink this
 + + + + + + + + + + + + + + + + + + + + * * */   
 
+require('./globals.js')
 require('./components/ui_nav-pt-marker.js');
 require('./components/ui_timeline.js');
 require('./components/ui_buttons.js');
