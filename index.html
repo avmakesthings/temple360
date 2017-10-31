@@ -16,11 +16,14 @@
         <a-asset-item id="scene-model" src="/assets/scene_model.gltf"></a-asset-item>
         <img id="360-test" src="assets/360-photo.jpg">
       </a-assets>
+
       <!-- scene--> 
       <a-entity id="scene-template" template="src:templates/scene_home.html">
       </a-entity> 
       <!-- managers--> 
       <a-entity id="managers" ></a-entity>
+      <!-- controls--> 
+      <a-entity laser-controls="hand: left" line="color: red; opacity: 0.75"></a-entity>
       <!-- camera--> 
       <a-camera rotataion="0 180 0">
         <a-entity cursor="fuse: true; fuseTimeout: 1000"
