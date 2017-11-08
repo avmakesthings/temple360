@@ -239,7 +239,7 @@ module.exports = {
             "source": "17-08-temple.gltf"
         }
     },
-    "360images": {    
+    "threeSixtyImages": {    
         "2017-08-15": [
             {
                 "title": "360-test-1",
