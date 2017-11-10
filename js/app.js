@@ -9,6 +9,8 @@ require('aframe-state-component');
 require('aframe-text-geometry-component');
 require('aframe-template-component');
 require('aframe-layout-component');
+require('aframe-animation-component');
+
 require('./globals.js');
 require('./materials.js');
 require('./userInterface.js');
