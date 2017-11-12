@@ -23,8 +23,6 @@ AFRAME.registerComponent('ui-button', {
 		iconMaterial: {type: 'string'},
 		value: {type: 'string'},
 		buttonType: {default: 'nav'},
-		hover: {type: 'string'},
-		click: {type: 'string'} // can this be a function? 
 	},
 	init: function (){
 		var data = this.data;
@@ -62,11 +60,7 @@ AFRAME.registerComponent('ui-button', {
 				el.object3D.add(mesh);
 			}
 		}
-
-			el.flushToDOM();
-
 		//add button icon
-
 
 		//add button text
 		el.setAttribute('text', {
@@ -91,7 +85,6 @@ AFRAME.registerComponent('ui-button', {
 
 		//animations
 		el.setAttribute('animation__enter', {
-			//doesn't work on wireframe? 
 			property:'material.opacity',
 			dur: 200,
 			to: 0.5,
@@ -124,14 +117,12 @@ AFRAME.registerComponent('ui-button', {
 			// el.addEventListener('animation__[clicked]-complete',()=>{
 				
 			// 			})
-			switch(data.buttonType){
-				case 'nav':
-				this.el.emit('activeSceneChanged',{ 
-					activeScene: data.click
-					});
-				default:
-				console.log('clicked');
+			if(el.clickHandler){
+				el.clickHandler(e)
+			} else {
+				console.warn("No click handler assigned")
 			}
+			
 		});
   }
 });

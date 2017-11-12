@@ -1,7 +1,7 @@
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Temple360 - An A-frame web viewer for the design
 & construction of the 2017 Burning Man temple
-Author: AV
+Author: Anastasia Victor
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 require('aframe');
@@ -30,7 +30,6 @@ function getState(event, key){
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 State manager --
-Based on K-frame Redux 'State' component  
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 AFRAME.registerReducer('app', {
@@ -134,7 +133,7 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveThreeSixty', {
-			activeThreeSixty: {}
+			activeThreeSixty: {} 
 		});
 
 		AFRAME.scenes[0].emit('changeActiveModel', {
@@ -152,7 +151,6 @@ window.onload = function() {
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Scene Manager 
 + + + + + + + + + + + + + + + + + + + + * * */ 
-//if # of scenes is more than 4, they should be moved to a dictionary
 AFRAME.registerComponent('scene-manager', {
 	schema: {
 		sceneHome: {type: 'asset', default: 'templates/scene_home.html'},
@@ -176,30 +174,19 @@ AFRAME.registerComponent('scene-manager', {
 		if(nextScene == 'sceneHome'){
 			if(currentTemplate == this.data.scene3DModel){
 				this.resetEnv('scene3DModel');
-				this.removeTestUI();
 			}
-			managers.removeAttribute('nav-manager');
-			managers.removeAttribute('timeline-manager');
-			managers.removeAttribute('test-manager');
 			sceneTemplate.setAttribute('template', 'src:' + this.data.sceneHome);
 			
 		}if(nextScene == 'scene360'){
 			if(currentTemplate == this.data.scene3DModel){
 				this.resetEnv('scene3DModel');
-				this.removeTestUI();
 			}
-			managers.removeAttribute('nav-manager');
-			managers.removeAttribute('timeline-manager');
-			managers.setAttribute('test-manager', true);
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene360);
 
 		}if(nextScene == 'scene3DModel'){
 			if(currentTemplate == this.data.sceneHome){
 				this.resetEnv('sceneHome');
 			}
-			managers.setAttribute('nav-manager',true);
-			managers.setAttribute('timeline-manager',true);
-			managers.setAttribute('test-manager', true);
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene3DModel);
 		}
 	},
@@ -211,11 +198,5 @@ AFRAME.registerComponent('scene-manager', {
 			var env = document.querySelector('#home-env') 
 		}
 		env.setAttribute('environment', {active:false});
-	},
-	removeTestUI: function(){
-		var telmark = document.querySelector('#teleport-markers');
-		var timeline = document.querySelector('#timeline');
-		telmark.parentNode.removeChild(telmark);
-		timeline.parentNode.removeChild(timeline);
 	}
 });
