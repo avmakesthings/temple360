@@ -16,7 +16,6 @@ require('./materials.js');
 require('./userInterface.js');
 
 var isEqual = require('lodash.isequal');
-var moment = require('moment');
 var extras = require('aframe-extras'); //fix for A-frame GLtf 2.0 issues
 extras.loaders.registerAll(); //Register 'A-frame extras' Loaders package and its dependencies.
 var mainData = require('./mainData.js'); //Get JSON data 
@@ -50,7 +49,7 @@ AFRAME.registerReducer('app', {
 			var models = action.models;
 			state.models = models;
 			console.log('modelsChanged',models)
-			AFRAME.scenes[0].emit('datesChanged', {models});
+			AFRAME.scenes[0].emit('modelsChanged', {models});
 			return state;
 		}, 
 
