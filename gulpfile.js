@@ -57,7 +57,7 @@ gulp.task('js', function(){
 
 
 gulp.task('watch', function(){
-  gulp.watch('./js/*.js', ['js']);
+  gulp.watch('./js/**/*.js', ['js']);
 });
 
 gulp.task('build', ['copy-assets', 'copy-html','copy-templates','js']);

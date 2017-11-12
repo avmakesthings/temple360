@@ -18,6 +18,7 @@
   "homepage": "https://github.com/avmakesthings/gltf-viewer#readme",
   "dependencies": {
     "aframe": "^0.7.0",
+    "aframe-animation-component": "^3.2.5",
     "aframe-extras": "^3.12.1",
     "aframe-layout": "^1.0.2",
     "aframe-layout-component": "^4.3.0",
