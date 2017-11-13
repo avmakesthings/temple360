@@ -30,11 +30,18 @@ var localStorageHistoryPlugin = {
 	getHistoryArray: function() {
 		return JSON.parse(localStorage.getItem('historyArray'));
 	},
+	peekLastEvent: function() {
+		localStorageHistoryArray = JSON.parse(localStorage.getItem('historyArray')) || [];
+		return localStorageHistoryArray.pop();
+	},
 	pushEvent: function(event) {
 		var historyArray = localStorage.getItem('historyArray') ?
 			JSON.parse(localStorage.getItem('historyArray')) : [];
 		historyArray.push(event);
 		localStorage.setItem('historyArray', JSON.stringify(historyArray));
+	},
+	clearHistory: function() {
+		localStorage.clear();
 	},
 };
 
@@ -52,6 +59,7 @@ AFRAME.registerReducer('app', {
 		activeModel: {},
 		activeThreeSixty: {},
 		activeScene: {}
+		history: localStorageHistoryPlugin,
 	},
 
 	handlers: {
