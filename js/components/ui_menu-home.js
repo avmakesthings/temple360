@@ -2,6 +2,8 @@
 MENU_Home : menu component for home scene
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
+
+
 AFRAME.registerComponent('ui-menu-home', {
 	schema: {
 	},
