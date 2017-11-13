@@ -58,7 +58,7 @@ AFRAME.registerReducer('app', {
 		activeDate: mainData.models["2016-11-01"], //this should just be a date string, not an object bc dates can be from 360's and models
 		activeModel: {},
 		activeThreeSixty: {},
-		activeScene: {}
+		activeScene: {},
 		history: localStorageHistoryPlugin,
 	},
 
