@@ -55,7 +55,7 @@ AFRAME.registerReducer('app', {
 		models: mainData.models,
 		threeSixtyImages: mainData.threeSixtyImages,
 		activeLocation: mainData.locations["origin"],
-		activeDate: mainData.models["2016-11-01"], //this should just be a date string, not an object bc dates can be from 360's and models
+		activeDate: "2017-08-15",
 		activeModel: {},
 		activeThreeSixty: {},
 		activeScene: {},
@@ -152,7 +152,7 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveDate', {
-			activeDate: mainData.models["2016-11-01"]
+			activeDate: "2017-08-15"
 		});
 
 		AFRAME.scenes[0].emit('changeActiveThreeSixty', {
