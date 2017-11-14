@@ -56,11 +56,13 @@ AFRAME.registerComponent('ui-menu-model', {
 			columns: 3,
 			reverse:true
 		});                                                       
-
+		layout.setAttribute('id','model-menu-container');
 		//add timeline component
 		var timeline = document.createElement('a-entity');
+		timeline.setAttribute('id','timeline');
 		timeline.setAttribute('ui-panel-timeline',{
 			timelineData: JSON.stringify(mainData.models),
+			timeScales: ['year','month'],
 			componentTitle:'timeline',
 			active:true
 		});
