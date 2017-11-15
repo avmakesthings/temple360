@@ -26,22 +26,22 @@ function getState(event, key){
 	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
 }
 
-var localStorageHistoryPlugin = {
+var sessionStorageHistoryPlugin = {
 	getHistoryArray: function() {
-		return JSON.parse(localStorage.getItem('historyArray'));
+		return JSON.parse(sessionStorage.getItem('historyArray'));
 	},
 	peekLastEvent: function() {
-		localStorageHistoryArray = JSON.parse(localStorage.getItem('historyArray')) || [];
-		return localStorageHistoryArray.pop();
+		sessionStorageHistoryArray = JSON.parse(sessionStorage.getItem('historyArray')) || [];
+		return sessionStorageHistoryArray.pop();
 	},
 	pushEvent: function(event) {
-		var historyArray = localStorage.getItem('historyArray') ?
-			JSON.parse(localStorage.getItem('historyArray')) : [];
+		var historyArray = sessionStorage.getItem('historyArray') ?
+			JSON.parse(sessionStorage.getItem('historyArray')) : [];
 		historyArray.push(event);
-		localStorage.setItem('historyArray', JSON.stringify(historyArray));
+		sessionStorage.setItem('historyArray', JSON.stringify(historyArray));
 	},
 	clearHistory: function() {
-		localStorage.clear();
+		sessionStorage.clear();
 	},
 };
 
