@@ -59,7 +59,7 @@ AFRAME.registerReducer('app', {
 		activeModel: {},
 		activeThreeSixty: {},
 		activeScene: {},
-		history: localStorageHistoryPlugin,
+		history: sessionStorageHistoryPlugin,
 	},
 
 	handlers: {
