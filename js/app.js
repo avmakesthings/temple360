@@ -10,6 +10,7 @@ require('aframe-text-geometry-component');
 require('aframe-template-component');
 require('aframe-layout-component');
 require('aframe-animation-component');
+require('aframe-dev-components');
 
 require('./globals.js');
 require('./materials.js');
