@@ -1,3 +1,9 @@
+
+
+
+
+
+
 /* * * + + + + + + + + + + + + + + + + + + + + 
 PANEL_Timeline : 2 level timeline component
 Uses configuration object and parsed dates to create hierarchical indicator
@@ -40,7 +46,6 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		timelineContainer.setAttribute('id', 'timelineContainer');
 		//set layout basepoint to top left
 		timelineContainer.setAttribute('position',basePosition);
-		timelineContainer.setAttribute('bb');
 		el.appendChild(timelineContainer);
 
 		//create panel heading -- can move into sub-compoennt
