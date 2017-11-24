@@ -80,13 +80,13 @@ function getTextBBox(object3D, depth=10){
 
     var min = new THREE.Vector3(
         bbox.min.x*scale.x, 
-        bbox.min.y*scale.y,  
+        bbox.max.y*scale.y,   
         0*scale.z
     )
 
     var max = new THREE.Vector3(
         bbox.max.x*scale.x, 
-        bbox.max.y*scale.y, 
+        bbox.min.y*scale.y,
         depth*scale.z
     )
     
@@ -136,6 +136,38 @@ function getBBox(object3D){
     }
 }
 
+//gets length of a bounding box in a specifed direction
+function getBBoxDimInDir(dir,bbox){
+
+    var min = bbox.min
+    var max = bbox.max
+    var dim
+
+    switch(dir){
+        case 'x':
+            dim = max.x - min.x
+            return dim
+        case 'y':
+            dim = max.y - min.y
+            return dim
+        case 'z':
+            dim = max.z - min.z
+            return dim
+    }
+}
+
+//computes a total bounding box based on child bounding boxes
+function getTotalBBoxFromMeshArr(childMeshArray){
+    
+    var concatBBox = new THREE.Box3()
+    childMeshArray.forEach(function(childMesh){
+        var thisBBox = getBBox(childMesh)
+        concatBBox.union(thisBBox)
+    })
+    return concatBBox
+} 
+
+
 // Groups do not generate valid bboxes, 
 // so it is sometimes convenient to flatten 
 // them out of the hierarchy
@@ -168,17 +200,23 @@ AFRAME.registerComponent('ui-panel-container', {
         panelType:{default:'scale-to-fit'},
         reflowPlane: {default: 'xy'},
         reverse: {default: true},
+        wireframe: {default: true},
         panelID: {default:''},
 		panelTitle: {default:''},
 		panelHeight: {default:1.0},
 		panelWidth:{default:0.5},
         panelDepth:{default:0.2},
-        wireframe: {default: true}
+        panelMargin: {default:0.1}
+        //add preview bbox toggle - default false
         //basePosition? 
         //add more support for colors later
 	},
 	init: function (){
         
+        if(data.panelID){
+            this.el.setAttribute('id', data.panelID);   
+        }
+     
         setTimeout(()=>{
             this.reflow();
             this.createContainerGeo()
@@ -191,51 +229,51 @@ AFRAME.registerComponent('ui-panel-container', {
     reflow: function(){
         const children = this.el.children
         const reflowDir = reflowPlaneToDir[this.data.reflowPlane]
-        const itemSize = 0.2 // <- TODO: be smart about spacing based on item size
 
-        for (var i = 0; i < children.length; i++){
-            const nextPos = {}
-            let nextDim = i * itemSize
+        childMeshArrays = getChildMeshArrays(this.el.object3D)
+        
+        let totalLengthInDir = 0
+        let objectSize 
+        let i = 0
+        
+        //TODO- support different transform positions. currently text transform is
+        //located bottom, back left while geo transforms are centered
+        childMeshArrays.forEach((childMeshArray, i)=>{
+
+            var bbox = getTotalBBoxFromMeshArr(childMeshArray)
+            objectSize = getBBoxDimInDir(reflowDir,bbox)
+            totalLengthInDir += objectSize 
+            let nextPos = new THREE.Vector3(0,0,0)
+
             if(this.data.reverse) { 
-                nextDim = nextDim * -1
+                nextPos[reflowDir] = totalLengthInDir * -1
+            }else{
+                nextPos[reflowDir] = totalLengthInDir
             }
-            nextPos[reflowDir] = nextDim 
             children[i].setAttribute("position", nextPos)
-        } 
-
-        this.resizeContainerGeo();
+            totalLengthInDir += this.data.panelMargin
+        }) 
     },
     createContainerGeo: function(){
         const el = this.el
         const data = this.data
 
-        childMeshArrays = getChildMeshArrays(this.el.object3D)
+        switch(data.panelType){
+            case 'fixed':
+                if(data.wireframe){
+                    globals.createWireframeBox(el,data.panelHeight,data.panelWidth,data.panelDepth);
+                    globals.createMeshPlaneFill(el,data.panelHeight, data.panelWidth, data.panelDepth);
+                }
+                break
+            case 'scale-to-fit':
+                //get the concat height, width & depth of all child bounding boxes 
+                
+                //create container geo based on these dimensions 
 
-        childMeshArrays.forEach((childMeshArray)=>{
-            childMeshArray.forEach((childMesh)=>{
-                var bbox = getBBox(childMesh)
-            })
-        })
 
-
-        // OR....
-        // if(data.wireframe){
-        //     globals.createWireframeBox(el,data.panelHeight,data.panelWidth,data.panelDepth);
-        //     globals.createMeshPlaneFill(el,data.panelHeight, data.panelWidth, data.panelDepth);
-        // }
-
-		// var container = document.createElement('a-entity');
-		// container.setAttribute('id', data.panelID);
-		// el.appendChild(container); 
-    },
-    resizeContainerGeo: function(){
-        //adjusts dimensions of container based on reflow
-        //updates the panel data -height, width, depth values
-
-        // things to consider ... max container h,w,d
-        // margins?
-    },
-    getChildHeight: function(){
+                break
+        }
 
     }
+
 })

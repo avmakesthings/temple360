@@ -38,8 +38,8 @@ AFRAME.registerComponent('ui-menu-model', {
 		});
 
 		//create menu container geometry 
-		// globals.createWireframeBox(el,data.menuHeight, data.menuWidth, data.menuDepth);
-		// globals.createMeshPlaneFill(el,data.menuHeight, data.menuWidth, data.menuDepth);
+		globals.createWireframeBox(el,data.menuHeight, data.menuWidth, data.menuDepth);
+		globals.createMeshPlaneFill(el,data.menuHeight, data.menuWidth, data.menuDepth);
 
 		//add layout component & set base position 
 		var layout = document.createElement('a-entity');
@@ -92,14 +92,14 @@ AFRAME.registerComponent('ui-menu-model', {
 				anchor: 'left',
 				baseline: 'bottom'
 			})
-			if(itemText === "baz"){
-				item.setAttribute('geometry',{
-					primitive: 'box',
-					width: 0.5,
-					height: 0.3,
-					depth: 0.1
-				})
-			}
+			// if(itemText === "baz"){
+			// 	item.setAttribute('geometry',{
+			// 		primitive: 'box',
+			// 		width: 0.5,
+			// 		height: 0.3,
+			// 		depth: 0.1
+			// 	})
+			// }
 			container.appendChild(item);
 		})
 
