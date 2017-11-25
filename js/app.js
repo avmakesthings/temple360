@@ -27,6 +27,24 @@ function getState(event, key){
 	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
 }
 
+var sessionStorageHistoryPlugin = {
+	getHistoryArray: function() {
+		return JSON.parse(sessionStorage.getItem('historyArray'));
+	},
+	peekLastEvent: function() {
+		sessionStorageHistoryArray = JSON.parse(sessionStorage.getItem('historyArray')) || [];
+		return sessionStorageHistoryArray.pop();
+	},
+	pushEvent: function(event) {
+		var historyArray = sessionStorage.getItem('historyArray') ?
+			JSON.parse(sessionStorage.getItem('historyArray')) : [];
+		historyArray.push(event);
+		sessionStorage.setItem('historyArray', JSON.stringify(historyArray));
+	},
+	clearHistory: function() {
+		sessionStorage.clear();
+	},
+};
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 State manager --
@@ -38,10 +56,11 @@ AFRAME.registerReducer('app', {
 		models: mainData.models,
 		threeSixtyImages: mainData.threeSixtyImages,
 		activeLocation: mainData.locations["origin"],
-		activeDate: mainData.models["2016-11-01"], //this should just be a date string, not an object bc dates can be from 360's and models
+		activeDate: "2017-08-15",
 		activeModel: {},
 		activeThreeSixty: {},
-		activeScene: {}
+		activeScene: {},
+		history: sessionStorageHistoryPlugin,
 	},
 
 	handlers: {
@@ -75,6 +94,7 @@ AFRAME.registerReducer('app', {
 			state.activeDate = activeDate;
 			console.log('activeDateChanged', activeDate)
 			AFRAME.scenes[0].emit('activeDateChanged', {activeDate});
+			this.initialState.history.pushEvent(action);
 			return state;
 		},  
 		  
@@ -83,6 +103,7 @@ AFRAME.registerReducer('app', {
 			state.activeLocation = activeLocation;
 			console.log('activeLocationChanged', activeLocation)
 			AFRAME.scenes[0].emit('activeLocationChanged', {activeLocation});
+			this.initialState.history.pushEvent(action);
 			return state;
 		},  
 		changeActiveThreeSixty: function (state, action) {
@@ -90,6 +111,7 @@ AFRAME.registerReducer('app', {
 			state.activeThreeSixty = activeThreeSixty;
 			console.log('activeThreeSixty', activeThreeSixty)
 			AFRAME.scenes[0].emit('activeThreeSixtyChanged', {activeThreeSixty});
+			this.initialState.history.pushEvent(action);
 			return state;
 		},  
 		changeActiveModel: function (state, action) {
@@ -97,6 +119,7 @@ AFRAME.registerReducer('app', {
 			state.activeModel = activeModel;
 			console.log('activeModelChanged', activeModel)
 			AFRAME.scenes[0].emit('activeModelChanged', {activeModel});
+			this.initialState.history.pushEvent(action);
 			return state;
 		},  
 		changeActiveScene: function (state, action) {
@@ -104,6 +127,7 @@ AFRAME.registerReducer('app', {
 			state.activeScene = activeScene;
 			console.log('activeSceneChanged', activeScene)
 			AFRAME.scenes[0].emit('activeSceneChanged', {activeScene});
+			this.initialState.history.pushEvent(action);
 			return state;
 		},  
 	},
@@ -129,7 +153,7 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveDate', {
-			activeDate: mainData.models["2016-11-01"]
+			activeDate: "2017-08-15"
 		});
 
 		AFRAME.scenes[0].emit('changeActiveThreeSixty', {

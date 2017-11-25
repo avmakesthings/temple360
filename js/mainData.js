@@ -242,9 +242,21 @@ module.exports = {
     "threeSixtyImages": {    
         "2017-08-15": [
             {
-                "title": "360-test-1",
-                "description": "test6",
+                "title": "360-test-1-a",
+                "description": "test6a",
                 "location": "origin",
+                "source": "somesorce.jpg"
+            },
+            {
+                "title": "360-test-1-b",
+                "description": "test6b",
+                "location": "interiorSouth",
+                "source": "somesorce.jpg"
+            },
+            {
+                "title": "360-test-1-c",
+                "description": "test6c",
+                "location": "interiorEast",
                 "source": "somesorce.jpg"
             }
         ],
