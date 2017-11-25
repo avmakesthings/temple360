@@ -54,7 +54,8 @@ window.globals = window.globals || {
 		var geo = new THREE.EdgesGeometry( geometry );
 		var mat = this.wireframeLineMaterial;
 		var wireframe = new THREE.LineSegments( geo, mat );
-		el.object3D.add(wireframe);
+        el.object3D.add(wireframe);
+        return wireframe
     },
     //a function create a planar fill for panels and buttons, can maybe work into wireframe box?
     createMeshPlaneFill: function(el,height,width, depth){
@@ -62,7 +63,8 @@ window.globals = window.globals || {
 		var mesh = new THREE.Mesh(plane, this.transAmberMaterial);
 		mesh.position.z = -(depth/2);
 		mesh.updateMatrix();
-		el.object3D.add(mesh);
+        el.object3D.add(mesh);
+        return mesh
     }
 
 };
