@@ -41,7 +41,12 @@ const reflowPlaneToDir = {
   7: max
   
 */
-function previewBBox(parentEl, bbox){
+function previewBBox(parentObject3D, bbox){
+
+    if(!parentObject3D.isObject3D || !bbox.isBox3){
+        throw new Error("Expected Object3D & Box3 for previewBBox")
+    }
+
     var material = new THREE.LineBasicMaterial({ 
         color: 0xf44295,
         linewidth: 2
@@ -69,7 +74,7 @@ function previewBBox(parentEl, bbox){
     })
 
     var line = new THREE.Line(geometry, material);
-    parentEl.add(line)
+    parentObject3D.add(line)
 }
 
 // Note: Depth is an arbitrary parameter, since text is 2D
@@ -120,7 +125,6 @@ function getDefaultBBox(object3D){
 }
 
 
-
 function getBBox(object3D){
     var bbox;
 
@@ -137,6 +141,7 @@ function getBBox(object3D){
 }
 
 //gets length of a bounding box in a specifed direction
+//bc .getSize() wasn't working? 
 function getBBoxDimInDir(dir,bbox){
 
     var min = bbox.min
@@ -166,6 +171,50 @@ function getTotalBBoxFromMeshArr(childMeshArray){
     })
     return concatBBox
 } 
+
+
+//horizontally align a bounding box
+function alignBBoxHorizontal(bbox,alignment,dir){
+    
+    var offset
+    var vecTranslate
+
+    switch(dir){
+        case 'x':
+            offset = (bbox.getSize().x)/2
+            vecTranslate = new THREE.Vector3(offset,0,0)
+            break
+        case 'z':
+            offset = (bbox.getSize().z)/2
+            vecTranslate = new THREE.Vector3(0,0,offset)            
+            break
+    }
+    switch(alignment){
+        case 'left':
+            bbox.translate(vecTranslate)
+            return bbox
+        case 'right':
+            bbox.translate(-1*vecTranslate)
+            return bbox
+    }
+}
+
+//vertically align a bounding box
+// function alignBBoxVertical(bbox,alignment,dir){
+    
+//     var offset = (bbox.getSize().y)/2
+//     var vecTranslate =new THREE.Vector3(0,offset,0)
+
+//     switch(alignment){
+//         case 'top':
+//             bbox.translate(vecTranslate)
+//             return bbox
+//         case 'bottom':
+//             bbox.translate(-1*vecTranslate)
+//             return bbox
+//     }
+// }
+
 
 
 // Groups do not generate valid bboxes, 
@@ -206,10 +255,11 @@ AFRAME.registerComponent('ui-panel-container', {
 		panelHeight: {default:1.0},
 		panelWidth:{default:0.5},
         panelDepth:{default:0.2},
-        panelMargin: {default:0.1}
-        //add preview bbox toggle - default false
-        //basePosition? 
-        //add more support for colors later
+        panelMargin: {default:0.1},
+        boundingBoxOn: {default: true},
+        verticalAlign: {default: 'bottom'},
+        horizontalAlign: {default: 'left'}
+        //add more support for themes later
 	},
 	init: function (){
         
@@ -229,20 +279,20 @@ AFRAME.registerComponent('ui-panel-container', {
     reflow: function(){
         const children = this.el.children
         const reflowDir = reflowPlaneToDir[this.data.reflowPlane]
-
-        childMeshArrays = getChildMeshArrays(this.el.object3D)
-        
         let totalLengthInDir = 0
-        let objectSize 
         let i = 0
-        
+        let childBBoxes = []
+        let transformedChildBBoxes = []
+        childMeshArrays = getChildMeshArrays(this.el.object3D)
+
         //TODO- support different transform positions. currently text transform is
         //located bottom, back left while geo transforms are centered
         childMeshArrays.forEach((childMeshArray, i)=>{
 
-            var bbox = getTotalBBoxFromMeshArr(childMeshArray)
-            objectSize = getBBoxDimInDir(reflowDir,bbox)
-            totalLengthInDir += objectSize 
+            let bbox = getTotalBBoxFromMeshArr(childMeshArray)
+            let boxSize = bbox.getSize()
+
+            totalLengthInDir += boxSize[reflowDir] 
             let nextPos = new THREE.Vector3(0,0,0)
 
             if(this.data.reverse) { 
@@ -252,7 +302,22 @@ AFRAME.registerComponent('ui-panel-container', {
             }
             children[i].setAttribute("position", nextPos)
             totalLengthInDir += this.data.panelMargin
+            childBBoxes.push(bbox)
+            
+            let transformedBBox = new THREE.Box3().copy(bbox)
+            transformedBBox.translate(childMeshArray[0].parent.position)
+            transformedChildBBoxes.push(transformedBBox)
         }) 
+
+        let concatBBox = new THREE.Box3()
+        transformedChildBBoxes.forEach(function(thisBBox){
+            return concatBBox.union(thisBBox)
+        })
+        
+        concatBBox.expandByScalar(0.01)
+        previewBBox(this.el.object3D, concatBBox)
+
+
     },
     createContainerGeo: function(){
         const el = this.el
@@ -266,9 +331,6 @@ AFRAME.registerComponent('ui-panel-container', {
                 }
                 break
             case 'scale-to-fit':
-                //get the concat height, width & depth of all child bounding boxes 
-                
-                //create container geo based on these dimensions 
 
 
                 break
