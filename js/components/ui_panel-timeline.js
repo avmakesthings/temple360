@@ -35,19 +35,19 @@ function formatDateSegment(segment,timeScale){
 	var formatDate;
 	switch(timeScale){
 		case "year":
-		formatDate=moment(segment,'YY').format('YYYY');
+		formatDate=moment(segment,'YYYY').format('YYYY');
 		break;
 	case "month":
-		formatDate=moment(segment,'MM').format('MMMM');
+		formatDate=moment(segment+1,'MM').format('MMMM');
 		break;
 	case 'day':
-		formatDate=moment(segment,'DD').format('DDDD');
+		formatDate=moment(segment+1,'DD').format('DDDD');
 		break;
 	case 'hour':
-		formatDate=moment(segment,'HH').format('HHHH');
+		formatDate=moment(segment+1,'HH').format('HHHH');
 		break;
 	case 'minute':
-		formatDate=moment(segment,'mm').format('MMM');
+		formatDate=moment(segment+1,'mm').format('MMM');
 		break;
 	default :
 		console.log('Formatting date segment did not work')
@@ -111,40 +111,43 @@ AFRAME.registerComponent('ui-panel-timeline', {
 
 		return dateTree
 	},
-	/*
-		renderDateTree(2016)
-			renderDateTree(2016-01)
-				renderDateTree(2016-01-18)
-					- add all children for days
-					return container/children
-				
-				- add all children for months
-				return container/children
-			
-			...
-
-			element 
-				el -2016
-					09
-					10
-				el - 2017
-
-
-	*/
-	renderDateTree: function (dateTree, key="root", depth=0){
+	renderDateTree: function (dateTree, depth=0){
 		
 		const isLeafTimescale = depth === this.data.timeScales.length
 		var thisEl = document.createElement('a-entity')
-		thisEl.setAttribute('id', key)
-
+		var containerEl = document.createElement('a-entity')
+		
 		if(isLeafTimescale){
 			return thisEl
 		}
 
-		Object.keys(dateTree).forEach((childKey)=>{
-			var childEl = this.renderDateTree(dateTree[childKey], childKey, depth+1)
-			thisEl.appendChild(childEl)
+		containerEl.setAttribute('ui-panel-container',{
+			panelType:'scale-to-fit'
 		})
+		thisEl.appendChild(containerEl)
+
+		Object.keys(dateTree).forEach((childKey)=>{
+			var childEl = this.renderDateTree(dateTree[childKey], depth+1)
+
+			childEl.setAttribute('id', childKey)
+			var timeScale = this.data.timeScales[depth]
+			var dateVal = getTimescaleFromDate(childKey, timeScale)
+			childEl.setAttribute('text', {
+				value: formatDateSegment(dateVal,timeScale),
+				anchor: 'left',
+				baseline: 'bottom'
+			})
+			// childEl.flushToDOM()
+
+			containerEl.appendChild(childEl)
+		})
+
+		// FIXME: Temporary for debugging bbox issues with nested layouts
+		if(depth == 1){
+			setTimeout(()=>{
+				containerEl.components["ui-panel-container"].previewBBox()
+			}, 200)	
+		}
 
 		return thisEl
 	}

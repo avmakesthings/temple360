@@ -73,8 +73,12 @@ function previewBBox(parentObject3D, bbox){
         geometry.vertices.push(v[i])
     })
 
+    var group = document.createElement('a-entity')
+    parentObject3D.el.appendChild(group)
+
     var line = new THREE.Line(geometry, material);
-    parentObject3D.add(line)
+    
+    group.object3D.add(line)
 }
 
 // Note: Depth is an arbitrary parameter, since text is 2D
@@ -128,14 +132,26 @@ function getDefaultBBox(object3D){
 function getBBox(object3D){
     var bbox;
 
+    if(!object3D.geometry){
+        // TODO: verify that it is a group..
+        // TODO: Make sure it has a ui-panel-container
+        return object3D.el.components["ui-panel-container"].getBBox()
+    }
+
+    if(object3D.constructor.name == "Line"){
+        bbox = new THREE.Box3()
+        return bbox
+    }
+
     switch (object3D.geometry.constructor.name){
         case "TextGeometry":
             bbox = getTextBBox(object3D)
-            previewBBox(object3D.parent, bbox)
+            // previewBBox(object3D.parent, bbox)
             return bbox
+            break;
         default:
             bbox = getDefaultBBox(object3D)
-            previewBBox(object3D.parent, bbox)
+            // previewBBox(object3D.parent, bbox)
             return bbox
     }
 }
@@ -174,30 +190,30 @@ function getTotalBBoxFromMeshArr(childMeshArray){
 
 
 //horizontally align a bounding box
-function alignBBoxHorizontal(bbox,alignment,dir){
+// function alignBBoxHorizontal(bbox,alignment,dir){
     
-    var offset
-    var vecTranslate
+//     var offset
+//     var vecTranslate
 
-    switch(dir){
-        case 'x':
-            offset = (bbox.getSize().x)/2
-            vecTranslate = new THREE.Vector3(offset,0,0)
-            break
-        case 'z':
-            offset = (bbox.getSize().z)/2
-            vecTranslate = new THREE.Vector3(0,0,offset)            
-            break
-    }
-    switch(alignment){
-        case 'left':
-            bbox.translate(vecTranslate)
-            return bbox
-        case 'right':
-            bbox.translate(-1*vecTranslate)
-            return bbox
-    }
-}
+//     switch(dir){
+//         case 'x':
+//             offset = (bbox.getSize().x)/2
+//             vecTranslate = new THREE.Vector3(offset,0,0)
+//             break
+//         case 'z':
+//             offset = (bbox.getSize().z)/2
+//             vecTranslate = new THREE.Vector3(0,0,offset)            
+//             break
+//     }
+//     switch(alignment){
+//         case 'left':
+//             bbox.translate(vecTranslate)
+//             return bbox
+//         case 'right':
+//             bbox.translate(-1*vecTranslate)
+//             return bbox
+//     }
+// }
 
 //vertically align a bounding box
 // function alignBBoxVertical(bbox,alignment,dir){
@@ -224,8 +240,8 @@ function skipGroups(object3D){
     // Special provisions needed 
     // for when children are containers?:
     // isContainer = !object3D.el.hasAttribute('ui-panel-container') // TODO: Test if this is right...
-    isContainer = false
-    if(object3D.type == "Group" && object3D.children.length > 0 && !isContainer){
+
+    if(object3D.type == "Group"  && object3D.children.length > 0){
         return object3D.children.map((child)=>{
             return skipGroups(child)
         }).reduce(function(prev, curr) {
@@ -277,6 +293,7 @@ AFRAME.registerComponent('ui-panel-container', {
         });
     },
     reflow: function(){
+        console.log("reflow!!")
         const children = this.el.children
         const reflowDir = reflowPlaneToDir[this.data.reflowPlane]
         let totalLengthInDir = 0
@@ -315,9 +332,22 @@ AFRAME.registerComponent('ui-panel-container', {
         })
         
         concatBBox.expandByScalar(0.01)
-        previewBBox(this.el.object3D, concatBBox)
-
-
+        this.setBBox(concatBBox)
+        // previewBBox(this.el.object3D, concatBBox)
+    },
+    setBBox: function(bbox){
+        this.bbox = bbox
+    },
+    getBBox: function(){
+        if(this.bbox){
+            return this.bbox
+        } else {
+            console.log("default BBOX!")
+            return new THREE.Box3()
+        }
+    },
+    previewBBox: function(){
+        previewBBox(this.el.object3D, this.getBBox())
     },
     createContainerGeo: function(){
         const el = this.el
@@ -337,5 +367,6 @@ AFRAME.registerComponent('ui-panel-container', {
         }
 
     }
+    
 
 })
