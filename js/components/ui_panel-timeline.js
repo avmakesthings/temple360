@@ -1,8 +1,11 @@
 
-/* * * + + + + + + + + + + + + + + + + + + + + 
-PANEL_Timeline : 2 level timeline component
-Uses configuration object and parsed dates to create hierarchical indicator
-+ + + + + + + + + + + + + + + + + + + + * * */ 
+/**
+ * @author AnastasiaVictor/ http://github.com/avmakesthings
+ * @author JohnFaichney / http://github.com/johnfaichney
+ * 
+ * A-frame Nested Timeline Component: 
+ */
+
 var moment = require('moment');
 var isEqual = require('lodash.isequal');
 
@@ -139,7 +142,21 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		this.dateTree = this.timelineDataToDateTree(data.timelineData, data.timeScales)
 
 		var datesEl = this.renderDateTree(this.dateTree)
+
+		var totalHeight = datesEl.getAttribute('height')
+
+		//create container geometry 
+		globals.createWireframeBox(el,totalHeight, 0.3, 0.2);
+		globals.createMeshPlaneFill(el,totalHeight, 0.3, 0.2 );
+
+		datesEl.setAttribute('position', {
+			x:-0.13,
+			y:0.35,
+			z:0.01
+		});
+
 		el.appendChild(datesEl)
+
 	},
 	timelineDataToDateTree: function(timelineData, timeScales){
 		var dateTree = {
