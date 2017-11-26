@@ -74,7 +74,8 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		var data = this.data;
 
 		var dateTree = this.timelineDataToDateTree(data.timelineData, data.timeScales)
-		this.renderDateTree(dateTree)
+		var datesEl = this.renderDateTree(dateTree)
+		el.appendChild(datesEl)
 	},
 	timelineDataToDateTree: function(timelineData, timeScales){
 		var dateTree = {}
@@ -121,10 +122,33 @@ AFRAME.registerComponent('ui-panel-timeline', {
 				return container/children
 			
 			...
+
+			element 
+				el -2016
+					09
+					10
+				el - 2017
+
+
 	*/
-	renderDateTree: function(dateTree){
+	renderDateTree: function (dateTree, key="root", depth=0){
 		
+		const isLeafTimescale = depth === this.data.timeScales.length
+		var thisEl = document.createElement('a-entity')
+		thisEl.setAttribute('id', key)
+
+		if(isLeafTimescale){
+			return thisEl
+		}
+
+		Object.keys(dateTree).forEach((childKey)=>{
+			var childEl = this.renderDateTree(dateTree[childKey], childKey, depth+1)
+			thisEl.appendChild(childEl)
+		})
+
+		return thisEl
 	}
+
 });
 
 
