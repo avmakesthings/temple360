@@ -8,7 +8,6 @@ and dictates what UI components should be shown
 
 require('./globals.js')
 require('./components/ui_button.js');
-require('./components/ui_panel-container.js');
 require('./components/ui_panel-heading.js');
 require('./components/ui_panel-timeline.js');
 require('./components/ui_panel-preview.js');
