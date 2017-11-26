@@ -135,7 +135,13 @@ function getBBox(object3D){
     if(!object3D.geometry){
         // TODO: verify that it is a group..
         // TODO: Make sure it has a ui-panel-container
-        return object3D.el.components["ui-panel-container"].getBBox()
+        if( object3D.el.components["ui-panel-container"]){
+            return object3D.el.components["ui-panel-container"].getBBox()
+        } else {
+            // FIXME: Huge hack to not error out on 
+            // groups with unknown consequences
+            return new THREE.Box3()
+        }
     }
 
     if(object3D.constructor.name == "Line"){
@@ -239,9 +245,9 @@ function getTotalBBoxFromMeshArr(childMeshArray){
 function skipGroups(object3D){
     // Special provisions needed 
     // for when children are containers?:
-    // isContainer = !object3D.el.hasAttribute('ui-panel-container') // TODO: Test if this is right...
+    isNotContainer = !object3D.el.hasAttribute('ui-panel-container') // TODO: Test if this is right...
 
-    if(object3D.type == "Group"  && object3D.children.length > 0){
+    if(object3D.type == "Group"  && object3D.children.length > 0 && isNotContainer){
         return object3D.children.map((child)=>{
             return skipGroups(child)
         }).reduce(function(prev, curr) {
@@ -271,7 +277,7 @@ AFRAME.registerComponent('ui-panel-container', {
 		panelHeight: {default:1.0},
 		panelWidth:{default:0.5},
         panelDepth:{default:0.2},
-        panelMargin: {default:0.1},
+        panelMargin: {default:0.0},
         boundingBoxOn: {default: true},
         verticalAlign: {default: 'bottom'},
         horizontalAlign: {default: 'left'}
@@ -307,6 +313,7 @@ AFRAME.registerComponent('ui-panel-container', {
         childMeshArrays.forEach((childMeshArray, i)=>{
 
             let bbox = getTotalBBoxFromMeshArr(childMeshArray)
+
             let boxSize = bbox.getSize()
 
             totalLengthInDir += boxSize[reflowDir] 
@@ -323,6 +330,7 @@ AFRAME.registerComponent('ui-panel-container', {
             
             let transformedBBox = new THREE.Box3().copy(bbox)
             transformedBBox.translate(childMeshArray[0].parent.position)
+            
             transformedChildBBoxes.push(transformedBBox)
         }) 
 

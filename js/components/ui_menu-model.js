@@ -14,7 +14,7 @@ AFRAME.registerComponent('ui-menu-model', {
 		menuHeight: {default: 1.2},
 		menuWidth: {default: 2.5},
 		menuDepth: {default: 0.3},
-		margin: {default: 0.},
+		margin: {default: 0.0},
 		active: {default: false}
 	},
 	init: function (){
@@ -49,13 +49,13 @@ AFRAME.registerComponent('ui-menu-model', {
 			y:0,
 			z:0
 		});
-		layout.setAttribute('layout', {
-			type:'box',
-			margin: data.margin,
-			plane:'xy',
-			columns: 3,
-			reverse:true
-		});                                                       
+		// layout.setAttribute('layout', {
+		// 	type:'box',
+		// 	margin: data.margin,
+		// 	plane:'xy',
+		// 	columns: 3,
+		// 	reverse:true
+		// });                                                       
 		layout.setAttribute('id','model-menu-container');
 
 		//add timeline component
@@ -75,6 +75,12 @@ AFRAME.registerComponent('ui-menu-model', {
 		// 	componentTitle:'timeline',
 		// 	active:true
 		// });
+
+		timeline.setAttribute('position', {
+			x:-0.25,
+			y:0.45,
+			z:0.0
+		});
 
 		layout.appendChild(timeline);
 
