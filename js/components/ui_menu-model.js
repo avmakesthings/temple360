@@ -14,7 +14,7 @@ AFRAME.registerComponent('ui-menu-model', {
 		menuHeight: {default: 1.2},
 		menuWidth: {default: 2.5},
 		menuDepth: {default: 0.3},
-		margin: {default: 0.},
+		margin: {default: 0.0},
 		active: {default: false}
 	},
 	init: function (){
@@ -59,49 +59,63 @@ AFRAME.registerComponent('ui-menu-model', {
 		layout.setAttribute('id','model-menu-container');
 
 		//add timeline component
-		// var timeline = document.createElement('a-entity');
-		// timeline.setAttribute('id','timeline');
+		var timeline = document.createElement('a-entity');
+		timeline.setAttribute('id','timeline');
+
+		timeline.setAttribute('ui-panel-timeline',{
+			timelineData: JSON.stringify(mainData.models),
+			timeScales: ['year','month'],
+			componentTitle:'timeline',
+			active:true
+		});
+
 		// timeline.setAttribute('ui-panel-timeline',{
-		// 	timelineData: JSON.stringify(mainData.models),
-		// 	timeScales: ['year','month'],
+		// 	timelineData: JSON.stringify(mainData.threeSixtyImages),
+		// 	timeScales: ['month','day'],
 		// 	componentTitle:'timeline',
 		// 	active:true
 		// });
-		// layout.appendChild(timeline);
+
+		timeline.setAttribute('position', {
+			x:-0.25,
+			y:0.45,
+			z:0.0
+		});
+
+		layout.appendChild(timeline);
 
 		// Test container component - eventually, this would be instantiated within timeline
-		var container = document.createElement('a-entity');
-		container.setAttribute('id','ui-panel-container');
-		container.setAttribute('ui-panel-container', {
-			panelType: 'scale-to-fit'
-		});
+		// var container = document.createElement('a-entity');
+		// container.setAttribute('ui-panel-container', {
+		// 	panelType: 'scale-to-fit'
+		// });
 		// container.setAttribute('geometry',{
 		// 	primitive: 'box',
 		// 	width: 0.5,
 		// 	height: 0.3,
 		// 	depth: 0.1
 		// })
-		layout.appendChild(container);
+		// layout.appendChild(container);
 
-		var itemTextArr = ["foo is a long string", "bar", "baz", "foo2", "foo3"]
-		itemTextArr.forEach((itemText)=>{
-			var item = document.createElement('a-entity');
-			item.setAttribute('id',itemText);
-			item.setAttribute('text', {
-				value: itemText,
-				anchor: 'left',
-				baseline: 'bottom'
-			})
-			// if(itemText === "baz"){
-			// 	item.setAttribute('geometry',{
-			// 		primitive: 'box',
-			// 		width: 0.5,
-			// 		height: 0.3,
-			// 		depth: 0.1
-			// 	})
-			// }
-			container.appendChild(item);
-		})
+		// var itemTextArr = ["foo is a long string", "bar", "baz", "foo2", "foo3"]
+		// itemTextArr.forEach((itemText)=>{
+		// 	var item = document.createElement('a-entity');
+		// 	item.setAttribute('id',itemText);
+		// 	item.setAttribute('text', {
+		// 		value: itemText,
+		// 		anchor: 'left',
+		// 		baseline: 'bottom'
+		// 	})
+		// 	// if(itemText === "baz"){
+		// 	// 	item.setAttribute('geometry',{
+		// 	// 		primitive: 'box',
+		// 	// 		width: 0.5,
+		// 	// 		height: 0.3,
+		// 	// 		depth: 0.1
+		// 	// 	})
+		// 	// }
+		// 	container.appendChild(item);
+		// })
 
 
 		//add navigation buttons
