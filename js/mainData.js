@@ -210,27 +210,6 @@ module.exports = {
             "location": "origin",
             "source": "17-02-temple.gltf"
         },
-        "2017-05-01": 
-        {
-            "title": "Design iteration model",
-            "description": "test2",
-            "location": "origin",
-            "source": "somesorce.gltf"
-        },
-        "2017-06-01": 
-        {
-            "title": "Design iteration model",
-            "description": "test3",
-            "location": "origin",
-            "source": "somesorce.gltf"
-        },
-        "2017-07-01": 
-        {
-            "title": "Design iteration model",
-            "description": "test4",
-            "location": "origin",
-            "source": "somesorce.gltf"
-        },
         "2017-08-01": 
         {
             "title": "Design iteration model",
@@ -240,136 +219,68 @@ module.exports = {
         }
     },
     "threeSixtyImages": {    
-        "2017-08-15": [
-            {
-                "title": "360-test-1-a",
-                "description": "test6a",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            },
-            {
-                "title": "360-test-1-b",
-                "description": "test6b",
-                "location": "interiorSouth",
-                "source": "somesorce.jpg"
-            },
-            {
-                "title": "360-test-1-c",
-                "description": "test6c",
-                "location": "interiorEast",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-16": [
-            {
-                "title": "360-test-2",
-                "description": "test7",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-17": [
-            {
-                "title": "360-test-3",
-                "description": "test8",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
         "2017-08-18": [
             {
-                "title": "360-test-4",
-                "description": "test9",
+                "title": "image1",
+                "description": "test6a",
+                "location": "northEntry",
+                "source": "SAM_100_0004.jpg"
+            },
+            {
+                "title": "image2",
+                "description": "test6b",
                 "location": "origin",
-                "source": "somesorce.jpg"
-            }
+                "source": "SAM_100_0005.jpg"
+            },
+            {
+                "title": "image3",
+                "description": "test6c",
+                "location": "southCantilever",
+                "source": "SAM_100_0006.jpg"
+            },
+            {
+                "title": "image4",
+                "description": "test6c",
+                "location": "southGate",
+                "source": "SAM_100_0007.jpg"
+            }            
         ],
         "2017-08-19": [
             {
-                "title": "360-test-5",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-20": [
+                "title": "image5",
+                "description": "test7",
+                "location": "northCanteliver",
+                "source": "SAM_100_0009.jpg"
+            },
             {
-                "title": "360-test-6",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-21": [
+                "title": "image6",
+                "description": "test7",
+                "location": "northEntry",
+                "source": "SAM_100_0010.jpg"
+            },
             {
-                "title": "360-test-7",
-                "description": "Initial 3D model",
+                "title": "fdskjhs",
+                "description": "test7",
                 "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-22": [
+                "source": "SAM_100_0011.jpg"
+            },
             {
-                "title": "360-test-8",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-23": [
+                "title": "image8",
+                "description": "test7",
+                "location": "southCantilever",
+                "source": "SAM_100_0012.jpg"
+            },
             {
-                "title": "360-test-9",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-24": [
+                "title": "image9",
+                "description": "test7",
+                "location": "southGate",
+                "source": "SAM_100_0013.jpg"
+            },
             {
-                "title": "360-test-10",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-25": [
-            {
-                "title": "360-test-11",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-26": [
-            {
-                "title": "360-test-12",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-27": [
-            {
-                "title": "360-test-13",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-08-28": [
-            {
-                "title": "Design iteration model",
-                "description": "Initial 3D model",
-                "location": "main01",
-                "source": "somesorce.jpg"
-            }
-        ],
-        "2017-09-02": [
-            {
-                "title": "360-test-14",
-                "description": "Initial 3D model",
-                "location": "origin",
-                "source": "somesorce.jpg"
+                "title": "image10",
+                "description": "test7",
+                "location": "northGate",
+                "source": "SAM_100_0016.jpg"
             }
         ]
     }

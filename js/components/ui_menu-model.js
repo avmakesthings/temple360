@@ -1,12 +1,10 @@
-/* * * + + + + + + + + + + + + + + + + + + + + 
-MENU_Model : menu component for model scene
-has:
-panelTimeline
-panelInfo
-panelPreview
-panelNav
+/**
+ * @author AnastasiaVictor/ http://github.com/avmakesthings
+ * @author JohnFaichney / http://github.com/johnfaichney
+ * 
+ * A-frame Menu Component - Model Scene
+ */
 
-+ + + + + + + + + + + + + + + + + + + + * * */ 
 var mainData = require('./../mainData.js');
 
 AFRAME.registerComponent('ui-menu-model', {
@@ -50,7 +48,7 @@ AFRAME.registerComponent('ui-menu-model', {
 			z:0
 		});
 		// layout.setAttribute('layout', {
-		// 	type:'box',
+		// 	type:'line',
 		// 	margin: data.margin,
 		// 	plane:'xy',
 		// 	columns: 3,
@@ -58,7 +56,7 @@ AFRAME.registerComponent('ui-menu-model', {
 		// });                                                       
 		layout.setAttribute('id','model-menu-container');
 
-		//add timeline component
+		//add timeline panel component
 		var timeline = document.createElement('a-entity');
 		timeline.setAttribute('id','timeline');
 
@@ -69,57 +67,27 @@ AFRAME.registerComponent('ui-menu-model', {
 			active:true
 		});
 
+		layout.appendChild(timeline);
+
+
+		//add data panel component 
+
+
+		//add preview panel component
+
+
+		//add navigation panel component 
+
+
+
+    }
+});
+
+
+
 		// timeline.setAttribute('ui-panel-timeline',{
 		// 	timelineData: JSON.stringify(mainData.threeSixtyImages),
 		// 	timeScales: ['month','day'],
 		// 	componentTitle:'timeline',
 		// 	active:true
 		// });
-
-		timeline.setAttribute('position', {
-			x:-0.25,
-			y:0.45,
-			z:0.0
-		});
-
-		layout.appendChild(timeline);
-
-		// Test container component - eventually, this would be instantiated within timeline
-		// var container = document.createElement('a-entity');
-		// container.setAttribute('ui-panel-container', {
-		// 	panelType: 'scale-to-fit'
-		// });
-		// container.setAttribute('geometry',{
-		// 	primitive: 'box',
-		// 	width: 0.5,
-		// 	height: 0.3,
-		// 	depth: 0.1
-		// })
-		// layout.appendChild(container);
-
-		// var itemTextArr = ["foo is a long string", "bar", "baz", "foo2", "foo3"]
-		// itemTextArr.forEach((itemText)=>{
-		// 	var item = document.createElement('a-entity');
-		// 	item.setAttribute('id',itemText);
-		// 	item.setAttribute('text', {
-		// 		value: itemText,
-		// 		anchor: 'left',
-		// 		baseline: 'bottom'
-		// 	})
-		// 	// if(itemText === "baz"){
-		// 	// 	item.setAttribute('geometry',{
-		// 	// 		primitive: 'box',
-		// 	// 		width: 0.5,
-		// 	// 		height: 0.3,
-		// 	// 		depth: 0.1
-		// 	// 	})
-		// 	// }
-		// 	container.appendChild(item);
-		// })
-
-
-		//add navigation buttons
-
-
-    }
-});
