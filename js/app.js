@@ -26,8 +26,14 @@ var mainData = require('./mainData.js'); //Get JSON data
 var sceneEl = document.querySelector('a-scene'); //Scene element
 
 
-function getState(event, key){
-	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
+// TODO: Rename 'app' to 'appState' or 'state' in app.js
+// Move that reducer, the window events, & this helper to the same file
+// Import & use this helper wherever appState needs to be pulled
+// Require the rest into app.js - condense with the one in ui_markers
+function getState(key){
+    var sceneEl = document.querySelector('a-scene');
+    var appState = sceneEl.systems.state.state.app 
+    return appState[key]
 }
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
@@ -114,15 +120,12 @@ AFRAME.registerReducer('app', {
 			AFRAME.scenes[0].emit('activeLocationChanged', {activeLocation});
 			this.initialState.history.pushEvent(action);
 			return state;
-		},  
+		},
+
 		changeActiveThreeSixty: function (state, action) {
 			var activeThreeSixty = action.activeThreeSixty;
 			state.activeThreeSixty = activeThreeSixty;
-			console.log('activeThreeSixty', activeThreeSixty)
-
-			// TODO: Move this to a component w/ listener attached to the scene360 entity?
-			const sky = document.getElementById('scene360').children[0]
-			sky.setAttribute('src', `assets/${activeThreeSixty.source}`)
+			console.log('activeThreeSixtyChanged', activeThreeSixty)
 
 			AFRAME.scenes[0].emit('activeThreeSixtyChanged', {activeThreeSixty});
 			this.initialState.history.pushEvent(action);
@@ -198,6 +201,17 @@ window.addEventListener('activeModelChanged', function (event) {
 	}
 });
 
+window.addEventListener('acive', function (event) {
+	var thisModel = document.querySelector("#loaded-model");
+	var thisModelOpaque = document.querySelector("#loaded-model-opaque");
+	var nextModelPath = event.detail.activeModel;
+	console.log("about to change model");
+	if(nextModelPath){
+		thisModel.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+		thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+	}
+});
+
 
 
 
@@ -236,6 +250,16 @@ AFRAME.registerComponent('scene-manager', {
 				this.resetEnv('scene3DModel');
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene360);
+
+
+			// Set 'src' attribute of sky - this should really be on sky.onLoad...
+			setTimeout(()=>{
+				const activeThreeSixty = getState('activeThreeSixty')
+				const sky = document.getElementById('scene360').children[0]
+				sky.setAttribute('src', `assets/${activeThreeSixty.source}`)
+			}, 0)
+
+
 			this.setCameraPos(new THREE.Vector3(0,1.6,0))
 
 		}if(nextScene == 'scene3DModel'){

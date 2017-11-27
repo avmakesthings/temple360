@@ -52,14 +52,15 @@ AFRAME.registerComponent('ui-markers', {
             marker.clickHandler = (e)=>{
                 console.log("Clicked: ", thisMarkerData)
 
-                // this.el.emit('changeActiveScene', { 
-                //     activeScene: 'scene360'
-                // })
-                setTimeout(()=>{
-                    this.el.emit('changeActiveThreeSixty', { 
-                        activeThreeSixty: thisMarkerData
-                    })
-                }, 2000)
+
+            this.el.emit('changeActiveThreeSixty', { 
+                    activeThreeSixty: thisMarkerData
+                })
+                // setTimeout(()=>{
+                    this.el.emit('changeActiveScene', { 
+                            activeScene: 'scene360'
+                        })
+                // }, 2000)
 
             }
 

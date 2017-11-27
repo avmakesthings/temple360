@@ -28,8 +28,9 @@ AFRAME.registerComponent('ui-manager', {
         //same key press .. needs to know what the active scene is 
         //placeholder for toggling menus 
         window.addEventListener('keydown', (e)=>{
-            var toggleMenu = e.keyCode === 77
+            var toggleMenu = e.keyCode === 77 
             if(e.keyCode === 77){
+                // Key: m
                 console.log('key pressed')
                 switch(currentScene){
                     case "sceneHome":
@@ -45,6 +46,24 @@ AFRAME.registerComponent('ui-manager', {
                         console.log('menu toggle switch not working')
                 }
             } 
+        if(e.keyCode == 27){
+            // Key: "escape"
+            // Most likely, this is just for debug purposes
+            switch(currentScene){
+                case "scene3DModel":
+                    this.el.emit('changeActiveScene', { 
+                        activeScene: 'sceneHome'
+                    })
+                    break  
+                case "scene360":
+                    this.el.emit('changeActiveScene', { 
+                        activeScene: 'scene3DModel'
+                    })
+                    break
+                default:
+                    console.log('scene switch not working')
+            }  
+        }
         });
     }
 })
