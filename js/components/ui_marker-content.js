@@ -24,6 +24,8 @@ AFRAME.registerComponent('ui-marker-content', {
 		this.addOBJ('fill')
 		this.addOBJ('top')
 		
+		this.addClickCone()
+
 		this.animate()
 	},
 
@@ -49,6 +51,30 @@ AFRAME.registerComponent('ui-marker-content', {
 		return this.el.appendChild(this[type]);
 	},
 
+	addClickCone: function(){
+		const clickCone = document.createElement('a-entity')
+		clickCone.setAttribute('geometry',{
+			primitive: 'cone',
+			radiusBottom: 0.20, 
+			radiusTop: 0.20,
+			height: 2
+		})
+		clickCone.setAttribute('material',{
+			color: '#000000',
+			transparent: true,
+			opacity: 0
+		})
+		
+		clickCone.addEventListener('click', (e)=>{
+			if(this.el.clickHandler){
+				this.el.clickHandler(e)
+			} else {
+				console.warn("No click handler assigned")
+			}
+		});
+		this.el.appendChild(clickCone)
+	},
+
 	highlight: function(delay){
 		const beacon = document.createElement('a-entity');
 		const visibleFor = 15000
@@ -66,14 +92,14 @@ AFRAME.registerComponent('ui-marker-content', {
 			opacity: 0
 		})
 
-		// const animation = document.createElement('a-animation');
-		// animation.setAttribute('attribute', 'material.opacity');
-		// animation.setAttribute('direction', 'alternate')  
-		// animation.setAttribute('easing', 'ease-cubic')  
-		// animation.setAttribute('dur', visibleFor/6) 
-		// animation.setAttribute('from', '0');
-		// animation.setAttribute('to', '0.25');
-		// animation.setAttribute('repeat', 6) 
+		const animation = document.createElement('a-animation');
+		animation.setAttribute('attribute', 'material.opacity');
+		animation.setAttribute('direction', 'alternate')  
+		animation.setAttribute('easing', 'ease-cubic')  
+		animation.setAttribute('dur', visibleFor/6) 
+		animation.setAttribute('from', '0');
+		animation.setAttribute('to', '0.25');
+		animation.setAttribute('repeat', 6) 
 
 		setTimeout(()=>{
 			this.el.appendChild(beacon)

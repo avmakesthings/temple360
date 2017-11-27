@@ -119,6 +119,11 @@ AFRAME.registerReducer('app', {
 			var activeThreeSixty = action.activeThreeSixty;
 			state.activeThreeSixty = activeThreeSixty;
 			console.log('activeThreeSixty', activeThreeSixty)
+
+			// TODO: Move this to a component w/ listener attached to the scene360 entity?
+			const sky = document.getElementById('scene360').children[0]
+			sky.setAttribute('src', `assets/${activeThreeSixty.source}`)
+
 			AFRAME.scenes[0].emit('activeThreeSixtyChanged', {activeThreeSixty});
 			this.initialState.history.pushEvent(action);
 			return state;
@@ -165,9 +170,9 @@ window.onload = function() {
 			activeDate: "2017-08-18"
 		});
 
-		AFRAME.scenes[0].emit('changeActiveThreeSixty', {
-			activeThreeSixty: {} 
-		});
+		// AFRAME.scenes[0].emit('changeActiveThreeSixty', {
+		// 	activeThreeSixty: {} 
+		// });
 
 		AFRAME.scenes[0].emit('changeActiveModel', {
 			//can initialize with latest version of the temple model

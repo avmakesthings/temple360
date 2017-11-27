@@ -21,13 +21,13 @@ AFRAME.registerComponent('ui-markers', {
         this.activeDate = getState('activeDate')
 
         this.markers = this.addMarkers()
-        this.highlightMarkers()
+        // this.highlightMarkers()
 
         window.addEventListener('activeDateChanged',(e)=> {
-            this.activeDate = getState('activeDate')
+            this.activeDate = e.detail.activeDate
             this.clearMarkers()
             this.markers = this.addMarkers()
-            this.highlightMarkers()
+            // this.highlightMarkers()
         });        
     },
 
@@ -49,6 +49,20 @@ AFRAME.registerComponent('ui-markers', {
                 data: thisMarkerData
             })
             
+            marker.clickHandler = (e)=>{
+                console.log("Clicked: ", thisMarkerData)
+
+                // this.el.emit('changeActiveScene', { 
+                //     activeScene: 'scene360'
+                // })
+                setTimeout(()=>{
+                    this.el.emit('changeActiveThreeSixty', { 
+                        activeThreeSixty: thisMarkerData
+                    })
+                }, 2000)
+
+            }
+
             markers.push(el.appendChild(marker))
         })
 
@@ -65,5 +79,6 @@ AFRAME.registerComponent('ui-markers', {
         this.markers.forEach((markerEl)=>{
             this.el.removeChild(markerEl)
         })
+        this.markers = []
     }
 });
