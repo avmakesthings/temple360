@@ -201,16 +201,6 @@ window.addEventListener('activeModelChanged', function (event) {
 	}
 });
 
-window.addEventListener('acive', function (event) {
-	var thisModel = document.querySelector("#loaded-model");
-	var thisModelOpaque = document.querySelector("#loaded-model-opaque");
-	var nextModelPath = event.detail.activeModel;
-	console.log("about to change model");
-	if(nextModelPath){
-		thisModel.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
-		thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
-	}
-});
 
 
 
