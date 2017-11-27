@@ -4,6 +4,7 @@ UI Manager
 
 require('./globals.js')
 require('./components/ui_button.js');
+require('./components/ui_panel-info.js');
 require('./components/ui_panel-heading.js');
 require('./components/ui_panel-timeline.js');
 require('./components/ui_panel-preview.js');

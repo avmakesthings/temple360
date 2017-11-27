@@ -177,10 +177,10 @@ window.onload = function() {
 		// 	activeThreeSixty: {} 
 		// });
 
-		AFRAME.scenes[0].emit('changeActiveModel', {
-			//can initialize with latest version of the temple model
-			activeModel: {}
-		});
+		// AFRAME.scenes[0].emit('changeActiveModel', {
+		// 	//can initialize with latest version of the temple model
+		// 	activeModel: {}
+		// });
 
 		AFRAME.scenes[0].emit('changeActiveScene', {
 			activeScene: 'sceneHome'

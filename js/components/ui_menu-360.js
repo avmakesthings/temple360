@@ -75,6 +75,20 @@ AFRAME.registerComponent('ui-menu-360', {
 
 		layout.appendChild(timeline);
 
+
+		//add nav button
+		var navButton = document.createElement('a-entity');
+		navButton.setAttribute('ui-button', {
+			value:'start',
+		});
+		navButton.clickHandler = (e)=>{
+			this.el.emit('changeActiveScene',{ 
+				activeScene: 'scene3DModel'
+			});
+			//active location changed?
+		}
+		layout.appendChild(navButton);
+
 		window.addEventListener('show360Menu', (e)=>{
 			var menuState = this.el.getAttribute('visible')
 			this.el.setAttribute('visible', (!menuState))
