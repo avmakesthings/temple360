@@ -132,7 +132,8 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		rowHeight: {default: 0.032},
 		margin: {default: 0.04},
 		active:{default: false},
-		componentTitle: {default:''},
+		componentTitle: {default:''}
+
 	},
 	init: function (){
 		var el = this.el;
@@ -232,12 +233,24 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		// Ensure this is set for renderDateTree heights to work correctly
 		el.setAttribute('height', this.data.rowHeight)
 
+
 		setTimeout(()=>{
 			var boxEl = appendBoxEl(el)
 
 			boxEl.addEventListener('click', (e)=>{
 				console.log("Clicked: ", nodeData)
-				e.stopPropagation()
+				// e.stopPropagation()
+
+				//this will be a problem if multiple instances
+				//of timeline exist in a scene - how do you access
+				//the component data from here? can set the id that way 
+				timelineEl = document.querySelector('#timeline')
+
+				if(timelineEl.clickHandler){
+					timelineEl.clickHandler(nodeData)
+				} else {
+					console.warn("No click handler assigned")
+				}
 			});
 		},0)
 

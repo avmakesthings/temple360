@@ -168,6 +168,7 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveModel', {
+			//can initialize with latest version of the temple model
 			activeModel: {}
 		});
 
@@ -177,6 +178,20 @@ window.onload = function() {
 
 	})
 }
+
+// Change active model
+window.addEventListener('activeModelChanged', function (event) {
+	var thisModel = document.querySelector("#loaded-model");
+	var thisModelOpaque = document.querySelector("#loaded-model-opaque");
+	var nextModelPath = event.detail.activeModel;
+	console.log("about to change model");
+	if(nextModelPath){
+		thisModel.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+		thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+	}
+});
+
+
 
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
@@ -238,3 +253,9 @@ AFRAME.registerComponent('scene-manager', {
 		cameraEl.setAttribute('position', position)
 	}
 });
+
+
+
+
+
+

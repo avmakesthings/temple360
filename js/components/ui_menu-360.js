@@ -53,6 +53,28 @@ AFRAME.registerComponent('ui-menu-360', {
                                                   
 		layout.setAttribute('id','360-menu-container');
 
+		//add timeline panel component
+		var timeline = document.createElement('a-entity');
+		timeline.setAttribute('id','timeline');
+
+		timeline.setAttribute('ui-panel-timeline',{
+			timelineData: JSON.stringify(mainData.threeSixtyImages),
+			timeScales: ['month','day'],
+			componentTitle:'timeline',
+			active:true
+		});
+
+		timeline.clickHandler = (e)=>{
+			this.el.emit('changeActiveDate',{ 
+				activeDate: e.key
+			});
+			this.el.emit('changeActiveThreeSixty',{ 
+				activeThreeSixty: e.children.source
+			});
+		}
+
+		layout.appendChild(timeline);
+
 		window.addEventListener('show360Menu', (e)=>{
 			var menuState = this.el.getAttribute('visible')
 			this.el.setAttribute('visible', (!menuState))
