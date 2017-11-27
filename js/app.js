@@ -14,6 +14,7 @@ require('aframe-template-component');
 require('aframe-layout-component');
 require('aframe-animation-component');
 require('aframe-dev-components');
+require('aframe-look-at-component');
 
 require('./globals.js');
 require('./materials.js');
