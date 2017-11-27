@@ -69,6 +69,16 @@ AFRAME.registerComponent('ui-menu-model', {
 			active:true
 		});
 
+		timeline.clickHandler = (e)=>{
+			console.log('just clicked a timeline element')
+			this.el.emit('changeActiveDate',{ 
+				activeDate: e.key
+			});
+			this.el.emit('changeActiveModel',{ 
+				activeModel: e.children.source
+			});
+		}
+
 		layout.appendChild(timeline);
 
 
