@@ -66,14 +66,14 @@ AFRAME.registerComponent('ui-marker-content', {
 			opacity: 0
 		})
 
-		const animation = document.createElement('a-animation');
-		animation.setAttribute('attribute', 'material.opacity');
-		animation.setAttribute('direction', 'alternate')  
-		animation.setAttribute('easing', 'ease-cubic')  
-		animation.setAttribute('dur', visibleFor/6) 
-		animation.setAttribute('from', '0');
-		animation.setAttribute('to', '0.25');
-		animation.setAttribute('repeat', 6) 
+		// const animation = document.createElement('a-animation');
+		// animation.setAttribute('attribute', 'material.opacity');
+		// animation.setAttribute('direction', 'alternate')  
+		// animation.setAttribute('easing', 'ease-cubic')  
+		// animation.setAttribute('dur', visibleFor/6) 
+		// animation.setAttribute('from', '0');
+		// animation.setAttribute('to', '0.25');
+		// animation.setAttribute('repeat', 6) 
 
 		setTimeout(()=>{
 			this.el.appendChild(beacon)

@@ -49,7 +49,7 @@ AFRAME.registerComponent('gltf-opaque', {
 			  color: 0x555555,
 			  specular: 0xffffff, 
 			  shininess: 50, 
-			  shading: THREE.SmoothShading, 
+			  flatShading: false, 
 			  transparent: true,
 			  opacity: 0.5,
 		  } );

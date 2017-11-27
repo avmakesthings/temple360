@@ -25,6 +25,7 @@ AFRAME.registerComponent('ui-markers', {
 
         window.addEventListener('activeDateChanged',(e)=> {
             this.activeDate = getState('activeDate')
+            this.clearMarkers()
             this.markers = this.addMarkers()
             this.highlightMarkers()
         });        
@@ -55,12 +56,14 @@ AFRAME.registerComponent('ui-markers', {
     },
 
     highlightMarkers: function(){
-        this.markers.forEach((el, i)=>{
-            el.components['ui-marker-content'].highlight(i*500);
+        this.markers.forEach((markerEl, i)=>{
+            markerEl.components['ui-marker-content'].highlight(i*500);
         })
     },
     
     clearMarkers: function(){
-        
+        this.markers.forEach((markerEl)=>{
+            this.el.removeChild(markerEl)
+        })
     }
 });
