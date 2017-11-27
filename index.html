@@ -35,11 +35,11 @@
       <a-entity id="scene-template" template="src:templates/scene_home.html">
       </a-entity> 
       <!-- managers--> 
-      <a-entity id="managers" ></a-entity>
+      <a-entity id="managers" ui-manager></a-entity>
       <!-- controls--> 
       <a-entity laser-controls="hand: left" line="color: red; opacity: 0.75"></a-entity>
       <!-- camera--> 
-      <a-camera position = "0 0 40">
+      <a-camera>
         <a-entity cursor="fuse: true; fuseTimeout: 1000"
         position="0 0 -1"
         geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"

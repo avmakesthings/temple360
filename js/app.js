@@ -1,8 +1,11 @@
-/* * * + + + + + + + + + + + + + + + + + + + + 
-Temple360 - An A-frame web viewer for the design
-& construction of the 2017 Burning Man temple
-Author: Anastasia Victor
-+ + + + + + + + + + + + + + + + + + + + * * */ 
+/**
+ * @author AnastasiaVictor/ http://github.com/avmakesthings
+ * @author JohnFaichney/ http://github.com/johnvf
+ * @author DavidLu/ http://github.com/daveeloo
+ * 
+ * Temple360 - An A-frame web viewer for the design
+ * & construction of the 2017 Burning Man temple
+ */
 
 require('aframe');
 require('aframe-state-component');
@@ -14,7 +17,7 @@ require('aframe-dev-components');
 
 require('./globals.js');
 require('./materials.js');
-require('./userInterface.js');
+require('./ui_manager.js');
 
 var isEqual = require('lodash.isequal');
 var extras = require('aframe-extras'); //fix for A-frame GLtf 2.0 issues
@@ -26,6 +29,10 @@ var sceneEl = document.querySelector('a-scene'); //Scene element
 function getState(event, key){
 	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
 }
+
+/* * * + + + + + + + + + + + + + + + + + + + + 
+History manager --
++ + + + + + + + + + + + + + + + + + + + * * */ 
 
 var sessionStorageHistoryPlugin = {
 	getHistoryArray: function() {
@@ -39,7 +46,7 @@ var sessionStorageHistoryPlugin = {
 		var historyArray = sessionStorage.getItem('historyArray') ?
 			JSON.parse(sessionStorage.getItem('historyArray')) : [];
 		historyArray.push(event);
-		sessionStorage.setItem('historyArray', JSON.stringify(historyArray));
+		// sessionStorage.setItem('historyArray', JSON.stringify(historyArray));
 	},
 	clearHistory: function() {
 		sessionStorage.clear();
@@ -179,7 +186,7 @@ AFRAME.registerComponent('scene-manager', {
 	schema: {
 		sceneHome: {type: 'asset', default: 'templates/scene_home.html'},
 		scene360: {type: 'asset', default: 'templates/scene_360.html'},
-		scene3DModel: {type: 'asset', default: 'templates/scene_model.html'}
+		scene3DModel: {type: 'asset', default: 'templates/scene_model.html'},
 	},
 	init: function (){
 		var self = this
@@ -200,18 +207,21 @@ AFRAME.registerComponent('scene-manager', {
 				this.resetEnv('scene3DModel');
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.sceneHome);
+			this.setCameraPos(new THREE.Vector3(0,1.6,0))
 			
 		}if(nextScene == 'scene360'){
 			if(currentTemplate == this.data.scene3DModel){
 				this.resetEnv('scene3DModel');
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene360);
+			this.setCameraPos(new THREE.Vector3(0,1.6,0))
 
 		}if(nextScene == 'scene3DModel'){
 			if(currentTemplate == this.data.sceneHome){
 				this.resetEnv('sceneHome');
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene3DModel);
+			this.setCameraPos(new THREE.Vector3(0,1.6,40))	
 		}
 	},
 	resetEnv: function(currentTemplate){
@@ -222,5 +232,9 @@ AFRAME.registerComponent('scene-manager', {
 			var env = document.querySelector('#home-env') 
 		}
 		env.setAttribute('environment', {active:false});
+	},
+	setCameraPos: function(position){
+		var cameraEl = document.querySelector('a-camera');
+		cameraEl.setAttribute('position', position)
 	}
 });

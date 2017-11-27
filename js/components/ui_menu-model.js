@@ -1,8 +1,7 @@
 /**
  * @author AnastasiaVictor/ http://github.com/avmakesthings
- * @author JohnFaichney / http://github.com/johnfaichney
  * 
- * A-frame Menu Component - Model Scene
+ * A-frame Model Menu Component
  */
 
 var mainData = require('./../mainData.js');
@@ -19,6 +18,7 @@ AFRAME.registerComponent('ui-menu-model', {
 
 		var el = this.el;
 		data = this.data;
+
 		
 		//get camera position
 		var camPosition = document.querySelector('a-camera').components.position.data;
@@ -27,6 +27,8 @@ AFRAME.registerComponent('ui-menu-model', {
             y:camPosition.y+0.2, 
             z:camPosition.z-1.5 
 		}
+
+		el.setAttribute('visible', false);
 		
 		//set menu position 
 		el.setAttribute('position', {
@@ -78,9 +80,14 @@ AFRAME.registerComponent('ui-menu-model', {
 
 		//add navigation panel component 
 
+		//menu toggle - replace with VR controller keypress
 
+		window.addEventListener('showModelMenu', (e)=>{
+			var menuState = this.el.getAttribute('visible')
+			this.el.setAttribute('visible', (!menuState))
+		})
 
-    }
+	},
 });
 
 

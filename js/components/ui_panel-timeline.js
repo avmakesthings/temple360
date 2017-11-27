@@ -151,7 +151,7 @@ AFRAME.registerComponent('ui-panel-timeline', {
 
 		datesEl.setAttribute('position', {
 			x:-0.13,
-			y:0.35,
+			y:totalHeight/2,
 			z:0.01
 		});
 
