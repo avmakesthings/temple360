@@ -22,31 +22,28 @@ AFRAME.registerComponent('ui-menu-model', {
 		this.setPosition()
 		el.setAttribute('visible', false);
 		
-		//create menu container geometry 
-		globals.createWireframeBox(el,data.menuHeight, data.menuWidth, data.menuDepth);
-		globals.createMeshPlaneFill(el,data.menuHeight, data.menuWidth, data.menuDepth);
-
 		//add layout component & set base position 
 		var layout = document.createElement('a-entity');
-		el.appendChild(layout);	
-		layout.setAttribute('position', {
-			x:-data.menuWidth/2+0.5,
-			y:0,
-			z:0
-		});                                   
 		layout.setAttribute('id','model-menu-container');
+		layout.setAttribute('position', {
+            x:0, 
+            y:0.2, 
+            z:-1.5 
+		})
+		//create menu container geometry 
+		globals.createWireframeBox(layout,data.menuHeight, data.menuWidth, data.menuDepth);
+		globals.createMeshPlaneFill(layout,data.menuHeight, data.menuWidth, data.menuDepth);
+		el.appendChild(layout);	
 
 		//add timeline panel component
 		var timeline = document.createElement('a-entity');
 		timeline.setAttribute('id','timeline');
-
 		timeline.setAttribute('ui-panel-timeline',{
 			timelineData: JSON.stringify(mainData.models),
 			timeScales: ['year','month'],
 			componentTitle:'timeline',
 			active:true
 		});
-
 		timeline.clickHandler = (e)=>{
 			console.log('just clicked a timeline element')
 			this.el.emit('changeActiveDate',{ 
@@ -56,9 +53,7 @@ AFRAME.registerComponent('ui-menu-model', {
 				activeModel: e.children.source
 			});
 		}
-
 		layout.appendChild(timeline);
-
 
 		//add info panel component --TODO
 		var info = document.createElement('a-entity');
@@ -92,12 +87,15 @@ AFRAME.registerComponent('ui-menu-model', {
 
 	},
 	setPosition: function(){
-		var camPos = document.querySelector('a-camera').components.position.data;
-		this.el.setAttribute('position', {
-            x:camPos.x, 
-            y:camPos.y+0.2, 
-            z:camPos.z-1.5 
+		var cam = document.querySelector('a-camera')
+		var camPos = cam.components.position.data;
+		var camRot = cam.components.rotation.data;
+		this.el.setAttribute('rotation',{
+			x:0,
+			y:camRot.y,
+			z:0
 		})
+		this.el.setAttribute('position', camPos)
 	}
 });
 
