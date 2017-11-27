@@ -249,7 +249,7 @@ module.exports = {
             {
                 "title": "image5",
                 "description": "test7",
-                "location": "northCanteliver",
+                "location": "northCantilever",
                 "source": "SAM_100_0009.jpg"
             },
             {

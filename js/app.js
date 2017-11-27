@@ -26,8 +26,14 @@ var mainData = require('./mainData.js'); //Get JSON data
 var sceneEl = document.querySelector('a-scene'); //Scene element
 
 
-function getState(event, key){
-	return event.target.sceneEl.systems["state"].getState().app[key].toJSON()
+// TODO: Rename 'app' to 'appState' or 'state' in app.js
+// Move that reducer, the window events, & this helper to the same file
+// Import & use this helper wherever appState needs to be pulled
+// Require the rest into app.js - condense with the one in ui_markers
+function getState(key){
+    var sceneEl = document.querySelector('a-scene');
+    var appState = sceneEl.systems.state.state.app 
+    return appState[key]
 }
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
@@ -46,6 +52,8 @@ var sessionStorageHistoryPlugin = {
 		var historyArray = sessionStorage.getItem('historyArray') ?
 			JSON.parse(sessionStorage.getItem('historyArray')) : [];
 		historyArray.push(event);
+		// FIXME: Temporarily commented out:
+		// Consider circular-safe JSON stringify?
 		// sessionStorage.setItem('historyArray', JSON.stringify(historyArray));
 	},
 	clearHistory: function() {
@@ -63,7 +71,7 @@ AFRAME.registerReducer('app', {
 		models: mainData.models,
 		threeSixtyImages: mainData.threeSixtyImages,
 		activeLocation: mainData.locations["origin"],
-		activeDate: "2017-08-15",
+		activeDate: "2017-08-18",
 		activeModel: {},
 		activeThreeSixty: {},
 		activeScene: {},
@@ -112,11 +120,13 @@ AFRAME.registerReducer('app', {
 			AFRAME.scenes[0].emit('activeLocationChanged', {activeLocation});
 			this.initialState.history.pushEvent(action);
 			return state;
-		},  
+		},
+
 		changeActiveThreeSixty: function (state, action) {
 			var activeThreeSixty = action.activeThreeSixty;
 			state.activeThreeSixty = activeThreeSixty;
-			console.log('activeThreeSixty', activeThreeSixty)
+			console.log('activeThreeSixtyChanged', activeThreeSixty)
+
 			AFRAME.scenes[0].emit('activeThreeSixtyChanged', {activeThreeSixty});
 			this.initialState.history.pushEvent(action);
 			return state;
@@ -160,12 +170,12 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveDate', {
-			activeDate: "2017-08-15"
+			activeDate: "2017-08-18"
 		});
 
-		AFRAME.scenes[0].emit('changeActiveThreeSixty', {
-			activeThreeSixty: {} 
-		});
+		// AFRAME.scenes[0].emit('changeActiveThreeSixty', {
+		// 	activeThreeSixty: {} 
+		// });
 
 		AFRAME.scenes[0].emit('changeActiveModel', {
 			//can initialize with latest version of the temple model
@@ -190,6 +200,7 @@ window.addEventListener('activeModelChanged', function (event) {
 		thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
 	}
 });
+
 
 
 
@@ -229,6 +240,16 @@ AFRAME.registerComponent('scene-manager', {
 				this.resetEnv('scene3DModel');
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene360);
+
+
+			// Set 'src' attribute of sky - this should really be on sky.onLoad...
+			setTimeout(()=>{
+				const activeThreeSixty = getState('activeThreeSixty')
+				const sky = document.getElementById('scene360').children[0]
+				sky.setAttribute('src', `assets/${activeThreeSixty.source}`)
+			}, 0)
+
+
 			this.setCameraPos(new THREE.Vector3(0,1.6,0))
 
 		}if(nextScene == 'scene3DModel'){

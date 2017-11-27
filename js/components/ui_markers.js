@@ -18,15 +18,17 @@ AFRAME.registerComponent('ui-markers', {
 	init: function (){
         this.locations = getState('locations')
         this.threeSixtyImages = getState('threeSixtyImages')
-        
         this.activeDate = getState('activeDate')
 
-        window.addEventListener('activeDateChanged',(e)=> {
-            this.activeDate = getState('activeDate')
-            this.addMarkers()
-        });
+        this.markers = this.addMarkers()
+        // this.highlightMarkers()
 
-        this.addMarkers()
+        window.addEventListener('activeDateChanged',(e)=> {
+            this.activeDate = e.detail.activeDate
+            this.clearMarkers()
+            this.markers = this.addMarkers()
+            // this.highlightMarkers()
+        });        
     },
 
     getMarkerData: function(){
@@ -35,6 +37,7 @@ AFRAME.registerComponent('ui-markers', {
 
 	addMarkers: function(){
         var el = this.el;
+        var markers = []
         var markerData = this.getMarkerData()
 
         markerData.forEach((thisMarkerData)=>{
@@ -46,11 +49,37 @@ AFRAME.registerComponent('ui-markers', {
                 data: thisMarkerData
             })
             
-            el.appendChild(marker);	
+            marker.clickHandler = (e)=>{
+                console.log("Clicked: ", thisMarkerData)
+
+
+            this.el.emit('changeActiveThreeSixty', { 
+                    activeThreeSixty: thisMarkerData
+                })
+                // setTimeout(()=>{
+                    this.el.emit('changeActiveScene', { 
+                            activeScene: 'scene360'
+                        })
+                // }, 2000)
+
+            }
+
+            markers.push(el.appendChild(marker))
+        })
+
+        return markers
+    },
+
+    highlightMarkers: function(){
+        this.markers.forEach((markerEl, i)=>{
+            markerEl.components['ui-marker-content'].highlight(i*500);
         })
     },
     
     clearMarkers: function(){
-        
+        this.markers.forEach((markerEl)=>{
+            this.el.removeChild(markerEl)
+        })
+        this.markers = []
     }
 });
