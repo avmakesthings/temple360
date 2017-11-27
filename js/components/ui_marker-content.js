@@ -23,7 +23,7 @@ AFRAME.registerComponent('ui-marker-content', {
 
 		this.addOBJ('fill')
 		this.addOBJ('top')
-
+		
 		this.animate()
 	},
 
@@ -49,6 +49,43 @@ AFRAME.registerComponent('ui-marker-content', {
 		return this.el.appendChild(this[type]);
 	},
 
+	highlight: function(delay){
+		const beacon = document.createElement('a-entity');
+		const visibleFor = 15000
+
+		beacon.setAttribute('geometry',{
+			primitive: 'cone',
+			radiusBottom: 0.25, 
+			radiusTop: 0.25,
+			height: 400
+		})
+
+		beacon.setAttribute('material',{
+			color: '#f8ff44',
+			transparent: true,
+			opacity: 0
+		})
+
+		const animation = document.createElement('a-animation');
+		animation.setAttribute('attribute', 'material.opacity');
+		animation.setAttribute('direction', 'alternate')  
+		animation.setAttribute('easing', 'ease-cubic')  
+		animation.setAttribute('dur', visibleFor/6) 
+		animation.setAttribute('from', '0');
+		animation.setAttribute('to', '0.25');
+		animation.setAttribute('repeat', 6) 
+
+		setTimeout(()=>{
+			this.el.appendChild(beacon)
+			beacon.appendChild(animation)
+
+			setTimeout(()=>{
+				this.el.removeChild(beacon)
+			}, visibleFor+1000)
+
+		}, delay)
+	},
+
 	animate: function(){
 		this.addRotationAnimation(this['fill'], 10000)
 		this.addRotationAnimation(this['top'], 5000)
@@ -65,4 +102,6 @@ AFRAME.registerComponent('ui-marker-content', {
 		animation.setAttribute('repeat', 'indefinite') 
 		el.appendChild(animation)
 	}
+
+
 });

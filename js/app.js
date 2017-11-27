@@ -46,6 +46,8 @@ var sessionStorageHistoryPlugin = {
 		var historyArray = sessionStorage.getItem('historyArray') ?
 			JSON.parse(sessionStorage.getItem('historyArray')) : [];
 		historyArray.push(event);
+		// FIXME: Temporarily commented out:
+		// Consider circular-safe JSON stringify?
 		// sessionStorage.setItem('historyArray', JSON.stringify(historyArray));
 	},
 	clearHistory: function() {
@@ -63,7 +65,7 @@ AFRAME.registerReducer('app', {
 		models: mainData.models,
 		threeSixtyImages: mainData.threeSixtyImages,
 		activeLocation: mainData.locations["origin"],
-		activeDate: "2017-08-15",
+		activeDate: "2017-08-18",
 		activeModel: {},
 		activeThreeSixty: {},
 		activeScene: {},
@@ -160,7 +162,7 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveDate', {
-			activeDate: "2017-08-15"
+			activeDate: "2017-08-18"
 		});
 
 		AFRAME.scenes[0].emit('changeActiveThreeSixty', {

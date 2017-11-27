@@ -18,15 +18,16 @@ AFRAME.registerComponent('ui-markers', {
 	init: function (){
         this.locations = getState('locations')
         this.threeSixtyImages = getState('threeSixtyImages')
-        
         this.activeDate = getState('activeDate')
+
+        this.markers = this.addMarkers()
+        this.highlightMarkers()
 
         window.addEventListener('activeDateChanged',(e)=> {
             this.activeDate = getState('activeDate')
-            this.addMarkers()
-        });
-
-        this.addMarkers()
+            this.markers = this.addMarkers()
+            this.highlightMarkers()
+        });        
     },
 
     getMarkerData: function(){
@@ -35,6 +36,7 @@ AFRAME.registerComponent('ui-markers', {
 
 	addMarkers: function(){
         var el = this.el;
+        var markers = []
         var markerData = this.getMarkerData()
 
         markerData.forEach((thisMarkerData)=>{
@@ -46,7 +48,15 @@ AFRAME.registerComponent('ui-markers', {
                 data: thisMarkerData
             })
             
-            el.appendChild(marker);	
+            markers.push(el.appendChild(marker))
+        })
+
+        return markers
+    },
+
+    highlightMarkers: function(){
+        this.markers.forEach((el, i)=>{
+            el.components['ui-marker-content'].highlight(i*500);
         })
     },
     
