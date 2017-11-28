@@ -1,15 +1,14 @@
-/* * * + + + + + + + + + + + + + + + + + + + + 
-MENU_360 : menu component for 360 scene
-has:
-panelTimeline
-panelInfo
-panelPreview
-panelNav
+/**
+ * @author AnastasiaVictor/ http://github.com/avmakesthings
+ * 
+ * A-frame 360 Menu Component
+ */
 
-+ + + + + + + + + + + + + + + + + + + + * * */ 
+var mainData = require('./../mainData.js');
 
 AFRAME.registerComponent('ui-menu-360', {
 	schema: {
+
 		menuHeight: {default: 1.2},
 		menuWidth: {default: 2.5},
 		menuDepth: {default: 0.3},
@@ -21,41 +20,33 @@ AFRAME.registerComponent('ui-menu-360', {
 		data = this.data;
 
 		
-		//get camera position
-		var camPosition = document.querySelector('a-camera').components.position.data;
-        var menuPosition = {
-            x:camPosition.x, 
-            y:camPosition.y+0.2, 
-            z:camPosition.z-1.5 
-		}
-
+		this.setPosition()
 		el.setAttribute('visible', false);
-		
-		//set menu position 
-		el.setAttribute('position', {
-			x:menuPosition.x,
-			y:menuPosition.y,
-			z:menuPosition.z
-		});
-
-		//create menu container geometry 
-		globals.createWireframeBox(el,data.menuHeight, data.menuWidth, data.menuDepth);
-		globals.createMeshPlaneFill(el,data.menuHeight, data.menuWidth, data.menuDepth);
-
 		//add layout component & set base position 
 		var layout = document.createElement('a-entity');
-		el.appendChild(layout);	
+		layout.setAttribute('id','model-menu-container');
 		layout.setAttribute('position', {
-			x:-data.menuWidth/2+0.5,
-			y:0,
-			z:0
-		});
-                                                  
+            x:0, 
+            y:0.2, 
+            z:-1.5 
+		})
+		//create menu container geometry 
+		globals.createWireframeBox(layout,data.menuHeight, data.menuWidth, data.menuDepth);
+		globals.createMeshPlaneFill(layout,data.menuHeight, data.menuWidth, data.menuDepth);
+		el.appendChild(layout);			
+                                        
 		layout.setAttribute('id','360-menu-container');
 
 		//add timeline panel component
 		var timeline = document.createElement('a-entity');
 		timeline.setAttribute('id','timeline');
+		
+		//absolute pos placeholder
+		timeline.setAttribute('position',{
+			X: -0.9,
+			Y: 0.3,
+			Z: 0
+		})
 
 		timeline.setAttribute('ui-panel-timeline',{
 			timelineData: JSON.stringify(mainData.threeSixtyImages),
@@ -79,7 +70,7 @@ AFRAME.registerComponent('ui-menu-360', {
 		//add nav button
 		var navButton = document.createElement('a-entity');
 		navButton.setAttribute('ui-button', {
-			value:'start',
+			value:'Back',
 		});
 		navButton.clickHandler = (e)=>{
 			this.el.emit('changeActiveScene',{ 
@@ -91,11 +82,19 @@ AFRAME.registerComponent('ui-menu-360', {
 
 		window.addEventListener('show360Menu', (e)=>{
 			var menuState = this.el.getAttribute('visible')
+			this.setPosition()
 			this.el.setAttribute('visible', (!menuState))
-			console.log('360 menu toggled')
 		})
-
-
-
-    }
+	},
+	setPosition: function(){
+		var cam = document.querySelector('a-camera')
+		var camPos = cam.components.position.data;
+		var camRot = cam.components.rotation.data;
+		this.el.setAttribute('rotation',{
+			x:0,
+			y:camRot.y,
+			z:0
+		})
+		this.el.setAttribute('position', camPos)
+	}
 });
