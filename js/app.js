@@ -234,7 +234,7 @@ AFRAME.registerComponent('scene-manager', {
 				this.resetEnv('scene3DModel');
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.sceneHome);
-			this.setCameraPos(new THREE.Vector3(0,1.6,0))
+			// this.setCameraPos(new THREE.Vector3(0,1.6,0))
 			
 		}if(nextScene == 'scene360'){
 			if(currentTemplate == this.data.scene3DModel){
@@ -242,23 +242,19 @@ AFRAME.registerComponent('scene-manager', {
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene360);
 
-
-			// Set 'src' attribute of sky - this should really be on sky.onLoad...
 			setTimeout(()=>{
 				const activeThreeSixty = getState('activeThreeSixty')
-				const sky = document.getElementById('scene360').children[0]
-				sky.setAttribute('src', `assets/${activeThreeSixty.source}`)
+				next360 = `assets/${activeThreeSixty.source}`
+				this.set360(next360)
 			}, 0)
-
-
-			this.setCameraPos(new THREE.Vector3(0,1.6,0))
+			// this.setCameraPos(new THREE.Vector3(0,1.6,0))
 
 		}if(nextScene == 'scene3DModel'){
 			if(currentTemplate == this.data.sceneHome){
 				this.resetEnv('sceneHome');
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene3DModel);
-			this.setCameraPos(new THREE.Vector3(0,1.6,40))	
+			// this.setCameraPos(new THREE.Vector3(0,1.6,40))	
 		}
 	},
 	resetEnv: function(currentTemplate){
@@ -273,6 +269,16 @@ AFRAME.registerComponent('scene-manager', {
 	setCameraPos: function(position){
 		var cameraEl = document.querySelector('a-camera');
 		cameraEl.setAttribute('position', position)
+	},
+	set360: function(image){
+		var sky = document.createElement('a-sky')
+		var sceneEl = document.querySelector('a-scene')
+		sky.setAttribute('src', image)
+		this.el.appendChild(sky)
+	},
+	remove360: function(){
+		var sky = document.querySelector('a-sky')
+		sky.parentNode.removeChild(sky);
 	}
 });
 

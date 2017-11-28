@@ -3,6 +3,7 @@ UI Manager
 + + + + + + + + + + + + + + + + + + + + * * */   
 
 require('./globals.js')
+require('./components/effects.js');
 require('./components/ui_button.js');
 require('./components/ui_panel-info.js');
 require('./components/ui_panel-heading.js');
