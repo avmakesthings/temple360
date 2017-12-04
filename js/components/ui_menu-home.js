@@ -70,6 +70,7 @@ AFRAME.registerComponent('ui-menu-home', {
 			this.el.emit('changeActiveScene',{ 
 				activeScene: 'scene3DModel'
 			});
+
 		}
 		layout.appendChild(navButton);
 		navButton.flushToDOM();

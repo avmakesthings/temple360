@@ -17,7 +17,7 @@ require('aframe-dev-components');
 require('aframe-look-at-component');
 
 require('./globals.js');
-require('./materials.js');
+require('./renderers.js');
 require('./ui_manager.js');
 
 var isEqual = require('lodash.isequal');
@@ -179,8 +179,7 @@ window.onload = function() {
 		// });
 
 		// AFRAME.scenes[0].emit('changeActiveModel', {
-		// 	//can initialize with latest version of the temple model
-		// 	activeModel: {}
+		// 	activeModel: "17-08-temple.gltf"
 		// });
 
 		AFRAME.scenes[0].emit('changeActiveScene', {
@@ -192,8 +191,7 @@ window.onload = function() {
 
 // Change active model
 window.addEventListener('activeModelChanged', function (event) {
-	var thisModel = document.querySelector("#loaded-model");
-	var thisModelOpaque = document.querySelector("#loaded-model-opaque");
+	var thisModel = document.querySelector("#building-model");
 	var nextModelPath = event.detail.activeModel;
 	console.log("about to change model");
 	if(nextModelPath){
