@@ -10,7 +10,7 @@ module.exports = {
             }
         },
         "interiorSouth": {
-            "title": "South",
+            "title": "Interior South",
             "description": "The path to civilization",
             "coord": {
                 "x": 0,
@@ -19,7 +19,7 @@ module.exports = {
             }
         },
         "interiorEast": {
-            "title": "East",
+            "title": "Interior East",
             "description": "The sun rises",
             "coord": {
                 "x": 6,
@@ -28,7 +28,7 @@ module.exports = {
             }
         },
         "interiorNorth": {
-            "title": "North",
+            "title": "Interior North",
             "description": "To eternity",
             "coord": {
                 "x": 0,
@@ -37,7 +37,7 @@ module.exports = {
             }
         },
         "interiorWest": {
-            "title": "West",
+            "title": "Interior West",
             "description": "Dusk over mountains",
             "coord": {
                 "x": -6,
@@ -55,8 +55,8 @@ module.exports = {
             }
         },             
         "southCourtyard": {
-            "title": "Into the fold",
-            "description": "",
+            "title": "South Courtyard",
+            // "description": "Into the fold",
             "coord": {
                 "x": 0,
                 "y": 0,
@@ -64,8 +64,8 @@ module.exports = {
             }
         },
         "southCantilever": {
-            "title": "First Contact",
-            // "description": "",
+            "title": "South Cantilever",
+            // "description": "First Contact",
             "coord": {
                 "x": 0,
                 "y": 0,
@@ -91,8 +91,8 @@ module.exports = {
             }
         },
         "northCantilever": {
-            "title": "The Edge of Civilization",
-            // "description": "",
+            "title": "North Cantilever",
+            // "description": "The Edge of Civilization",
             "coord": {
                 "x": 0,
                 "y": 0,
@@ -118,8 +118,8 @@ module.exports = {
             }
         },
         "westCourtyard": {
-            "title": "Ritual",
-            // "description": "",
+            "title": "West Courtyard",
+            // "description": "Ritual",
             "coord": {
                 "x": -20,
                 "y": 0,
@@ -127,8 +127,8 @@ module.exports = {
             }
         },
         "westCantilever": {
-            "title": "Sunset Through the Trees",
-            // "description": "",
+            "title": "West Cantilever",
+            // "description": "Sunset Through the Trees",
             "coord": {
                 "x": -14,
                 "y": 0,
@@ -154,8 +154,8 @@ module.exports = {
             }
         },
         "eastCantilever": {
-            "title": "Dawn in the Forest",
-            // "description": "",
+            "title": "East Cantilever",
+            // "description": "Dawn in the Forest",
             "coord": {
                 "x": 14,
                 "y": 0,
@@ -163,8 +163,8 @@ module.exports = {
             }
         },
         "eastCourtyard": {
-            "title": "Introspection",
-            // "description": "",
+            "title": "East Courtyard",
+            // "description": "Introspection",
             "coord": {
                 "x": 20,
                 "y": 0,

@@ -20,6 +20,7 @@ AFRAME.registerComponent('ui-markers', {
         this.threeSixtyImages = getState('threeSixtyImages')
         this.activeDate = getState('activeDate')
 
+
         this.markers = this.addMarkers()
         // this.highlightMarkers()
 
@@ -51,17 +52,19 @@ AFRAME.registerComponent('ui-markers', {
             
             marker.clickHandler = (e)=>{
                 console.log("Clicked: ", thisMarkerData)
-
-
-            this.el.emit('changeActiveThreeSixty', { 
-                    activeThreeSixty: thisMarkerData
+            
+                //should also emit active location change
+                this.el.emit('changeActiveLocation', { 
+                        activeLocation: thisMarkerData.location
+                })
+                this.el.emit('changeActiveThreeSixty', { 
+                        activeThreeSixty: thisMarkerData
                 })
                 // setTimeout(()=>{
-                    this.el.emit('changeActiveScene', { 
-                            activeScene: 'scene360'
-                        })
+                this.el.emit('changeActiveScene', { 
+                        activeScene: 'scene360'
+                    })
                 // }, 2000)
-
             }
 
             markers.push(el.appendChild(marker))

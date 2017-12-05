@@ -71,7 +71,8 @@ AFRAME.registerReducer('app', {
 		locations: mainData.locations,
 		models: mainData.models,
 		threeSixtyImages: mainData.threeSixtyImages,
-		activeLocation: mainData.locations["origin"],
+		// activeLocation: mainData.locations["origin"],
+		activeLocation: "origin",
 		activeDate: "2017-08-18",
 		activeModel: {},
 		activeThreeSixty: {},
@@ -127,7 +128,6 @@ AFRAME.registerReducer('app', {
 			var activeThreeSixty = action.activeThreeSixty;
 			state.activeThreeSixty = activeThreeSixty;
 			console.log('activeThreeSixtyChanged', activeThreeSixty)
-
 			AFRAME.scenes[0].emit('activeThreeSixtyChanged', {activeThreeSixty});
 			this.initialState.history.pushEvent(action);
 			return state;
@@ -167,7 +167,8 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveLocation', {
-			activeLocation: mainData.locations["southGate"]
+			// activeLocation: mainData.locations["southGate"]
+			activeLocation: "southGate"
 		});
 
 		AFRAME.scenes[0].emit('changeActiveDate', {
@@ -221,6 +222,10 @@ AFRAME.registerComponent('scene-manager', {
 		window.addEventListener('activeSceneChanged',(e)=> {
 			nextScene = e.detail.activeScene;
 			self.setScene(nextScene)
+		});
+		window.addEventListener('activeThreeSixtyChanged',(e)=> {
+			next360 = `assets/${e.detail.activeThreeSixty.source}`
+			this.change360(next360)
 		});
 	}, 
 	setScene: function(nextScene){
@@ -279,6 +284,10 @@ AFRAME.registerComponent('scene-manager', {
 	remove360: function(){
 		var sky = document.querySelector('a-sky')
 		sky.parentNode.removeChild(sky);
+	},
+	change360: function(image){
+		var sky = document.querySelector('a-sky')
+		sky.setAttribute('src', image)
 	}
 });
 
