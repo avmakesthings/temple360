@@ -78,7 +78,7 @@ AFRAME.registerComponent('ui-menu-360', {
 			});
 			//active location changed?
 		}
-		layout.appendChild(navButton);
+		// layout.appendChild(navButton);
 
 		window.addEventListener('show360Menu', (e)=>{
 			var menuState = this.el.getAttribute('visible')
