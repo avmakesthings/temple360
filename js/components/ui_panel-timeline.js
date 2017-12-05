@@ -145,14 +145,15 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		var datesEl = this.renderDateTree(this.dateTree)
 
 		var totalHeight = datesEl.getAttribute('height')
+		var adjustedHeight = totalHeight + 0.1 
 
 		//create container geometry 
-		globals.createWireframeBox(el,totalHeight, 0.3, 0.2);
-		globals.createMeshPlaneFill(el,totalHeight, 0.3, 0.2 );
+		globals.createWireframeBox(el,totalHeight, 0.4, 0.2);
+		globals.createMeshPlaneFill(el,totalHeight, 0.4, 0.2 );
 
 		datesEl.setAttribute('position', {
 			x:-0.13,
-			y:totalHeight/2,
+			y:(totalHeight/2)-0.05,
 			z:0.01
 		});
 

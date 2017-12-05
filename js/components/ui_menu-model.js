@@ -4,6 +4,12 @@
  * A-frame Model Menu Component
  */
 
+function getState(key){
+    var sceneEl = document.querySelector('a-scene');
+    var appState = sceneEl.systems.state.state.app 
+    return appState[key]
+} 
+
 var mainData = require('./../mainData.js');
 
 AFRAME.registerComponent('ui-menu-model', {
@@ -16,69 +22,11 @@ AFRAME.registerComponent('ui-menu-model', {
 	},
 	init: function (){
 
-		var el = this.el;
-		data = this.data;
-		
 		this.setPosition()
-		el.setAttribute('visible', false);
-		
-		//add layout component & set base position 
-		var layout = document.createElement('a-entity');
-		layout.setAttribute('id','model-menu-container');
-		layout.setAttribute('position', {
-            x:0, 
-            y:0.2, 
-            z:-1.5 
-		})
-		//create menu container geometry 
-		globals.createWireframeBox(layout,data.menuHeight, data.menuWidth, data.menuDepth);
-		globals.createMeshPlaneFill(layout,data.menuHeight, data.menuWidth, data.menuDepth);
-		el.appendChild(layout);	
+		// this.el.setAttribute('visible', false)
+		this.createMenuLayout()
 
-		//add timeline panel component
-		var timeline = document.createElement('a-entity');
-		timeline.setAttribute('id','timeline');
-		timeline.setAttribute('ui-panel-timeline',{
-			timelineData: JSON.stringify(mainData.models),
-			timeScales: ['year','month'],
-			componentTitle:'timeline',
-			active:true
-		});
-		timeline.clickHandler = (e)=>{
-			console.log('just clicked a timeline element')
-			this.el.emit('changeActiveDate',{ 
-				activeDate: e.key
-			});
-			this.el.emit('changeActiveModel',{ 
-				activeModel: e.children.source
-			});
-		}
-		layout.appendChild(timeline);
-
-		//add info panel component --TODO
-		var info = document.createElement('a-entity');
-		info.setAttribute('id','info');
-
-		//add preview panel component
-
-		//add navigation panel component 
-		//test nav button
-		var navButton = document.createElement('a-entity');
-		navButton.setAttribute('ui-button', {
-			value:'home',
-		});
-		navButton.setAttribute('position', {
-			x: 0.5
-		});
-		navButton.clickHandler = (e)=>{
-			this.el.emit('changeActiveScene',{ 
-				activeScene: 'sceneHome'
-			});
-			//active location changed?
-		}
-		layout.appendChild(navButton);
-
-		//menu toggle - replace with VR controller keypress
+		//menu toggle - TODO - add support for VR controller keypress
 		window.addEventListener('showModelMenu', (e)=>{
 			var menuState = this.el.getAttribute('visible')
 			this.setPosition()
@@ -96,12 +44,112 @@ AFRAME.registerComponent('ui-menu-model', {
 			z:0
 		})
 		this.el.setAttribute('position', camPos)
+	},
+	createMenuLayout: function(){
+		const layout = document.createElement('a-entity')
+		layout.setAttribute('id','model-menu-container')
+		layout.setAttribute('position', {
+            x:0, 
+            y:0.2, 
+            z:-1.5 
+		})
+		this.createMenuGeo(layout)
+
+		const layoutUpper = document.createElement('a-entity')
+		layoutUpper.setAttribute('id','layout-upper')
+		layoutUpper.setAttribute('position', {
+            x:0, 
+            y:0.07, 
+            z:0
+		})		
+		const layoutLower = document.createElement('a-entity')
+		layoutLower.setAttribute('id','layout-lower')
+		layoutLower.setAttribute('position', {
+            x:0, 
+            y:-0.4, 
+            z:0
+		})			
+		layout.appendChild(layoutUpper)
+		layout.appendChild(layoutLower)
+		
+		const timeline = this.createTimelinePanel(layoutUpper)
+		const info = this.createInfoPanel(layoutUpper)
+		const nav = this.createNavPanel(layoutLower)
+		
+		//add positioning logic
+		timeline.setAttribute('position', {
+            x:-0.5, 
+            y:0, 
+            z:0
+		})
+		info.setAttribute('position', {
+            x:0.5, 
+            y:0, 
+            z:0
+		})			
+		
+		this.el.appendChild(layout)
+	},
+	createMenuGeo: function(el){
+		data = this.data
+		globals.createWireframeBox(el,data.menuHeight, data.menuWidth, data.menuDepth)
+		globals.createMeshPlaneFill(el,data.menuHeight, data.menuWidth, data.menuDepth)
+	},
+	createTimelinePanel: function(el){
+		var timeline = document.createElement('a-entity');
+		timeline.setAttribute('id','timeline');
+		timeline.setAttribute('ui-panel-timeline',{
+			timelineData: JSON.stringify(mainData.models),
+			timeScales: ['year','month'],
+			componentTitle:'timeline',
+			active:true
+		});
+		timeline.clickHandler = (e)=>{
+			console.log('just clicked a timeline element')
+			this.el.emit('changeActiveDate',{ 
+				activeDate: e.key
+			});
+			this.el.emit('changeActiveModel',{ 
+				activeModel: e.children.source
+			});
+		}
+		el.appendChild(timeline);
+		return timeline
+	},
+	createInfoPanel: function(el){
+
+		var info = document.createElement('a-entity')		
+		info.setAttribute('id','info')
+		info.setAttribute('ui-panel-info',{
+			headingVal: 'test heading',
+			// descriptionVal: {default: "Description"},
+			// headingMixin: 'text-panel-heading',
+			// descriptionMixin: 'text-description-1',
+			// panelID: {default: ""},
+			// panelHeight: {default: 0.5},
+			// panelWidth: {default: 0.3},
+			// panelDepth: {default: 0.1},
+		});
+		el.appendChild(info)
+		return info
+	},
+	createNavPanel: function(el){
+		//test nav button
+		var navButton = document.createElement('a-entity');
+		navButton.setAttribute('ui-button', {
+			value:'home',
+		});
+		navButton.setAttribute('position', {
+			x: 0.5
+		});
+		navButton.clickHandler = (e)=>{
+			this.el.emit('changeActiveScene',{ 
+				activeScene: 'sceneHome'
+			});
+			//active location changed?
+		}
+		el.appendChild(navButton);
+		return navButton
 	}
 });
 
-		// timeline.setAttribute('ui-panel-timeline',{
-		// 	timelineData: JSON.stringify(mainData.threeSixtyImages),
-		// 	timeScales: ['month','day'],
-		// 	componentTitle:'timeline',
-		// 	active:true
-		// });
