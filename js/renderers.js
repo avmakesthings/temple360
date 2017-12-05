@@ -23,7 +23,7 @@ AFRAME.registerComponent('gltf-renderer', {
 			polygonOffsetUnits: 1
 		} );
 		var lineMat = new THREE.LineBasicMaterial( { 
-			color: 0x000000, linewidth: 10 
+			color: 0x000000, linewidth: 2 
 		} );
 		var wireframeEl = document.createElement('a-entity')
 		wireframeEl.setAttribute('id', 'wireframe-el')
@@ -35,14 +35,27 @@ AFRAME.registerComponent('gltf-renderer', {
 			if(!modelGeo){
 				return
 			}
+
+			var wireframes = []
+
 			modelGeo.traverse(function(item){
-				item.material = phongMaterial;
-				//this is supposed to add wireframe geo
-				//to each child object3D 
-				var geo = new THREE.WireframeGeometry( item );
-				var wireframe = new THREE.LineSegments( geo, lineMat );
-				wireframeEl.object3D.add(wireframe)
+				if (item.geometry){
+					item.material = phongMaterial;
+					var geo = new THREE.EdgesGeometry( item.geometry );
+					var wireframe = new THREE.LineSegments( geo, lineMat );
+					// We can't modify the children *during* 'traverse' or we'll recurse infinitely.
+					// Queue these up and add them later
+					wireframes.push({
+						wireframe,
+						item
+					})
+				}
 			});
+
+			wireframes.forEach(({wireframe, item})=>{
+				item.add(wireframe)
+			})
+
 		})
 		el.appendChild(wireframeEl)
   }
