@@ -6,6 +6,13 @@
 
 var mainData = require('./../mainData.js');
 
+//using this here but assuming that it's going to be rolled into app or globals
+function getState(key){
+    var sceneEl = document.querySelector('a-scene');
+    var appState = sceneEl.systems.state.state.app 
+    return appState[key]
+}
+
 AFRAME.registerComponent('ui-menu-360', {
 	schema: {
 
@@ -38,6 +45,9 @@ AFRAME.registerComponent('ui-menu-360', {
 		layout.setAttribute('id','360-menu-container');
 
 		//add timeline panel component
+		var activeLocation = getState('activeLocation')
+		var timelineData = this.filter360sByLocation(mainData.threeSixtyImages, activeLocation)
+		
 		var timeline = document.createElement('a-entity');
 		timeline.setAttribute('id','timeline');
 		
@@ -49,7 +59,7 @@ AFRAME.registerComponent('ui-menu-360', {
 		})
 
 		timeline.setAttribute('ui-panel-timeline',{
-			timelineData: JSON.stringify(mainData.threeSixtyImages),
+			timelineData: JSON.stringify(timelineData),
 			timeScales: ['month','day'],
 			componentTitle:'timeline',
 			active:true
@@ -60,25 +70,23 @@ AFRAME.registerComponent('ui-menu-360', {
 				activeDate: e.key
 			});
 			this.el.emit('changeActiveThreeSixty',{ 
-				activeThreeSixty: e.children.source
+				activeThreeSixty: e.children
 			});
 		}
-
 		layout.appendChild(timeline);
 
-
 		//add nav button
-		var navButton = document.createElement('a-entity');
-		navButton.setAttribute('ui-button', {
-			value:'Back',
-		});
-		navButton.clickHandler = (e)=>{
-			this.el.emit('changeActiveScene',{ 
-				activeScene: 'scene3DModel'
-			});
-			//active location changed?
-		}
-		layout.appendChild(navButton);
+		// var navButton = document.createElement('a-entity');
+		// navButton.setAttribute('ui-button', {
+		// 	value:'Back',
+		// });
+		// navButton.clickHandler = (e)=>{
+		// 	this.el.emit('changeActiveScene',{ 
+		// 		activeScene: 'scene3DModel'
+		// 	});
+		// 	//active location changed?
+		// }
+		// layout.appendChild(navButton);
 
 		window.addEventListener('show360Menu', (e)=>{
 			var menuState = this.el.getAttribute('visible')
@@ -96,5 +104,18 @@ AFRAME.registerComponent('ui-menu-360', {
 			z:0
 		})
 		this.el.setAttribute('position', camPos)
+	},
+	filter360sByLocation: function(data, activeLocation){
+		
+		var filteredData = {}
+		Object.keys(data).forEach((date)=>{
+			const item = data[date].find((item)=>{
+				return item.location === activeLocation
+			})
+			if(item){
+				filteredData[date] = item
+			}
+		})
+		return filteredData
 	}
 });

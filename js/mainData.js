@@ -10,7 +10,7 @@ module.exports = {
             }
         },
         "interiorSouth": {
-            "title": "South",
+            "title": "Interior South",
             "description": "The path to civilization",
             "coord": {
                 "x": 0,
@@ -19,7 +19,7 @@ module.exports = {
             }
         },
         "interiorEast": {
-            "title": "East",
+            "title": "Interior East",
             "description": "The sun rises",
             "coord": {
                 "x": 6,
@@ -28,7 +28,7 @@ module.exports = {
             }
         },
         "interiorNorth": {
-            "title": "North",
+            "title": "Interior North",
             "description": "To eternity",
             "coord": {
                 "x": 0,
@@ -37,7 +37,7 @@ module.exports = {
             }
         },
         "interiorWest": {
-            "title": "West",
+            "title": "Interior West",
             "description": "Dusk over mountains",
             "coord": {
                 "x": -6,
@@ -51,21 +51,21 @@ module.exports = {
             "coord": {
                 "x": 0,
                 "y": 0,
-                "z": -34
+                "z": -24
             }
         },             
         "southCourtyard": {
-            "title": "Into the fold",
-            "description": "",
+            "title": "South Courtyard",
+            // "description": "Into the fold",
             "coord": {
                 "x": 0,
                 "y": 0,
-                "z": -24
+                "z": -20
             }
         },
         "southCantilever": {
-            "title": "First Contact",
-            // "description": "",
+            "title": "South Cantilever",
+            // "description": "First Contact",
             "coord": {
                 "x": 0,
                 "y": 0,
@@ -91,8 +91,8 @@ module.exports = {
             }
         },
         "northCantilever": {
-            "title": "The Edge of Civilization",
-            // "description": "",
+            "title": "North Cantilever",
+            // "description": "The Edge of Civilization",
             "coord": {
                 "x": 0,
                 "y": 0,
@@ -118,8 +118,8 @@ module.exports = {
             }
         },
         "westCourtyard": {
-            "title": "Ritual",
-            // "description": "",
+            "title": "West Courtyard",
+            // "description": "Ritual",
             "coord": {
                 "x": -20,
                 "y": 0,
@@ -127,8 +127,8 @@ module.exports = {
             }
         },
         "westCantilever": {
-            "title": "Sunset Through the Trees",
-            // "description": "",
+            "title": "West Cantilever",
+            // "description": "Sunset Through the Trees",
             "coord": {
                 "x": -14,
                 "y": 0,
@@ -154,8 +154,8 @@ module.exports = {
             }
         },
         "eastCantilever": {
-            "title": "Dawn in the Forest",
-            // "description": "",
+            "title": "East Cantilever",
+            // "description": "Dawn in the Forest",
             "coord": {
                 "x": 14,
                 "y": 0,
@@ -163,8 +163,8 @@ module.exports = {
             }
         },
         "eastCourtyard": {
-            "title": "Introspection",
-            // "description": "",
+            "title": "East Courtyard",
+            // "description": "Introspection",
             "coord": {
                 "x": 20,
                 "y": 0,
@@ -178,6 +178,33 @@ module.exports = {
                 "x": 29,
                 "y": 0,
                 "z": 0
+            }
+        },
+        "northWestCantilever": {
+            "title": "North West Cantilever",
+            // "description": "",
+            "coord": {
+                "x": -9,
+                "y": 0,
+                "z": 9
+            }
+        },
+        "southRoad": {
+            "title": "South Road",
+            // "description": "",
+            "coord": {
+                "x": 0,
+                "y": 0,
+                "z": -34
+            }
+        },
+        "northRoad": {
+            "title": "North Road",
+            // "description": "",
+            "coord": {
+                "x": 0,
+                "y": 0,
+                "z": -34
             }
         }
     },
@@ -210,6 +237,20 @@ module.exports = {
             "location": "origin",
             "source": "17-02-temple.gltf"
         },
+        "2017-06-01": 
+        {
+            "title": "Design iteration model",
+            "description": "test5",
+            "location": "origin",
+            "source": "17-06-temple.gltf"
+        },
+        "2017-07-01": 
+        {
+            "title": "Design iteration model",
+            "description": "test5",
+            "location": "origin",
+            "source": "17-07-temple.gltf"
+        },
         "2017-08-01": 
         {
             "title": "Design iteration model",
@@ -241,7 +282,7 @@ module.exports = {
             {
                 "title": "image4",
                 "description": "test6c",
-                "location": "southGate",
+                "location": "southRoad",
                 "source": "SAM_100_0007.jpg"
             }            
         ],
@@ -273,7 +314,7 @@ module.exports = {
             {
                 "title": "image9",
                 "description": "test7",
-                "location": "southGate",
+                "location": "southRoad",
                 "source": "SAM_100_0013.jpg"
             },
             {
@@ -282,6 +323,273 @@ module.exports = {
                 "location": "northGate",
                 "source": "SAM_100_0016.jpg"
             }
+        ],
+        "2017-08-21": [
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northGate",
+                "source": "SAM_100_0018.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northCantilever",
+                "source": "SAM_100_0019.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "origin",
+                "source": "SAM_100_0022.jpg"
+            },  
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southCantilever",
+                "source": "SAM_100_0024.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southRoad",
+                "source": "SAM_100_0025.jpg"
+            }
+        ],
+        "2017-08-22": [
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northGate",
+                "source": "SAM_100_0027.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northCantilever",
+                "source": "SAM_100_0028.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "origin",
+                "source": "SAM_100_0029.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southCantilever",
+                "source": "SAM_100_0030.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southRoad",
+                "source": "SAM_100_0031.jpg"
+            }, 
+        ],
+        "2017-08-23": [
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northGate",
+                "source": "SAM_100_0032.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northCantilever",
+                "source": "SAM_100_0033.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "origin",
+                "source": "SAM_100_0034.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southCantilever",
+                "source": "SAM_100_0035.jpg"
+            },  
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southRoad",
+                "source": "SAM_100_0036.jpg"
+            },  
+        ],
+        "2017-08-24": [
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northEntry",
+                "source": "SAM_100_0037.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "origin",
+                "source": "SAM_100_0039.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southCantilever",
+                "source": "SAM_100_0040.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southRoad",
+                "source": "SAM_100_0041.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northCantilever",
+                "source": "SAM_100_0042.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northGate",
+                "source": "SAM_100_0043.jpg"
+            },
+        ],
+        "2017-08-28": [
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northWestCantilever",
+                "source": "SAM_100_0045.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northEntry",
+                "source": "SAM_100_0047.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northCantilever",
+                "source": "SAM_100_0048.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northGate",
+                "source": "SAM_100_0049.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southGate",
+                "source": "SAM_100_0051.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southRoad",
+                "source": "SAM_100_0053.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "origin",
+                "source": "SAM_100_0056.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "interiorWest",
+                "source": "SAM_100_0057.jpg"
+            },  
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "westEntry",
+                "source": "SAM_100_0058.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "westCantilever",
+                "source": "SAM_100_0059.jpg"
+            },   
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "eastEntry",
+                "source": "SAM_100_0060.jpg"
+            },
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "eastCantilever",
+                "source": "SAM_100_0061.jpg"
+            },  
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "eastGate",
+                "source": "SAM_100_0062.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northRoad",
+                "source": "SAM_100_0065.jpg"
+            },     
+        ],
+        "2017-09-02": [
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "eastGate",
+                "source": "SAM_100_0067.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northGate",
+                "source": "SAM_100_0069.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "southRoad",
+                "source": "SAM_100_0070.jpg"
+            }, 
+        ],
+        "2017-09-03": [
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "origin",
+                "source": "SAM_100_0074.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northEntry",
+                "source": "SAM_100_0077.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "eastCantilever",
+                "source": "SAM_100_0078.jpg"
+            }, 
+            {
+                "title": "this is a title",
+                "description": "this is a longer description with some words",
+                "location": "northCantilever",
+                "source": "SAM_100_0079.jpg"
+            }, 
         ]
+
     }
 }
