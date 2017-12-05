@@ -13,8 +13,8 @@ AFRAME.registerComponent('gltf-renderer', {
 		var el = this.el;
 		var myScene = document.querySelector('a-scene');
 		var phongMaterial = new THREE.MeshPhongMaterial( {  
-			color: 0x4286F4,
-			specular: 0xffffff, 
+			color: 0x555555,
+			specular: 0xFFFFFF, 
 			shininess: 50, 
 			transparent: true,
 			opacity: 0.5,
@@ -23,7 +23,7 @@ AFRAME.registerComponent('gltf-renderer', {
 			polygonOffsetUnits: 1
 		} );
 		var lineMat = new THREE.LineBasicMaterial( { 
-			color: 0x000000, linewidth: 2 
+			color: 0xFFFFFF, linewidth: 2 
 		} );
 		var wireframeEl = document.createElement('a-entity')
 		wireframeEl.setAttribute('id', 'wireframe-el')

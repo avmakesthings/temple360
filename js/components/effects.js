@@ -27,13 +27,13 @@ AFRAME.registerComponent('camera-mask', {
             color: 0x5B481B,
             side: THREE.BackSide,
             transparent: true,
-            opacity: 0.3,
+            opacity: 0.15,
             blending: THREE.AdditiveBlending
         } )
 
 
 
-        var sphere = new THREE.Mesh( geometry, matMul );
+        var sphere = new THREE.Mesh( geometry, matAdd );
         el.object3D.add(sphere);
 
 
