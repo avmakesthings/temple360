@@ -71,7 +71,6 @@ AFRAME.registerReducer('app', {
 		locations: mainData.locations,
 		models: mainData.models,
 		threeSixtyImages: mainData.threeSixtyImages,
-		// activeLocation: mainData.locations["origin"],
 		activeLocation: "origin",
 		activeDate: "2017-08-18",
 		activeModel: {},
@@ -167,7 +166,6 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveLocation', {
-			// activeLocation: mainData.locations["southGate"]
 			activeLocation: "southGate"
 		});
 
