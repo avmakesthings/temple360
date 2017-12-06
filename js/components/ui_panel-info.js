@@ -59,14 +59,13 @@ AFRAME.registerComponent('ui-panel-info', {
 		// })
 		description.setAttribute('position',{
 			x:0,
-			y:-this.getTextHeight(heading)-0.1, //placeholder
+			y:-this.getTextHeight(heading)-0.01, //placeholder
 			z:0
 		})
-		description.setAttribute('geometry',{
-			primitive:'plane',
-			height: 'auto',
-			width: 'auto'
-		})
+		// description.setAttribute('geometry',{
+		// 	primitive:'plane',
+		// 	height: 'auto',
+		// })
 		description.setAttribute('material',textGeoMat)
 		el.appendChild(description)
 	},
@@ -87,7 +86,7 @@ AFRAME.registerComponent('ui-panel-info', {
 		var infoContainer = document.createElement('a-entity')
 		infoContainer.setAttribute('id', panelID )
 		infoContainer.setAttribute('position', {
-			x: -0.09,
+			x: -0.45,
 			y: 0.1,
 			z:0
 		} )
