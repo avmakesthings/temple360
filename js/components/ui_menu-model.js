@@ -24,6 +24,8 @@ AFRAME.registerComponent('ui-menu-model', {
 	init: function (){
 		this.activeDate = getState('activeDate')
 		this.activeModel = getState('activeModel')
+
+		console.log('model-menu',this.activeModel)
 		this.setPosition()
 		// this.el.setAttribute('visible', false)
 		this.createMenu()
@@ -74,11 +76,18 @@ AFRAME.registerComponent('ui-menu-model', {
 		layout.appendChild(layoutUpper)
 		layout.appendChild(layoutLower)
 		
+		
+		//hack - need to add condition for dates that don't match model months. works with current data
+		var activeDate = moment(this.activeDate).format("YYYY-MM-DD")
+		var day = moment(activeDate).format('DD')
+		var monthYear = moment(activeDate).format('YYYY-MM')
+		if(day !== "01"){
+			activeDate = monthYear + "-01"
+		}
+		var headingText = JSON.stringify(mainData.models[activeDate].title)				
+		var descriptionText = JSON.stringify(mainData.models[activeDate].description)
+		
 		const timeline = this.createTimelinePanel(layoutUpper)
-		
-		var headingText = JSON.stringify(mainData.models[this.activeDate].title)
-		var descriptionText = JSON.stringify(mainData.models[this.activeDate].description)
-		
 		const info = this.createInfoPanel(layoutUpper,headingText, descriptionText)
 		const nav = this.createNavPanel(layoutLower)
 		
@@ -97,13 +106,14 @@ AFRAME.registerComponent('ui-menu-model', {
 		this.el.appendChild(layout)
 
 		window.addEventListener('activeDateChanged', (e)=>{
-			
-			var activeDate = moment(e.detail.activeDate).format("YYYY-MM-DD")
-
-			var headingText = JSON.stringify(mainData.models[activeDate].title)
-			var descriptionText = JSON.stringify(mainData.models[activeDate].description)
-			this.updateInfoPanel(info,headingText,descriptionText)
-			
+			var activeScene = getState('activeScene')
+			if(activeScene === 'scene3DModel'){
+				var activeDate = moment(e.detail.activeDate).format("YYYY-MM-DD")
+				
+					var headingText = JSON.stringify(mainData.models[activeDate].title)
+					var descriptionText = JSON.stringify(mainData.models[activeDate].description)
+					this.updateInfoPanel(info,headingText,descriptionText)
+			}
 		})
 	},
 	createMenuGeo: function(el){
