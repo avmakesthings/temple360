@@ -109,7 +109,7 @@ function appendBoxEl(el){
 	boxEl.setAttribute('material', {
 		color: '#000000',
 		transparent: true,
-		opacity: 0.1
+		opacity: 0.0
 	})
 
 	boxEl.setAttribute('position', {
