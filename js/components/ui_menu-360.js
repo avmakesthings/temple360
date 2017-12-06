@@ -31,7 +31,7 @@ AFRAME.registerComponent('ui-menu-360', {
 		el.setAttribute('visible', false);
 		//add layout component & set base position 
 		var layout = document.createElement('a-entity');
-		layout.setAttribute('id','model-menu-container');
+		layout.setAttribute('id','360-menu-container');
 		layout.setAttribute('position', {
             x:0, 
             y:0.2, 
@@ -42,29 +42,23 @@ AFRAME.registerComponent('ui-menu-360', {
 		globals.createMeshPlaneFill(layout,data.menuHeight, data.menuWidth, data.menuDepth);
 		el.appendChild(layout);			
                                         
-		layout.setAttribute('id','360-menu-container');
-
 		//add timeline panel component
 		var activeLocation = getState('activeLocation')
 		var timelineData = this.filter360sByLocation(mainData.threeSixtyImages, activeLocation)
-		
+
 		var timeline = document.createElement('a-entity');
 		timeline.setAttribute('id','timeline');
-		
-		//absolute pos placeholder
 		timeline.setAttribute('position',{
-			X: -0.9,
-			Y: 0.3,
-			Z: 0
+			x: -0.7,
+			y: 0.07,
+			z: 0.1
 		})
-
 		timeline.setAttribute('ui-panel-timeline',{
 			timelineData: JSON.stringify(timelineData),
 			timeScales: ['month','day'],
 			componentTitle:'timeline',
 			active:true
 		});
-
 		timeline.clickHandler = (e)=>{
 			this.el.emit('changeActiveDate',{ 
 				activeDate: e.key
@@ -73,20 +67,21 @@ AFRAME.registerComponent('ui-menu-360', {
 				activeThreeSixty: e.children
 			});
 		}
+
 		layout.appendChild(timeline);
 
 		//add nav button
-		// var navButton = document.createElement('a-entity');
-		// navButton.setAttribute('ui-button', {
-		// 	value:'Back',
-		// });
-		// navButton.clickHandler = (e)=>{
-		// 	this.el.emit('changeActiveScene',{ 
-		// 		activeScene: 'scene3DModel'
-		// 	});
-		// 	//active location changed?
-		// }
-		// layout.appendChild(navButton);
+		var navButton = document.createElement('a-entity');
+		navButton.setAttribute('ui-button', {
+			value:'Back',
+		});
+		navButton.clickHandler = (e)=>{
+			this.el.emit('changeActiveScene',{ 
+				activeScene: 'scene3DModel'
+			});
+			//active location changed?
+		}
+		layout.appendChild(navButton);
 
 		window.addEventListener('show360Menu', (e)=>{
 			var menuState = this.el.getAttribute('visible')

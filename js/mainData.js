@@ -232,7 +232,7 @@ module.exports = {
         },
         "2017-02-01": 
         {
-            "title": "Design iteration model",
+            "title": "Burning Man Grant Submittal",
             "description": "Initial 3D model",
             "location": "origin",
             "source": "17-02-temple.gltf"
@@ -246,15 +246,15 @@ module.exports = {
         },
         "2017-07-01": 
         {
-            "title": "Design iteration model",
+            "title": "Refined model",
             "description": "test5",
             "location": "origin",
             "source": "17-07-temple.gltf"
         },
         "2017-08-01": 
         {
-            "title": "Design iteration model",
-            "description": "test5",
+            "title": "Final design",
+            "description": "This was the model that we took to the desert",
             "location": "origin",
             "source": "17-08-temple.gltf"
         }
