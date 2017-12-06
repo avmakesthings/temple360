@@ -3,6 +3,8 @@ MARKERS : A component which adds/removes markers
 
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
+var moment = require('moment');
+
 // TODO: Rename 'app' to 'appState' or 'state' in app.js
 // Move that reducer, the window events, & this helper to the same file
 // Import & use this helper wherever appState needs to be pulled
@@ -13,13 +15,25 @@ function getState(key){
     return appState[key]
 }
 
+// If no threeSixty is found for this date, 
+// find the first match within the month if one exists
+// Note: assumes they're already sorted
+function getFirstThreeSixty(activeDate, threeSixtyImages){
+    var activeDateMonth = moment(activeDate).month()
+    var firstThreeSixty = Object.keys(threeSixtyImages).find((date)=>{
+        return moment(date).month() === activeDateMonth
+    })
+    return firstThreeSixty
+}
+
 AFRAME.registerComponent('ui-markers', {
 
 	init: function (){
         this.locations = getState('locations')
         this.threeSixtyImages = getState('threeSixtyImages')
         this.activeDate = getState('activeDate')
-
+        
+        this.bestDate = getFirstThreeSixty(this.activeDate, this.threeSixtyImages)
 
         this.markers = this.addMarkers()
         // this.highlightMarkers()
@@ -33,7 +47,7 @@ AFRAME.registerComponent('ui-markers', {
     },
 
     getMarkerData: function(){
-        return this.threeSixtyImages[this.activeDate] || []
+        return this.threeSixtyImages[this.bestDate] || []
     },
 
 	addMarkers: function(){
