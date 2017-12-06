@@ -257,6 +257,13 @@ module.exports = {
             "description": "This was the model that we took to the desert",
             "location": "origin",
             "source": "17-08-temple.gltf"
+        },
+        "2017-09-01": 
+        {
+            "title": "September placeholder",
+            "description": "This was the model that we took to the desert",
+            "location": "origin",
+            "source": "17-08-temple.gltf"
         }
     },
     "threeSixtyImages": {    
