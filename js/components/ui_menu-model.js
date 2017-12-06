@@ -11,6 +11,7 @@ function getState(key){
 } 
 
 var mainData = require('./../mainData.js');
+var moment = require('moment');
 
 AFRAME.registerComponent('ui-menu-model', {
 	schema: {
@@ -21,10 +22,11 @@ AFRAME.registerComponent('ui-menu-model', {
 		active: {default: false}
 	},
 	init: function (){
-
+		this.activeDate = getState('activeDate')
+		this.activeModel = getState('activeModel')
 		this.setPosition()
 		// this.el.setAttribute('visible', false)
-		this.createMenuLayout()
+		this.createMenu()
 
 		//menu toggle - TODO - add support for VR controller keypress
 		window.addEventListener('showModelMenu', (e)=>{
@@ -45,7 +47,7 @@ AFRAME.registerComponent('ui-menu-model', {
 		})
 		this.el.setAttribute('position', camPos)
 	},
-	createMenuLayout: function(){
+	createMenu: function(){
 		const layout = document.createElement('a-entity')
 		layout.setAttribute('id','model-menu-container')
 		layout.setAttribute('position', {
@@ -73,7 +75,11 @@ AFRAME.registerComponent('ui-menu-model', {
 		layout.appendChild(layoutLower)
 		
 		const timeline = this.createTimelinePanel(layoutUpper)
-		const info = this.createInfoPanel(layoutUpper)
+		
+		var headingText = JSON.stringify(mainData.models[this.activeDate].title)
+		var descriptionText = JSON.stringify(mainData.models[this.activeDate].description)
+		
+		const info = this.createInfoPanel(layoutUpper,headingText, descriptionText)
 		const nav = this.createNavPanel(layoutLower)
 		
 		//add positioning logic
@@ -89,6 +95,16 @@ AFRAME.registerComponent('ui-menu-model', {
 		})			
 		
 		this.el.appendChild(layout)
+
+		window.addEventListener('activeDateChanged', (e)=>{
+			
+			var activeDate = moment(e.detail.activeDate).format("YYYY-MM-DD")
+
+			var headingText = JSON.stringify(mainData.models[activeDate].title)
+			var descriptionText = JSON.stringify(mainData.models[activeDate].description)
+			this.updateInfoPanel(info,headingText,descriptionText)
+			
+		})
 	},
 	createMenuGeo: function(el){
 		data = this.data
@@ -116,22 +132,26 @@ AFRAME.registerComponent('ui-menu-model', {
 		el.appendChild(timeline);
 		return timeline
 	},
-	createInfoPanel: function(el){
+	createInfoPanel: function(el, title, description){
 
 		var info = document.createElement('a-entity')		
 		info.setAttribute('id','info')
 		info.setAttribute('ui-panel-info',{
-			headingVal: 'test heading',
-			// descriptionVal: {default: "Description"},
-			// headingMixin: 'text-panel-heading',
-			// descriptionMixin: 'text-description-1',
-			// panelID: {default: ""},
-			// panelHeight: {default: 0.5},
-			// panelWidth: {default: 0.3},
-			// panelDepth: {default: 0.1},
+			headingVal: title,
+			descriptionVal: description ,
 		});
 		el.appendChild(info)
 		return info
+	},
+	updateInfoPanel: function(el,title, description){
+		var headingEl = el.querySelector('#heading')
+		headingEl.setAttribute('text', {value:title})
+		var descripEl = el.querySelector('#description')
+		descripEl.setAttribute('text', {value:description})
+	},
+	removeInfoPanel: function(){
+		var info = document.getElementById('info')
+		info.parentNode.removeChild(info)
 	},
 	createNavPanel: function(el){
 		//test nav button
@@ -146,7 +166,6 @@ AFRAME.registerComponent('ui-menu-model', {
 			this.el.emit('changeActiveScene',{ 
 				activeScene: 'sceneHome'
 			});
-			//active location changed?
 		}
 		el.appendChild(navButton);
 		return navButton

@@ -21,22 +21,17 @@ AFRAME.registerComponent('ui-panel-info', {
 
 		this.createInfoPanel(panelID)
 
-		window.addEventListener('activeDateChanged', (e)=>{
-			this.el.removeInfoPanel(panelID)
-			this.el.createInfoPanel(panelID)
-		})
 	}, //option to add a lifecycle method when the panel
 	//height is recalculated instead of event listener? 
 	createText: function(el){
 
 		var data = this.data
-		var heading = document.createElement('a-entity')
-
 		var textGeoMat = new THREE.MeshBasicMaterial({
 			transparent: true,
 			opacity: 0.0
 		})
 
+		var heading = document.createElement('a-entity')
 		heading.setAttribute('id', 'heading')
 		heading.setAttribute('text',{
 			value: data.headingVal,
@@ -54,6 +49,7 @@ AFRAME.registerComponent('ui-panel-info', {
 		el.appendChild(heading)
 
 		var description = document.createElement('a-entity')
+		description.setAttribute('id', 'description')
 		description.setAttribute('text',{
 			value: data.descriptionVal,
 			anchor: 'left'
@@ -97,7 +93,7 @@ AFRAME.registerComponent('ui-panel-info', {
 		} )
 		this.createText(infoContainer)
 		var panelHeight = this.calcPanelHeight(infoContainer)
-		this.createPanelGeo(this.el,panelHeight,0.3,0.1)
+		this.createPanelGeo(this.el,panelHeight,this.data.panelWidth,0.1)
 		this.el.appendChild(infoContainer)
 	},
 	removeInfoPanel: function(panelID){

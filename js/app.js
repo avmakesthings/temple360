@@ -170,7 +170,7 @@ window.onload = function() {
 		});
 
 		AFRAME.scenes[0].emit('changeActiveDate', {
-			activeDate: "2017-08-18"
+			activeDate: "2017-08-01"
 		});
 
 		// AFRAME.scenes[0].emit('changeActiveThreeSixty', {
@@ -195,7 +195,7 @@ window.addEventListener('activeModelChanged', function (event) {
 	console.log("about to change model");
 	if(nextModelPath){
 		thisModel.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
-		thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
+		// thisModelOpaque.setAttribute('gltf-model', "url(./assets/" + nextModelPath + ")");
 	}
 });
 
