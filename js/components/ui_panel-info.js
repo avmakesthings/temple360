@@ -6,72 +6,70 @@
 
 AFRAME.registerComponent('ui-panel-info', {
 	schema: {
+		preHeading: {default: true},
+		heading: {default: true},
+		subHeading: {default: false},
+		description: {default: true},
+		preHeadingVal: {default: "Pre-heading"},
 		headingVal: {default: "Title"},
+		// subHeadingVal: {default: "Sub-heading"},
 		descriptionVal: {default: "Description"},
-		// headingMixin: {default: ""},
-		// descriptionMixin: {default: ""},
+		preHeadingMixin: {default: "text-panel-sub-heading-2"},
+		headingMixin: {default: "text-heading-2"},
+		// subHeadingMixin: {default: "text-heading-2"},
+		descriptionMixin: {default: "text-description-2"},
 		panelID: {default: ""},
 		panelHeight: {default: 0.7},
 		panelWidth: {default: 1.0},
 		panelDepth: {default: 0.2},
-		panelMargin: {default: 0.05}
+		panelMargin: {default: 0.05},
 	},
 	init: function (){
+		
 		var panelID = this.data.panelID
-
 		this.createInfoPanel(panelID)
-
-	}, //option to add a lifecycle method when the panel
-	//height is recalculated instead of event listener? 
+	},
 	createText: function(el){
 
 		var data = this.data
-		var textGeoMat = new THREE.MeshBasicMaterial({
-			transparent: true,
-			opacity: 0.0
+
+		var preHeading = document.createElement('a-entity')
+		preHeading.setAttribute('id', 'preHeading')
+		preHeading.setAttribute('mixin',data.preHeadingMixin)
+		preHeading.setAttribute('text',{
+			value: data.preHeadingVal,
 		})
+		el.appendChild(preHeading)
 
 		var heading = document.createElement('a-entity')
 		heading.setAttribute('id', 'heading')
+		heading.setAttribute('mixin',data.headingMixin)
 		heading.setAttribute('text',{
 			value: data.headingVal,
-			anchor: 'left'
 		})
-		// heading.setAttribute('mixin',{
-		// 	value: data.headingMixin
-		// }),
-		heading.setAttribute('geometry',{
-			primitive:'plane',
-			height: 'auto',
-			width: 'auto'
+		heading.setAttribute('position',{
+			x:0,
+			y:-0.056, //placeholder
+			z:0
 		})
-		heading.setAttribute('material',textGeoMat)
 		el.appendChild(heading)
 
 		var description = document.createElement('a-entity')
 		description.setAttribute('id', 'description')
+		description.setAttribute('mixin',data.descriptionMixin)
 		description.setAttribute('text',{
 			value: data.descriptionVal,
-			anchor: 'left'
 		})
-		// description.setAttribute('mixin',{
-		// 	value: data.headingMixin
-		// })
-		description.setAttribute('position',{
+		description.setAttribute('position',{ //placeholder
 			x:0,
-			y:-this.getTextHeight(heading)-0.01, //placeholder
+			y:-0.454,
 			z:0
 		})
-		// description.setAttribute('geometry',{
-		// 	primitive:'plane',
-		// 	height: 'auto',
-		// })
-		description.setAttribute('material',textGeoMat)
 		el.appendChild(description)
 	},
 	getTextHeight: function(el){
-		// textObj = el.components.el.attributes.components.
-		// return textEl.components.geometry.height
+		//not finished - need to calc bbox of text to 
+		//size container
 		return 0.1 //placeholder
 	},
 	calcPanelHeight: function(){
@@ -86,17 +84,13 @@ AFRAME.registerComponent('ui-panel-info', {
 		var infoContainer = document.createElement('a-entity')
 		infoContainer.setAttribute('id', panelID )
 		infoContainer.setAttribute('position', {
-			x: -0.45,
-			y: 0.1,
+			x: -0.42,
+			y: 0.22,
 			z:0
 		} )
 		this.createText(infoContainer)
 		var panelHeight = this.calcPanelHeight(infoContainer)
 		this.createPanelGeo(this.el,this.data.panelHeight,this.data.panelWidth,this.data.panelDepth)
 		this.el.appendChild(infoContainer)
-	},
-	removeInfoPanel: function(panelID){
-		thisPanel = document.querySelector('#'+ panelID)
-		thisPanel.parentNode.removeChild(thisPanel)
 	}
 });
