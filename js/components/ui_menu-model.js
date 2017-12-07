@@ -83,12 +83,13 @@ AFRAME.registerComponent('ui-menu-model', {
 		if(day !== "01"){
 			activeDate = monthYear + "-01"
 		}
-		var headingText = JSON.stringify(mainData.models[activeDate].title)				
-		var descriptionText = JSON.stringify(mainData.models[activeDate].description)
+		var preHeadingText = moment(activeDate).format('MM/DD/YYYY')
+		var headingText = mainData.models[activeDate].title		
+		var descriptionText = mainData.models[activeDate].description
 		
 
 		const timeline = this.createTimelinePanel(layoutUpper)
-		const info = this.createInfoPanel(layoutUpper,headingText, descriptionText)
+		const info = this.createInfoPanel(layoutUpper,preHeadingText, headingText, descriptionText)
 		const nav = this.createNavPanel(layoutLower)
 		
 		//add positioning logic
@@ -109,10 +110,10 @@ AFRAME.registerComponent('ui-menu-model', {
 			var activeScene = getState('activeScene')
 			if(activeScene === 'scene3DModel'){
 				var activeDate = moment(e.detail.activeDate).format("YYYY-MM-DD")
-				
-				var headingText = JSON.stringify(mainData.models[activeDate].title)
-				var descriptionText = JSON.stringify(mainData.models[activeDate].description)
-				this.updateInfoPanel(info,headingText,descriptionText)
+				var preHeadingText = moment(activeDate).format('MM/DD/YYYY')
+				var headingText = mainData.models[activeDate].title
+				var descriptionText = mainData.models[activeDate].description
+				this.updateInfoPanel(info,preHeadingText,headingText,descriptionText)
 			}
 		})
 	},
@@ -142,18 +143,21 @@ AFRAME.registerComponent('ui-menu-model', {
 		el.appendChild(timeline);
 		return timeline
 	},
-	createInfoPanel: function(el, title, description){
+	createInfoPanel: function(el, preHeading, title, description){
 
 		var info = document.createElement('a-entity')		
 		info.setAttribute('id','info')
 		info.setAttribute('ui-panel-info',{
+			preHeadingVal: preHeading,
 			headingVal: title,
-			descriptionVal: description ,
+			descriptionVal: description
 		});
 		el.appendChild(info)
 		return info
 	},
-	updateInfoPanel: function(el,title, description){
+	updateInfoPanel: function(el,preHeading,title, description){
+		var preHeadingEl = el.querySelector('#preHeading')
+		preHeadingEl.setAttribute('text', {value:preHeading})
 		var headingEl = el.querySelector('#heading')
 		headingEl.setAttribute('text', {value:title})
 		var descripEl = el.querySelector('#description')
