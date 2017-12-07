@@ -1,14 +1,8 @@
-/* * * + + + + + + + + + + + + + + + + + + + + 
-BUTTON : UI button
-has:
-geom
-material
-location (in UI)
-value
-onHover
-onClick 
-
-+ + + + + + + + + + + + + + + + + + + + * * */ 
+/**
+ * @author AnastasiaVictor/ http://github.com/avmakesthings
+ * 
+ * A-frame Generic Button Component
+ */
 
 AFRAME.registerComponent('ui-button', {
 	schema: {
@@ -67,9 +61,6 @@ AFRAME.registerComponent('ui-button', {
 
 		el.setAttribute('text', {
 			value: data.value,
-			// letterSpacing: 3.6,
-			// width: 2,
-			// align: 'center'
 		});
 
 		el.setAttribute('geometry',{

@@ -9,6 +9,31 @@ function getState(key){
     return appState[key]
 } 
 
+//obj functions from Michael Jaspar
+function getNextKey(obj, id){
+	var keys = Object.keys( obj ),
+		idIndex = keys.indexOf( id ),
+		nextIndex = idIndex += 1;
+	if(nextIndex >= keys.length){
+		//we're at the end, there is no next
+		return;
+	}
+	var nextKey = keys[ nextIndex ]
+	return nextKey;
+};
+
+function getPreviousKey(obj, id){
+	var keys = Object.keys( obj ),
+		idIndex = keys.indexOf( id ),
+		nextIndex = idIndex -= 1;
+	if(idIndex === 0){
+	//we're at the beginning, there is no previous
+		return;
+	}
+	var nextKey = keys[ nextIndex ]
+	return nextKey;
+};
+
 var mainData = require('./../mainData.js');
 var moment = require('moment');
 
@@ -21,9 +46,10 @@ AFRAME.registerComponent('ui-menu-360', {
 		active: {default: false}
 	},
 	init: function (){
+		
 		var activeLocation = getState('activeLocation')
 		this.menuData = this.filter360sByLocation(mainData.threeSixtyImages, activeLocation)
-		this.setActiveDate() //hack for dealing with date discrepencies
+		this.activeDate = this.setActiveDate() //hack for dealing with date discrepencies
 		this.setPosition()
 		this.el.setAttribute('visible', false)
 		this.createMenu()
@@ -68,7 +94,7 @@ AFRAME.registerComponent('ui-menu-360', {
 		layoutLower.setAttribute('id','layout-lower')
 		layoutLower.setAttribute('position', {
             x:0, 
-            y:-0.4, 
+            y:-0.45, 
             z:0
 		})			
 		layout.appendChild(layoutUpper)
@@ -93,9 +119,10 @@ AFRAME.registerComponent('ui-menu-360', {
 		this.el.appendChild(layout)
 
 		window.addEventListener('activeDateChanged', (e)=>{
+			this.activeDate = e.detail.activeDate
 			var activeScene = getState('activeScene')
 			if(activeScene === 'scene360'){
-				this.updateInfoPanel(info, e.detail.activeDate)
+				this.updateInfoPanel(info, this.activeDate)
 			}
 		})
 	},
@@ -162,6 +189,7 @@ AFRAME.registerComponent('ui-menu-360', {
 		var navPanel = document.createElement('a-entity');
 		
 		var homeButton = document.createElement('a-entity');
+		homeButton.setAttribute('id', 'button-home')
 		homeButton.setAttribute('ui-button', {
 			value:'home',
 			height: 0.1,
@@ -170,7 +198,7 @@ AFRAME.registerComponent('ui-menu-360', {
 			mixin: 'text-button-2'
 		});
 		homeButton.setAttribute('position', {
-			x: 0.5
+			x: -0.315
 		});
 		homeButton.clickHandler = (e)=>{
 			this.el.emit('changeActiveScene',{ 
@@ -179,6 +207,77 @@ AFRAME.registerComponent('ui-menu-360', {
 		}
 		navPanel.appendChild(homeButton);
 		
+		var backButton = document.createElement('a-entity');
+		backButton.setAttribute('id', 'button-back')		
+		backButton.setAttribute('ui-button', {
+			value:'Back to Model',
+			height: 0.1,
+			width: 0.45,
+			depth: 0.1,	
+			mixin: 'text-button-2'
+		});
+		backButton.setAttribute('position', {
+			x: -0.695 
+		});
+		backButton.clickHandler = (e)=>{
+			this.el.emit('changeActiveScene',{ 
+				activeScene: 'scene3DModel'
+			});
+		}
+		navPanel.appendChild(backButton);
+
+		var prev360Button = document.createElement('a-entity')
+		prev360Button.setAttribute('id', 'button-prev-360')	
+		prev360Button.setAttribute('ui-button', {
+			value:'Prev 360',
+			height: 0.1,
+			width: 0.3,
+			depth: 0.1,	
+			mixin: 'text-button-2'
+		})
+		prev360Button.setAttribute('position', {
+			x: 0.345,
+		})
+		
+		prev360Button.clickHandler = (e)=>{
+			var prevDate = this.getPreviousDate()
+			if (prevDate != this.activeDate){
+				this.el.emit('changeActiveDate',{ 
+					activeDate: prevDate
+				})
+				this.el.emit('changeActiveThreeSixty',{ 
+					activeThreeSixty: this.menuData[prevDate]
+				});
+			}
+		}
+		navPanel.appendChild(prev360Button)	
+
+		var next360Button = document.createElement('a-entity')
+		next360Button.setAttribute('id', 'button-next-360')	
+		next360Button.setAttribute('ui-button', {
+			value:'Next 360',
+			height: 0.1,
+			width: 0.3,
+			depth: 0.1,	
+			mixin: 'text-button-2'
+		})
+		next360Button.setAttribute('position', {
+			x: 0.695
+		})
+
+		next360Button.clickHandler = (e)=>{
+			var nextDate = this.getNextDate()
+			if (nextDate != this.activeDate){			
+				this.el.emit('changeActiveDate',{ 
+					activeDate: nextDate
+				})
+				this.el.emit('changeActiveThreeSixty',{ 
+					activeThreeSixty: this.menuData[nextDate]
+				});
+			}
+		}
+		navPanel.appendChild(next360Button)	
+
 		el.appendChild(navPanel);
 		return navPanel
 	},
@@ -198,6 +297,21 @@ AFRAME.registerComponent('ui-menu-360', {
 	setActiveDate: function(){
 		var firstDate = Object.keys(this.menuData)[0]
 		el.emit('changeActiveDate',{activeDate:firstDate})
+		return firstDate
+	},
+	getPreviousDate: function(){
+		var prev360Key =  getPreviousKey(this.menuData, this.activeDate)
+		if(prev360Key == undefined){
+			return this.activeDate
+		}
+		return prev360Key
+	},
+	getNextDate: function(){
+		var next360Key = getNextKey(this.menuData, this.activeDate) 
+		if(next360Key == undefined){
+			return this.activeDate
+		}
+		return next360Key
 	}
 });
 
