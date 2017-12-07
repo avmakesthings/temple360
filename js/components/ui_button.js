@@ -23,6 +23,7 @@ AFRAME.registerComponent('ui-button', {
 		iconMaterial: {type: 'string'},
 		value: {type: 'string'},
 		buttonType: {default: 'nav'},
+		mixin: {default: 'text-button-1'}
 	},
 	init: function (){
 		var data = this.data;
@@ -62,12 +63,13 @@ AFRAME.registerComponent('ui-button', {
 		}
 		//add button icon
 
-		//add button text
+		el.setAttribute('mixin', data.mixin);
+
 		el.setAttribute('text', {
 			value: data.value,
-			letterSpacing: 3.6,
-			width: 2,
-			align: 'center'
+			// letterSpacing: 3.6,
+			// width: 2,
+			// align: 'center'
 		});
 
 		el.setAttribute('geometry',{

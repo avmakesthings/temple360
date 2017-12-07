@@ -16,7 +16,7 @@ var moment = require('moment');
 AFRAME.registerComponent('ui-menu-model', {
 	schema: {
 		menuHeight: {default: 1.2},
-		menuWidth: {default: 2.5},
+		menuWidth: {default: 2.1},
 		menuDepth: {default: 0.3},
 		margin: {default: 0.0},
 		active: {default: false}
@@ -25,7 +25,6 @@ AFRAME.registerComponent('ui-menu-model', {
 		this.activeDate = getState('activeDate')
 		this.activeModel = getState('activeModel')
 
-		console.log('model-menu',this.activeModel)
 		this.setPosition()
 		// this.el.setAttribute('visible', false)
 		this.createMenu()
@@ -87,20 +86,21 @@ AFRAME.registerComponent('ui-menu-model', {
 		var headingText = JSON.stringify(mainData.models[activeDate].title)				
 		var descriptionText = JSON.stringify(mainData.models[activeDate].description)
 		
+
 		const timeline = this.createTimelinePanel(layoutUpper)
 		const info = this.createInfoPanel(layoutUpper,headingText, descriptionText)
 		const nav = this.createNavPanel(layoutLower)
 		
 		//add positioning logic
 		timeline.setAttribute('position', {
-            x:-0.5, 
+            x:-0.556, 
             y:0, 
-            z:0
+            z:-0.126
 		})
 		info.setAttribute('position', {
-            x:0.5, 
-            y:0, 
-            z:0
+            x:0.149, 
+            y:-0.039, 
+            z:-0.032
 		})			
 		
 		this.el.appendChild(layout)
@@ -110,9 +110,9 @@ AFRAME.registerComponent('ui-menu-model', {
 			if(activeScene === 'scene3DModel'){
 				var activeDate = moment(e.detail.activeDate).format("YYYY-MM-DD")
 				
-					var headingText = JSON.stringify(mainData.models[activeDate].title)
-					var descriptionText = JSON.stringify(mainData.models[activeDate].description)
-					this.updateInfoPanel(info,headingText,descriptionText)
+				var headingText = JSON.stringify(mainData.models[activeDate].title)
+				var descriptionText = JSON.stringify(mainData.models[activeDate].description)
+				this.updateInfoPanel(info,headingText,descriptionText)
 			}
 		})
 	},
@@ -164,21 +164,29 @@ AFRAME.registerComponent('ui-menu-model', {
 		info.parentNode.removeChild(info)
 	},
 	createNavPanel: function(el){
-		//test nav button
-		var navButton = document.createElement('a-entity');
-		navButton.setAttribute('ui-button', {
+		
+		var navPanel = document.createElement('a-entity');
+		
+		var homeButton = document.createElement('a-entity');
+		homeButton.setAttribute('ui-button', {
 			value:'home',
+			height: 0.1,
+			width: 0.2,
+			depth: 0.1,	
+			mixin: 'text-button-2'
 		});
-		navButton.setAttribute('position', {
+		homeButton.setAttribute('position', {
 			x: 0.5
 		});
-		navButton.clickHandler = (e)=>{
+		homeButton.clickHandler = (e)=>{
 			this.el.emit('changeActiveScene',{ 
 				activeScene: 'sceneHome'
 			});
 		}
-		el.appendChild(navButton);
-		return navButton
+		navPanel.appendChild(homeButton);
+		
+		el.appendChild(navPanel);
+		return navPanel
 	}
 });
 

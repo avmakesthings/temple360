@@ -11,9 +11,9 @@ AFRAME.registerComponent('ui-panel-info', {
 		// headingMixin: {default: ""},
 		// descriptionMixin: {default: ""},
 		panelID: {default: ""},
-		panelHeight: {default: 0.5},
+		panelHeight: {default: 0.7},
 		panelWidth: {default: 1.0},
-		panelDepth: {default: 0.1},
+		panelDepth: {default: 0.2},
 		panelMargin: {default: 0.05}
 	},
 	init: function (){
@@ -92,7 +92,7 @@ AFRAME.registerComponent('ui-panel-info', {
 		} )
 		this.createText(infoContainer)
 		var panelHeight = this.calcPanelHeight(infoContainer)
-		this.createPanelGeo(this.el,panelHeight,this.data.panelWidth,0.1)
+		this.createPanelGeo(this.el,this.data.panelHeight,this.data.panelWidth,this.data.panelDepth)
 		this.el.appendChild(infoContainer)
 	},
 	removeInfoPanel: function(panelID){
