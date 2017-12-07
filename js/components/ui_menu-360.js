@@ -3,56 +3,112 @@
  * 
  * A-frame 360 Menu Component
  */
-
-var mainData = require('./../mainData.js');
-
-//using this here but assuming that it's going to be rolled into app or globals
 function getState(key){
     var sceneEl = document.querySelector('a-scene');
     var appState = sceneEl.systems.state.state.app 
     return appState[key]
-}
+} 
+
+var mainData = require('./../mainData.js');
+var moment = require('moment');
 
 AFRAME.registerComponent('ui-menu-360', {
 	schema: {
-
 		menuHeight: {default: 1.2},
-		menuWidth: {default: 2.5},
+		menuWidth: {default: 2.1},
 		menuDepth: {default: 0.3},
 		margin: {default: 0.0},
 		active: {default: false}
 	},
 	init: function (){
-		var el = this.el;
-		data = this.data;
-
-		
+		var activeLocation = getState('activeLocation')
+		this.menuData = this.filter360sByLocation(mainData.threeSixtyImages, activeLocation)
+		this.setActiveDate() //hack for dealing with date discrepencies
 		this.setPosition()
-		el.setAttribute('visible', false);
-		//add layout component & set base position 
-		var layout = document.createElement('a-entity');
-		layout.setAttribute('id','360-menu-container');
+		this.el.setAttribute('visible', false)
+		this.createMenu()
+
+		//menu toggle - TODO - add support for VR controller keypress
+		window.addEventListener('show360Menu', (e)=>{
+			var menuState = this.el.getAttribute('visible')
+			this.setPosition()
+			this.el.setAttribute('visible', (!menuState))
+		})
+
+	},
+	setPosition: function(){
+		var cam = document.querySelector('a-camera')
+		var camPos = cam.components.position.data;
+		var camRot = cam.components.rotation.data;
+		this.el.setAttribute('rotation',{
+			x:0,
+			y:camRot.y,
+			z:0
+		})
+		this.el.setAttribute('position', camPos)
+	},
+	createMenu: function(){
+		const layout = document.createElement('a-entity')
+		layout.setAttribute('id','model-menu-container')
 		layout.setAttribute('position', {
             x:0, 
             y:0.2, 
             z:-1.5 
 		})
-		//create menu container geometry 
-		globals.createWireframeBox(layout,data.menuHeight, data.menuWidth, data.menuDepth);
-		globals.createMeshPlaneFill(layout,data.menuHeight, data.menuWidth, data.menuDepth);
-		el.appendChild(layout);			
-                                        
-		//add timeline panel component
-		var activeLocation = getState('activeLocation')
-		var timelineData = this.filter360sByLocation(mainData.threeSixtyImages, activeLocation)
+		this.createMenuGeo(layout)
 
-		var timeline = document.createElement('a-entity');
-		timeline.setAttribute('id','timeline');
-		timeline.setAttribute('position',{
-			x: -0.7,
-			y: 0.07,
-			z: 0.1
+		const layoutUpper = document.createElement('a-entity')
+		layoutUpper.setAttribute('id','layout-upper')
+		layoutUpper.setAttribute('position', {
+            x:0, 
+            y:0.07, 
+            z:0
+		})		
+		const layoutLower = document.createElement('a-entity')
+		layoutLower.setAttribute('id','layout-lower')
+		layoutLower.setAttribute('position', {
+            x:0, 
+            y:-0.4, 
+            z:0
+		})			
+		layout.appendChild(layoutUpper)
+		layout.appendChild(layoutLower)
+		
+		const timeline = this.createTimelinePanel(layoutUpper)
+		const info = this.createInfoPanel(layoutUpper)
+		const nav = this.createNavPanel(layoutLower)
+		
+		//add positioning logic
+		timeline.setAttribute('position', {
+            x:-0.556, 
+            y:0, 
+            z:-0.126
 		})
+		info.setAttribute('position', {
+            x:0.149, 
+            y:-0.039, 
+            z:-0.032
+		})			
+		
+		this.el.appendChild(layout)
+
+		window.addEventListener('activeDateChanged', (e)=>{
+			var activeScene = getState('activeScene')
+			if(activeScene === 'scene360'){
+				this.updateInfoPanel(info, e.detail.activeDate)
+			}
+		})
+	},
+	createMenuGeo: function(el){
+		data = this.data
+		globals.createWireframeBox(el,data.menuHeight, data.menuWidth, data.menuDepth)
+		globals.createMeshPlaneFill(el,data.menuHeight, data.menuWidth, data.menuDepth)
+	},
+	createTimelinePanel: function(el){
+
+		var timelineData = this.menuData
+		var timeline = document.createElement('a-entity');		
+		timeline.setAttribute('id','timeline');
 		timeline.setAttribute('ui-panel-timeline',{
 			timelineData: JSON.stringify(timelineData),
 			timeScales: ['month','day'],
@@ -67,38 +123,64 @@ AFRAME.registerComponent('ui-menu-360', {
 				activeThreeSixty: e.children
 			});
 		}
-
-		layout.appendChild(timeline);
-
-		//add nav button
-		var navButton = document.createElement('a-entity');
-		navButton.setAttribute('ui-button', {
-			value:'Back',
+		el.appendChild(timeline);
+		return timeline
+	},
+	createInfoPanel: function(el){
+		
+		var initialDate = moment(Object.keys(this.menuData)[0]).format('MM/DD/YYYY')
+		var initialData = this.menuData[Object.keys(this.menuData)[0]]
+		var infoEl = document.createElement('a-entity')		
+		infoEl.setAttribute('id','info')
+		infoEl.setAttribute('ui-panel-info',{
+			preHeadingVal: initialDate,
+			headingVal: initialData.title,
+			descriptionVal: initialData.description
 		});
-		navButton.clickHandler = (e)=>{
-			this.el.emit('changeActiveScene',{ 
-				activeScene: 'scene3DModel'
-			});
-			//active location changed?
-		}
-		layout.appendChild(navButton);
+		el.appendChild(infoEl)
+		return infoEl
+	},
+	updateInfoPanel: function(el, activeDate){
 
-		window.addEventListener('show360Menu', (e)=>{
-			var menuState = this.el.getAttribute('visible')
-			this.setPosition()
-			this.el.setAttribute('visible', (!menuState))
+		activeDate = moment(activeDate).format("YYYY-MM-DD")
+
+		var preHeadingEl = el.querySelector('#preHeading')
+		preHeadingEl.setAttribute('text', {
+			value:moment(activeDate).format('MM/DD/YYYY')
+		})
+		var headingEl = el.querySelector('#heading')
+		headingEl.setAttribute('text', {
+			value:this.menuData[activeDate].title
+		})
+		var descripEl = el.querySelector('#description')
+		descripEl.setAttribute('text', {
+			value:this.menuData[activeDate].description
 		})
 	},
-	setPosition: function(){
-		var cam = document.querySelector('a-camera')
-		var camPos = cam.components.position.data;
-		var camRot = cam.components.rotation.data;
-		this.el.setAttribute('rotation',{
-			x:0,
-			y:camRot.y,
-			z:0
-		})
-		this.el.setAttribute('position', camPos)
+	createNavPanel: function(el){
+		
+		var navPanel = document.createElement('a-entity');
+		
+		var homeButton = document.createElement('a-entity');
+		homeButton.setAttribute('ui-button', {
+			value:'home',
+			height: 0.1,
+			width: 0.2,
+			depth: 0.1,	
+			mixin: 'text-button-2'
+		});
+		homeButton.setAttribute('position', {
+			x: 0.5
+		});
+		homeButton.clickHandler = (e)=>{
+			this.el.emit('changeActiveScene',{ 
+				activeScene: 'sceneHome'
+			});
+		}
+		navPanel.appendChild(homeButton);
+		
+		el.appendChild(navPanel);
+		return navPanel
 	},
 	filter360sByLocation: function(data, activeLocation){
 		
@@ -112,5 +194,10 @@ AFRAME.registerComponent('ui-menu-360', {
 			}
 		})
 		return filteredData
+	},
+	setActiveDate: function(){
+		var firstDate = Object.keys(this.menuData)[0]
+		el.emit('changeActiveDate',{activeDate:firstDate})
 	}
 });
+
