@@ -41,7 +41,7 @@ function formatDateSegment(segment,timeScale){
 		formatDate=moment(segment,'YYYY').format('YYYY');
 		break;
 	case "month":
-		formatDate=moment(segment+1,'MM').format('MMMM');
+		formatDate=moment(segment+1,'MM').format('MMM');
 		break;
 	case 'day':
 		formatDate=moment(segment,'DD').format('Do');
@@ -148,8 +148,8 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		var adjustedHeight = totalHeight + 0.1 
 
 		//create container geometry 
-		globals.createWireframeBox(el,totalHeight, 0.4, 0.2);
-		globals.createMeshPlaneFill(el,totalHeight, 0.4, 0.2 );
+		globals.createWireframeBox(el,totalHeight, 0.3, 0.2);
+		globals.createMeshPlaneFill(el,totalHeight, 0.3, 0.2 );
 
 		datesEl.setAttribute('position', {
 			x:-0.13,
