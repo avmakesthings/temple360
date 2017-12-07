@@ -26,7 +26,7 @@ AFRAME.registerComponent('ui-menu-model', {
 		this.activeModel = getState('activeModel')
 
 		this.setPosition()
-		// this.el.setAttribute('visible', false)
+		this.el.setAttribute('visible', false)
 		this.createMenu()
 
 		//menu toggle - TODO - add support for VR controller keypress
