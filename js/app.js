@@ -169,9 +169,9 @@ window.onload = function() {
 			activeLocation: "southGate"
 		});
 
-		AFRAME.scenes[0].emit('changeActiveDate', {
-			activeDate: "2017-08-01"
-		});
+		// AFRAME.scenes[0].emit('changeActiveDate', {
+		// 	activeDate: "2017-08-01"
+		// });
 
 		// AFRAME.scenes[0].emit('changeActiveThreeSixty', {
 		// 	activeThreeSixty: {} 

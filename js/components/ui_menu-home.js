@@ -1,8 +1,8 @@
-/* * * + + + + + + + + + + + + + + + + + + + + 
-MENU_Home : menu component for home scene
-+ + + + + + + + + + + + + + + + + + + + * * */ 
-
-
+/**
+ * @author AnastasiaVictor/ http://github.com/avmakesthings
+ * 
+ * MENU_Home : menu component for home scene
+ */
 
 AFRAME.registerComponent('ui-menu-home', {
 	schema: {
@@ -70,7 +70,11 @@ AFRAME.registerComponent('ui-menu-home', {
 			this.el.emit('changeActiveScene',{ 
 				activeScene: 'scene3DModel'
 			});
-
+			//hack to ensure active date is initialized when start button is pressed
+			//need to revise events 
+			AFRAME.scenes[0].emit('changeActiveDate',{ 
+				activeDate: '2017-08-01'
+			});
 		}
 		layout.appendChild(navButton);
 		navButton.flushToDOM();

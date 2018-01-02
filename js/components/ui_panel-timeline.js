@@ -159,6 +159,8 @@ AFRAME.registerComponent('ui-panel-timeline', {
 
 		el.appendChild(datesEl)
 
+		this.highlightActiveDate()
+
 	},
 	timelineDataToDateTree: function(timelineData, timeScales){
 		var dateTree = {
@@ -231,6 +233,8 @@ AFRAME.registerComponent('ui-panel-timeline', {
 			anchor: 'left',
 			baseline: 'top'
 		})
+		
+		el.setAttribute('id', moment(nodeData.key).format('YYYY-MM-DD'))
 		// Ensure this is set for renderDateTree heights to work correctly
 		el.setAttribute('height', this.data.rowHeight)
 
@@ -255,6 +259,43 @@ AFRAME.registerComponent('ui-panel-timeline', {
 			});
 		},0)
 
+	},
+	highlightActiveDate: function(){
+
+		window.addEventListener('activeDateChanged', (e)=>{
+
+			if(this.activeItem !== undefined){
+				var highlightItem = document.getElementById('timelineHighlight')
+				highlightItem.parentNode.removeChild(highlightItem)
+				this.activeItem.setAttribute('position',this.activeItemPos)
+			}
+			var dateID = moment(e.detail.activeDate).format('YYYY-MM-DD')
+			this.activeItem = document.getElementById(dateID)
+			this.activeItemPos = this.activeItem.components.position.attrValue
+
+			highlightGeo = document.createElement('a-entity')
+			highlightGeo.setAttribute('geometry',{
+				primitive: 'plane',
+				width: 0.05,
+				height: 0.005
+			})
+			highlightGeo.setAttribute('material',{
+				color: 'red'
+			})
+			highlightGeo.setAttribute('position',{
+				x: 0.029,
+				y: -0.043,
+			})
+			highlightGeo.setAttribute('id','timelineHighlight')
+			this.activeItem.appendChild(highlightGeo)
+			
+			this.activeItem.setAttribute('position',{
+				x:0.01,
+				y:this.activeItemPos.y + 0.005,
+				z:this.activeItemPos.z
+			})
+
+		})
 	}
 });
 
