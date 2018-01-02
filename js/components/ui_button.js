@@ -88,11 +88,11 @@ AFRAME.registerComponent('ui-button', {
 
 		el.setAttribute('animation__leave', {
 			property:'material.opacity',
-			dur: 200,
-			to: 0.5,
-			easing: 'easeInSine',
+			dur: 100,
+			to: 0,
+			easing: 'easeOutSine',
 			startEvents: 'mouseleave',
-			pauseEvents: ['mouseenter','click']
+			// pauseEvents: ['mouseenter','click']
 		});
 
 		// el.setAttribute('animation__clicked', {
