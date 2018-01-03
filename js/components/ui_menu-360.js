@@ -6,27 +6,31 @@
 var getState = require('../getState')
 
 //obj functions from Michael Jaspar
-function getNextKey(obj, id){
+function getNextKey(obj, curKey){
+	var nextKey = curKey;
 	var keys = Object.keys( obj ),
-		idIndex = keys.indexOf( id ),
-		nextIndex = idIndex += 1;
-	if(nextIndex >= keys.length){
-		//we're at the end, there is no next
-		return;
+		curIndex = keys.indexOf( curKey ),
+		nextIndex = curIndex + 1;
+
+	// There is a 'nextKey'
+	if(nextIndex < keys.length){
+		nextKey = keys[ nextIndex ]
 	}
-	var nextKey = keys[ nextIndex ]
+
 	return nextKey;
 };
 
-function getPreviousKey(obj, id){
+function getPreviousKey(obj, curKey){
+	var nextKey = curKey;
+
 	var keys = Object.keys( obj ),
-		idIndex = keys.indexOf( id ),
-		nextIndex = idIndex -= 1;
-	if(idIndex === 0){
-	//we're at the beginning, there is no previous
-		return;
-	}
-	var nextKey = keys[ nextIndex ]
+		curIndex = keys.indexOf( curKey );
+
+	// There is a 'prevKey'
+	if (curIndex > 0){
+		var nextKey = keys[ curIndex -1]
+	}	
+
 	return nextKey;
 };
 
@@ -236,6 +240,7 @@ AFRAME.registerComponent('ui-menu-360', {
 		})
 		
 		prev360Button.clickHandler = (e)=>{
+			console.log("Previous clicked!")
 			var prevDate = this.getPreviousDate()
 			if (prevDate != this.activeDate){
 				this.el.emit('changeActiveDate',{ 
@@ -262,6 +267,7 @@ AFRAME.registerComponent('ui-menu-360', {
 		})
 
 		next360Button.clickHandler = (e)=>{
+			console.log("Next clicked!")
 			var nextDate = this.getNextDate()
 			if (nextDate != this.activeDate){			
 				this.el.emit('changeActiveDate',{ 
@@ -296,17 +302,11 @@ AFRAME.registerComponent('ui-menu-360', {
 		return firstDate
 	},
 	getPreviousDate: function(){
-		var prev360Key =  getPreviousKey(this.menuData, this.activeDate)
-		if(prev360Key == undefined){
-			return this.activeDate
-		}
+		var prev360Key = getPreviousKey(this.menuData, this.activeDate)
 		return prev360Key
 	},
 	getNextDate: function(){
 		var next360Key = getNextKey(this.menuData, this.activeDate) 
-		if(next360Key == undefined){
-			return this.activeDate
-		}
 		return next360Key
 	}
 });
