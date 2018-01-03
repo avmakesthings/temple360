@@ -163,7 +163,11 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		window.addEventListener('activeDateChanged', (e)=>{
 			this.highlightActiveDate(e.detail.activeDate)
 		})
-		this.highlightActiveDate(getState('activeDate'))
+
+		
+		setTimeout(()=>{
+			this.highlightActiveDate(getState('activeDate'))
+		}, 0)
 	},
 	timelineDataToDateTree: function(timelineData, timeScales){
 		var dateTree = {
