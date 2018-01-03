@@ -3,11 +3,7 @@
  * 
  * A-frame 360 Menu Component
  */
-function getState(key){
-    var sceneEl = document.querySelector('a-scene');
-    var appState = sceneEl.systems.state.state.app 
-    return appState[key]
-} 
+var getState = require('../getState')
 
 //obj functions from Michael Jaspar
 function getNextKey(obj, id){

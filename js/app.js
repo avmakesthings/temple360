@@ -25,17 +25,7 @@ var extras = require('aframe-extras'); //fix for A-frame GLtf 2.0 issues
 extras.loaders.registerAll(); //Register 'A-frame extras' Loaders package and its dependencies.
 var mainData = require('./mainData.js'); //Get JSON data 
 var sceneEl = document.querySelector('a-scene'); //Scene element
-
-
-// TODO: Rename 'app' to 'appState' or 'state' in app.js
-// Move that reducer, the window events, & this helper to the same file
-// Import & use this helper wherever appState needs to be pulled
-// Require the rest into app.js - condense with the one in ui_markers
-function getState(key){
-    var sceneEl = document.querySelector('a-scene');
-    var appState = sceneEl.systems.state.state.app 
-    return appState[key]
-}
+var getState = require('./getState.js');
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 History manager --

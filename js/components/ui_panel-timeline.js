@@ -8,6 +8,7 @@
 
 var moment = require('moment');
 var isEqual = require('lodash.isequal');
+var getState = require('../getState')
 
 function getTimescaleFromDate(date,timeScale){
 	var dateSegment;
@@ -159,8 +160,10 @@ AFRAME.registerComponent('ui-panel-timeline', {
 
 		el.appendChild(datesEl)
 
-		this.highlightActiveDate()
-
+		window.addEventListener('activeDateChanged', (e)=>{
+			this.highlightActiveDate(e.detail.activeDate)
+		})
+		this.highlightActiveDate(getState('activeDate'))
 	},
 	timelineDataToDateTree: function(timelineData, timeScales){
 		var dateTree = {
@@ -289,44 +292,40 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		},0)
 
 	},
-	highlightActiveDate: function(){
-		window.addEventListener('activeDateChanged', (e)=>{
-
-			if(this.activeItem !== undefined){
-				this.activeItem.setAttribute('position',this.activeItemPos)
-				this.activeItem.setAttribute('text', {
-					opacity:0.5
-				})
-				this.activeIndicator.setAttribute('position', this.activeIndicatorPos)
-				this.activeIndicator.setAttribute('geometry', {
-					width: 0.04,
-					height: 0.002
-				})
-			}
-			var dateID = moment(e.detail.activeDate).format('YYYY-MM-DD')
-			var activeItem = this.activeItem = document.getElementById(dateID)
-			var activeItemPos = this.activeItemPos = activeItem.components.position.attrValue
-			var activeIndicator = this.activeIndicator = activeItem.querySelector('#indicator')
-			var activeIndicatorPos = this.activeIndicatorPos = activeIndicator.components.position.attrValue
-			activeItem.setAttribute('text',{
-				opacity:1
+	highlightActiveDate: function(activeDate){
+		if(this.activeItem !== undefined){
+			this.activeItem.setAttribute('position',this.activeItemPos)
+			this.activeItem.setAttribute('text', {
+				opacity:0.5
 			})
-			activeItem.setAttribute('position',{
-				x:0.137,
-				y:activeItemPos.y,
-				z:activeItemPos.z
-			})			
-			
-			activeIndicator.setAttribute('position',{
-				x: -0.069,
-				y: -0.023 + 0.005,
-				z: activeIndicatorPos.z
+			this.activeIndicator.setAttribute('position', this.activeIndicatorPos)
+			this.activeIndicator.setAttribute('geometry', {
+				width: 0.04,
+				height: 0.002
 			})
-			activeIndicator.setAttribute('geometry',{
-				width: 0.12,
-				height: 0.02
-			})
-
+		}
+		var dateID = moment(activeDate).format('YYYY-MM-DD')
+		var activeItem = this.activeItem = document.getElementById(dateID)
+		var activeItemPos = this.activeItemPos = activeItem.components.position.attrValue
+		var activeIndicator = this.activeIndicator = activeItem.querySelector('#indicator')
+		var activeIndicatorPos = this.activeIndicatorPos = activeIndicator.components.position.attrValue
+		activeItem.setAttribute('text',{
+			opacity:1
+		})
+		activeItem.setAttribute('position',{
+			x:0.137,
+			y:activeItemPos.y,
+			z:activeItemPos.z
+		})			
+		
+		activeIndicator.setAttribute('position',{
+			x: -0.069,
+			y: -0.023 + 0.005,
+			z: activeIndicatorPos.z
+		})
+		activeIndicator.setAttribute('geometry',{
+			width: 0.12,
+			height: 0.02
 		})
 	}
 });

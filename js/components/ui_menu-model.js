@@ -3,12 +3,7 @@
  * 
  * A-frame Model Menu Component
  */
-
-function getState(key){
-    var sceneEl = document.querySelector('a-scene');
-    var appState = sceneEl.systems.state.state.app 
-    return appState[key]
-} 
+var getState = require('../getState')
 
 var mainData = require('./../mainData.js');
 var moment = require('moment');
