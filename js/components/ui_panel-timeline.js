@@ -132,7 +132,7 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		rowHeight: {default: 0.032},
 		margin: {default: 0.04},
 		active:{default: false},
-		componentTitle: {default:''}
+		componentTitle: {default:''},
 
 	},
 	init: function (){
@@ -158,6 +158,8 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		});
 
 		el.appendChild(datesEl)
+
+		this.highlightActiveDate()
 
 	},
 	timelineDataToDateTree: function(timelineData, timeScales){
@@ -214,7 +216,7 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		Object.keys(parent.children).forEach((childKey)=>{
 			var childEl = this.renderDateTree(parent.children[childKey], depth+1)
 
-			var childPos = new THREE.Vector3(depth*.02,-totalHeight,0)
+			var childPos = new THREE.Vector3(depth*.05,-totalHeight,0)
 			childEl.setAttribute('position', childPos)
 			totalHeight += parseFloat(childEl.getAttribute('height')) +  this.data.margin
 			el.appendChild(childEl)
@@ -231,15 +233,46 @@ AFRAME.registerComponent('ui-panel-timeline', {
 			anchor: 'left',
 			baseline: 'top'
 		})
+		
+		el.setAttribute('id', moment(nodeData.key).format('YYYY-MM-DD'))
 		// Ensure this is set for renderDateTree heights to work correctly
 		el.setAttribute('height', this.data.rowHeight)
 
+		if(nodeData.timeScale === this.data.timeScales[0]){
+			el.setAttribute('text', {
+				letterSpacing: 5,
+				opacity: 0.8
+			})
+		}
+
+		if(nodeData.timeScale !== this.data.timeScales[0]){
+			el.setAttribute('text', {
+				letterSpacing: 3,
+				opacity: 0.5
+			})
+			indicatorGeo = document.createElement('a-entity')
+			indicatorGeo.setAttribute('geometry',{
+				primitive: 'plane',
+				width: 0.04,
+				height: 0.002
+			})
+			indicatorGeo.setAttribute('material',{
+				color: 'white',
+				opacity: 0.5
+			})
+			indicatorGeo.setAttribute('position',{
+				x: -0.020,
+				y: -0.026,
+			})
+			indicatorGeo.setAttribute('id','indicator')
+			el.appendChild(indicatorGeo)
+		}
 
 		setTimeout(()=>{
 			var boxEl = appendBoxEl(el)
 
 			boxEl.addEventListener('click', (e)=>{
-				console.log("Clicked: ", nodeData)
+				// console.log("Clicked: ", nodeData)
 				// e.stopPropagation()
 
 				//this will be a problem if multiple instances
@@ -255,6 +288,46 @@ AFRAME.registerComponent('ui-panel-timeline', {
 			});
 		},0)
 
+	},
+	highlightActiveDate: function(){
+		window.addEventListener('activeDateChanged', (e)=>{
+
+			if(this.activeItem !== undefined){
+				this.activeItem.setAttribute('position',this.activeItemPos)
+				this.activeItem.setAttribute('text', {
+					opacity:0.5
+				})
+				this.activeIndicator.setAttribute('position', this.activeIndicatorPos)
+				this.activeIndicator.setAttribute('geometry', {
+					width: 0.04,
+					height: 0.002
+				})
+			}
+			var dateID = moment(e.detail.activeDate).format('YYYY-MM-DD')
+			var activeItem = this.activeItem = document.getElementById(dateID)
+			var activeItemPos = this.activeItemPos = activeItem.components.position.attrValue
+			var activeIndicator = this.activeIndicator = activeItem.querySelector('#indicator')
+			var activeIndicatorPos = this.activeIndicatorPos = activeIndicator.components.position.attrValue
+			activeItem.setAttribute('text',{
+				opacity:1
+			})
+			activeItem.setAttribute('position',{
+				x:0.137,
+				y:activeItemPos.y,
+				z:activeItemPos.z
+			})			
+			
+			activeIndicator.setAttribute('position',{
+				x: -0.069,
+				y: -0.023 + 0.005,
+				z: activeIndicatorPos.z
+			})
+			activeIndicator.setAttribute('geometry',{
+				width: 0.12,
+				height: 0.02
+			})
+
+		})
 	}
 });
 
