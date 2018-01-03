@@ -4,16 +4,7 @@ MARKERS : A component which adds/removes markers
 + + + + + + + + + + + + + + + + + + + + * * */ 
 
 var moment = require('moment');
-
-// TODO: Rename 'app' to 'appState' or 'state' in app.js
-// Move that reducer, the window events, & this helper to the same file
-// Import & use this helper wherever appState needs to be pulled
-// Require the rest into app.js
-function getState(key){
-    var sceneEl = document.querySelector('a-scene');
-    var appState = sceneEl.systems.state.state.app 
-    return appState[key]
-}
+var getState = require('../getState')
 
 // If no threeSixty is found for this date, 
 // find the first match within the month if one exists
