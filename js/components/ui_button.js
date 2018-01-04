@@ -76,6 +76,12 @@ AFRAME.registerComponent('ui-button', {
 			opacity: 0.1
 		})
 
+		//sound not working 
+		el.setAttribute('sound',{
+			src:'#button-click',
+		})
+
+
 		//animations
 		el.setAttribute('animation__enter', {
 			property:'material.opacity',
@@ -105,11 +111,10 @@ AFRAME.registerComponent('ui-button', {
 
 		//click handler
 		el.addEventListener('click', (e)=>{
-			
+			e.target.components.sound.playSound();	//not working bc sound hasn't loaded?
 			//wait till animation finished before navigating
 			// el.addEventListener('animation__[clicked]-complete',()=>{
-				
-			// 			})
+			//})
 			if(el.clickHandler){
 				el.clickHandler(e)
 			} else {
@@ -117,5 +122,6 @@ AFRAME.registerComponent('ui-button', {
 			}
 			
 		});
-  }
+  },
+
 });
