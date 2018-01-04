@@ -1,8 +1,8 @@
 /**
  * @author AnastasiaVictor/ http://github.com/avmakesthings
  * 
- * A-frame Particle system component using  
- * 
+ * A-frame Particle system component using Shader Particle Engine
+ * by @squarefeet https://github.com/squarefeet/ShaderParticleEngine
  */
 
 var SPE = require('../scripts/SPE.min.js');
