@@ -22,7 +22,7 @@ var uglify = require('gulp-uglify');
 gulp.task('server', serve('dist'));
 
 gulp.task('copy-assets', function() {
-    gulp.src('./assets/**/*.{png,jpg,gif,svg,mp4,obj,gltf}')
+    gulp.src('./assets/**/*.{png,jpg,gif,svg,mp3,mp4,obj,gltf}')
     // Perform minification tasks, etc here
     .pipe(flatten())
     .pipe(gulp.dest('./dist/assets'));
