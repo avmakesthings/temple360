@@ -8,7 +8,6 @@
  */
 
 require('aframe');
-require('aframe-auto-detect-controllers-component');
 require('aframe-state-component');
 require('aframe-text-geometry-component');
 require('aframe-template-component');

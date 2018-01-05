@@ -56,7 +56,6 @@ AFRAME.registerComponent('ui-button', {
 			}
 		}
 		//add button icon
-		el.classList.add(window.globals.interactableClass)
 
 		el.setAttribute('mixin', data.mixin);
 
