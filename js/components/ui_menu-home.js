@@ -50,22 +50,78 @@ AFRAME.registerComponent('ui-menu-home', {
 		var layout = document.createElement('a-entity');
 		layout.setAttribute('position', {
 			x:0,
-			y:-menuHeight/2+0.2,
+			y:0.275,
 			z:0
 		})
-		layout.setAttribute('layout', {
-			type:'line',
-			margin: menuMargin,
-			plane:'yz'
-		});
 		layout.setAttribute('id',"#home-menu")
 		el.appendChild(layout);
+
+		//build
+		var textBuild = document.createElement('a-entity');
+		textBuild.setAttribute('mixin', 'text-description-1');
+		textBuild.setAttribute('text', {
+			value: 'WIP Build 01/01/18',
+			width: 0.7
+		});
+		textBuild.setAttribute('position', {
+			x:0,
+			y:-0.42,
+			z:0
+		})
+		layout.appendChild(textBuild);
+
+		//collaborators
+		var textCollab = document.createElement('a-entity');
+		textCollab.setAttribute('mixin', 'text-description-1');
+		textCollab.setAttribute('text', {
+			value: 'by Anastasia Victor & John Faichney',
+			width: 0.9
+		});
+		textCollab.setAttribute('position', {
+			x:0,
+			y:-0.09,
+			z:0
+		})
+		layout.appendChild(textCollab);
+
+
+		//add heading
+		var textHeading = document.createElement('a-entity');
+		textHeading.setAttribute('mixin', 'text-heading-1');
+		textHeading.setAttribute('text', {
+			value: 'A Forest in the Desert',
+		});
+		textHeading.setAttribute('position', {
+			x:0,
+			y:0,
+			z:0
+		})
+		layout.appendChild(textHeading);
+
+		//add description
+		var textDescription = document.createElement('a-entity');
+		textDescription.setAttribute('mixin', 'text-description-1');
+		textDescription.setAttribute('text', {
+			value: 'An A-frame based webVR interface for presenting the design, construction and installation of the 2017 Burning Man temple, set in space and time.',
+		});
+		textDescription.setAttribute('position', {
+			x:0,
+			y:-0.254,
+			z:0
+		})
+		layout.appendChild(textDescription);
+		
 
 		//add enter button
 		var navButton = document.createElement('a-entity');
 		navButton.setAttribute('ui-button', {
-			value:'start',
+			value:'enter',
 		});
+		navButton.setAttribute('position', {
+			x:0,
+			y:-0.625,
+			z:0
+		})
 		navButton.clickHandler = (e)=>{
 			this.el.emit('changeActiveScene',{ 
 				activeScene: 'scene3DModel'
@@ -79,23 +135,9 @@ AFRAME.registerComponent('ui-menu-home', {
 		layout.appendChild(navButton);
 		navButton.flushToDOM();
 
-		//add description
-		var textDescription = document.createElement('a-entity');
-		textDescription.setAttribute('mixin', 'text-description-1');
-		textDescription.setAttribute('text', {
-			value: 'A Forest in the Desert is an A-frame based webVR interface for spatially and chronologically relating and presenting the content generated over the design, construction and installation of the 2017 Burning Man temple.',
-		});
 
-		layout.appendChild(textDescription);
 
-		//add heading
-		var textHeading = document.createElement('a-entity');
-		textHeading.setAttribute('mixin', 'text-heading-1');
-		textHeading.setAttribute('text', {
-			value: 'A forest in the desert',
-		});
 
-		layout.appendChild(textHeading);
 
 	}
 });
