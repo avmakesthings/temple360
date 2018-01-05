@@ -63,23 +63,15 @@ AFRAME.registerComponent('ui-menu-360', {
 
 	},
 	setPosition: function(){
-		var cam = document.getElementById('cameraRig');
-		var head = document.getElementById('head');
+		var cam = document.querySelector('a-camera')
 		var camPos = cam.components.position.data;
-		var headPos = head.components.position.data
-		var camRot = head.components.rotation.data;
-
-		this.el.setAttribute('position', {
-			x:camPos.x + headPos.x,
-			y:camPos.y + headPos.y,
-			z:camPos.z + headPos.z
-		})
-
+		var camRot = cam.components.rotation.data;
 		this.el.setAttribute('rotation',{
 			x:0,
 			y:camRot.y,
 			z:0
 		})
+		this.el.setAttribute('position', camPos)
 	},
 	createMenu: function(){
 		const layout = document.createElement('a-entity')
