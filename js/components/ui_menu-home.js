@@ -18,7 +18,7 @@ AFRAME.registerComponent('ui-menu-home', {
 		var menuMargin = 0.4;
 		
 		//get camera position
-		var camPosition = document.getElementById('cameraRig').components.position.data;
+		var camPosition = document.getElementById('head').components.position.data;
         var menuPosition = {
             x:camPosition.x, 
             y:camPosition.y+0.2, 
