@@ -8,6 +8,7 @@
  */
 
 require('aframe');
+require('aframe-teleport-controls');
 require('aframe-auto-detect-controllers-component');
 require('aframe-state-component');
 require('aframe-text-geometry-component');
@@ -260,7 +261,7 @@ AFRAME.registerComponent('scene-manager', {
 		env.setAttribute('environment', {active:false});
 	},
 	setCameraPos: function(position){
-		var cameraEl = document.querySelector('a-camera');
+		var cameraEl = document.getElementById('cameraRig');
 		cameraEl.setAttribute('position', position)
 	},
 	set360: function(image){

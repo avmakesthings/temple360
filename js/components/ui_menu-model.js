@@ -33,7 +33,7 @@ AFRAME.registerComponent('ui-menu-model', {
 
 	},
 	setPosition: function(){
-		var cam = document.querySelector('a-camera')
+		var cam = document.getElementById('cameraRig');
 		var camPos = cam.components.position.data;
 		var camRot = cam.components.rotation.data;
 		this.el.setAttribute('rotation',{
