@@ -36,17 +36,19 @@ AFRAME.registerComponent('ui-menu-model', {
 		var cam = document.getElementById('cameraRig');
 		var head = document.getElementById('head');
 		var camPos = cam.components.position.data;
+		var headPos = head.components.position.data;
 		var camRot = head.components.rotation.data;
+
+		this.el.setAttribute('position', {
+			x:camPos.x + headPos.x,
+			y:camPos.y + headPos.y,
+			z:camPos.z + headPos.z
+		})
+
 		this.el.setAttribute('rotation',{
 			x:0,
 			y:camRot.y,
 			z:0
-		})
-
-		this.el.setAttribute('position', {
-			x:camPos.x,
-			y:camPos.y + window.globals.headHeight,
-			z:camPos.z
 		})
 	},
 	createMenu: function(){
@@ -55,7 +57,7 @@ AFRAME.registerComponent('ui-menu-model', {
 		layout.setAttribute('position', {
             x:0, 
             y:0.2, 
-            z:0
+            z:-1.5
 		})
 		this.createMenuGeo(layout)
 
@@ -70,7 +72,7 @@ AFRAME.registerComponent('ui-menu-model', {
 		layoutLower.setAttribute('id','layout-lower')
 		layoutLower.setAttribute('position', {
             x:0, 
-            y:-0.4, 
+            y:-0.45, 
             z:0
 		})			
 		layout.appendChild(layoutUpper)

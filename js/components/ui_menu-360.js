@@ -66,16 +66,19 @@ AFRAME.registerComponent('ui-menu-360', {
 		var cam = document.getElementById('cameraRig');
 		var head = document.getElementById('head');
 		var camPos = cam.components.position.data;
+		var headPos = head.components.position.data
 		var camRot = head.components.rotation.data;
+
+		this.el.setAttribute('position', {
+			x:camPos.x + headPos.x,
+			y:camPos.y + headPos.y,
+			z:camPos.z + headPos.z
+		})
+
 		this.el.setAttribute('rotation',{
 			x:0,
 			y:camRot.y,
 			z:0
-		})
-		this.el.setAttribute('position', {
-			x:camPos.x,
-			y:camPos.y + window.globals.headHeight,
-			z:camPos.z
 		})
 	},
 	createMenu: function(){

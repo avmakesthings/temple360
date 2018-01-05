@@ -13,7 +13,6 @@ window.globals = window.globals || {
 	
 	//CONSTANTS
 	interactableClass : "interactable",
-	headHeight: 1.2827402787494755,
 
     //FONTS
 
