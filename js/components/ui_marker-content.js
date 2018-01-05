@@ -53,8 +53,6 @@ AFRAME.registerComponent('ui-marker-content', {
 
 	addClickCone: function(){
 		const clickCone = document.createElement('a-entity')
-		clickCone.classList.add(window.globals.interactableClass)
-
 		clickCone.setAttribute('geometry',{
 			primitive: 'cone',
 			radiusBottom: 0.20, 

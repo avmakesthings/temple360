@@ -16,99 +16,59 @@ require('./components/ui_menu-360.js');
 require('./components/ui_markers.js');
 require('./components/ui_marker-content.js');
 
-const delay = 2000
 
 AFRAME.registerComponent('ui-manager', {
 	schema: {
     },
     init: function() {
         
-        this.currentScene
+        var currentScene
 
-		// TODO: Check that they are supported VR gamepads
-		this.gamepadCount = window.navigator.getGamepads().length
-		this.reticleActive = true
-		this.controls = document.getElementById("controls")
-
-		this.controls.addEventListener('buttondown', this.handleGamePadButtonDown.bind(this))
-		window.addEventListener('gamepadconnected', this.handleGamepadConnected.bind(this))
-		window.addEventListener('gamepaddisconnected', this.handleGamepadDisonnected.bind(this))        
-        window.addEventListener('keydown', this.handleKeyDown.bind(this));
-
-		window.addEventListener('activeSceneChanged',(e)=>{
-            this.currentScene = e.detail.activeScene
+        window.addEventListener('activeSceneChanged',function (e) {
+            currentScene = e.detail.activeScene
         })
-    },
-
-	tick: function(){
-
-		if(this.gamepadCount > 0 && this.reticleActive){
-			setTimeout(()=>{
-				if(this.gamepadCount > 0  && this.reticleActive){
-					this.toggleReticle()
-				}
-			}, delay)
-		}
-
-		if(this.gamepadCount < 1  && !this.reticleActive){
-			setTimeout(()=>{
-				if(this.gamepadCount < 1 && !this.reticleActive){
-					this.toggleReticle()
-				}
-			}, delay)
-		}
-	},
-
-	handleGamepadConnected: function(e){
-		// TODO: Validate that this is a VR Controller before incrementing 
-		this.gamepadCount+=1
-	},
-
-	handleGamepadDisonnected: function(e){
-		// TODO: Validate that this is a VR Controller before decrementing
-		this.gamepadCount-=1
-	},
-
-	handleKeyDown: function(e){
-        if(e.keyCode === 77){
-            // Key: m
-            this.toggleMenu()
+        
+        //same key press .. needs to know what the active scene is 
+        //placeholder for toggling menus 
+        window.addEventListener('keydown', (e)=>{
+            var toggleMenu = e.keyCode === 77 
+            if(e.keyCode === 77){
+                // Key: m
+                console.log('key pressed')
+                switch(currentScene){
+                    case "sceneHome":
+                        this.el.emit('showHomeMenu')
+                        break
+                    case "scene3DModel":
+                        this.el.emit('showModelMenu')
+                        break  
+                    case "scene360":
+                        this.el.emit('show360Menu')
+                        break
+                    default:
+                        console.log('menu toggle switch not working')
+                }
+            } 
+        if(e.keyCode == 27){
+            // Key: "escape"
+            // Most likely, this is just for debug purposes
+            switch(currentScene){
+                case "scene3DModel":
+                    this.el.emit('changeActiveScene', { 
+                        activeScene: 'sceneHome'
+                    })
+                    break  
+                case "scene360":
+                    this.el.emit('changeActiveScene', { 
+                        activeScene: 'scene3DModel'
+                    })
+                    break
+                default:
+                    console.log('scene switch not working')
+            }  
         }
-	},
-
-	handleGamePadButtonDown: function(e){
-
-		if(e.detail.id === 3){
-            // Key: menu
-            this.toggleMenu()
-        }
-	},
-
-	toggleMenu: function(){
-	    switch(this.currentScene){
-            case "sceneHome":
-                this.el.emit('showHomeMenu')
-                break
-            case "scene3DModel":
-                this.el.emit('showModelMenu')
-                break  
-            case "scene360":
-                this.el.emit('show360Menu')
-                break
-            default:
-                console.log('menu toggle switch not working')
-        }
-	},
-
-	toggleReticle: function(){
-		this.reticleActive = !this.reticleActive
-		const reticle = document.getElementById("reticle")
-		if(this.reticleActive){
-			reticle.setAttribute('visible', true)			
-		} else {
-			reticle.setAttribute('visible', false)			
-		}
-	}
+        });
+    }
 })
 
 

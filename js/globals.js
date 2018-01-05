@@ -10,9 +10,6 @@ var colWhite = 0xFFFFFF,
     colActive01=  0xFFAA00;
 
 window.globals = window.globals || {
-	
-	//CONSTANTS
-	interactableClass : "interactable",
 
     //FONTS
 
