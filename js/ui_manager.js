@@ -32,15 +32,12 @@ AFRAME.registerComponent('ui-manager', {
 
 		this.controls.addEventListener('buttondown', this.handleGamePadButtonDown.bind(this))
 		window.addEventListener('gamepadconnected', this.handleGamepadConnected.bind(this))
-		window.addEventListener('gamepaddisconnected', this.handleGamepadDisonnected.bind(this))
-		
+		window.addEventListener('gamepaddisconnected', this.handleGamepadDisonnected.bind(this))        
         window.addEventListener('keydown', this.handleKeyDown.bind(this));
 
 		window.addEventListener('activeSceneChanged',(e)=>{
             this.currentScene = e.detail.activeScene
         })
-
-		this.handleVRHeadHeight()
     },
 
 	tick: function(){
@@ -60,33 +57,6 @@ AFRAME.registerComponent('ui-manager', {
 				}
 			}, delay)
 		}
-	},
-
-	// Lots of hacks here...
-	handleVRHeadHeight: function(e){
-		// FIXME: AFRAME.utils.checkHeadsetConnected() is true if a headset is connected 
-		// regardless of whether it is activated or not on startup - need a better way to check
-		/*
-		setTimeout(()=>{
-			head.components.camera.data.userHeight = 1.6
-		}, 1000)
-		*/
-
-		document.querySelector('a-scene').addEventListener('enter-vr', function () {
-			setTimeout(()=>{
-				var head = document.getElementById("head")
-				//head.setAttribute('position', '0 0 0')
-				head.components.camera.data.userHeight = 0
-			},0)
-		});
-
-		document.querySelector('a-scene').addEventListener('exit-vr', function () {
-			setTimeout(()=>{
-				var head = document.getElementById("head")
-				//head.setAttribute('position', '0 1.6 0')
-				head.components.camera.data.userHeight = 1.6
-			},0)
-		});
 	},
 
 	handleGamepadConnected: function(e){
