@@ -211,57 +211,57 @@ module.exports = {
     "models": {
         "2016-11-01": 
         {
-            "title": "First forest model",
-            "description": "Initial 3D model",
+            "title": "Preliminary design - A forest",
+            "description": "This was the first concept model that the design team generated, inspired by the pine forests that our material was being sourced from.",
             "location": "origin",
             "source": "16-11-temple.gltf"
         },
         "2016-12-01": 
         {
-            "title": "Design iteration model",
-            "description": "Initial 3D model",
+            "title": "Design iteration #1",
+            "description": "The design team of 5 worked to develop the concept, bridging function with form. In this version we tried to create a denser, more forest-like canopy.",
             "location": "origin",
             "source": "16-12-temple.gltf"
         },
         "2017-01-01": 
         {
-            "title": "Design iteration model",
-            "description": "Initial 3D model",
+            "title": "Design iteration #2",
+            "description": "Sometimes things get a little crazy! We wrote a few python scripts to generate forms using Japanese style of stacked timber construction. Each iteration thought us something about the utility and form of the design.",
             "location": "origin",
             "source": "17-01-temple.gltf"
         },
         "2017-02-01": 
         {
             "title": "Burning Man Grant Submittal",
-            "description": "Initial 3D model",
+            "description": "This was the design that was selected by Burning Man for the 2017 Temple honoraria grant.  Key aspects of the form like the ‘cloud’ cantilever, pedestal columns and the spire are depicted",
             "location": "origin",
             "source": "17-02-temple.gltf"
         },
         "2017-06-01": 
         {
-            "title": "Design iteration model",
-            "description": "test5",
+            "title": "Design refinement #1",
+            "description": "After being awarded the submittal, we worked to resolve the construction detailing and sequencing. The structural and value engineering processes typically mean changes for the design.",
             "location": "origin",
             "source": "17-06-temple.gltf"
         },
         "2017-07-01": 
         {
-            "title": "Refined model",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            "title": "Design refinement #2",
+            "description": "Most of the structural engineering had been finalized by this point. Columns and beam grids are included, as well as some ideas for ceiling panels and other features",
             "location": "origin",
             "source": "17-07-temple.gltf"
         },
         "2017-08-01": 
         {
             "title": "Final design",
-            "description": "This was the model that we took to the desert",
+            "description": "While not 100% architecturally resolved, this was our stopping point and the design that we brought to the desert, documented in 2D- plans, section, elevations",
             "location": "origin",
             "source": "17-08-temple.gltf"
         },
         "2017-09-01": 
         {
-            "title": "September placeholder",
-            "description": "This was the model that we took to the desert",
+            "title": "Built installation",
+            "description": "We spent 3 weeks on-site in the Black Rock Desert with a crew of about 60 volunteers, building the Temple. Many details were developed through the build, like the prayer blocks for the interior altars.",
             "location": "origin",
             "source": "17-08-temple.gltf"
         }
