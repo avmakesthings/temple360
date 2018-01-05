@@ -3,9 +3,11 @@
  * 
  * A-frame 360 Menu Component
  */
-var getState = require('../getState')
 
-//obj functions from Michael Jaspar
+var getState = require('../getState')
+var mainData = require('./../mainData.js');
+var moment = require('moment');
+
 function getNextKey(obj, curKey){
 	var nextKey = curKey;
 	var keys = Object.keys( obj ),
@@ -34,9 +36,6 @@ function getPreviousKey(obj, curKey){
 	return nextKey;
 };
 
-var mainData = require('./../mainData.js');
-var moment = require('moment');
-
 AFRAME.registerComponent('ui-menu-360', {
 	schema: {
 		menuHeight: {default: 1.2},
@@ -47,8 +46,9 @@ AFRAME.registerComponent('ui-menu-360', {
 	},
 	init: function (){
 		
-		var activeLocation = getState('activeLocation')
-		this.menuData = this.filter360sByLocation(mainData.threeSixtyImages, activeLocation)
+		this.activeLocation = getState('activeLocation')
+		this.activeLocationTitle = mainData.locations[this.activeLocation].title
+		this.menuData = this.filter360sByLocation(mainData.threeSixtyImages, this.activeLocation)
 		this.activeDate = this.setActiveDate() //hack for dealing with date discrepencies
 		this.setPosition()
 		this.el.setAttribute('visible', false)
@@ -161,7 +161,8 @@ AFRAME.registerComponent('ui-menu-360', {
 		infoEl.setAttribute('id','info')
 		infoEl.setAttribute('ui-panel-info',{
 			preHeadingVal: initialDate,
-			headingVal: initialData.title,
+			// headingVal: initialData.title,
+			headingVal: this.activeLocationTitle,
 			descriptionVal: initialData.description
 		});
 		el.appendChild(infoEl)
@@ -177,7 +178,8 @@ AFRAME.registerComponent('ui-menu-360', {
 		})
 		var headingEl = el.querySelector('#heading')
 		headingEl.setAttribute('text', {
-			value:this.menuData[activeDate].title
+			// value:this.menuData[activeDate].title
+			value:this.activeLocationTitle
 		})
 		var descripEl = el.querySelector('#description')
 		descripEl.setAttribute('text', {
