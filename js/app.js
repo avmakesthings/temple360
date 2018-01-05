@@ -15,6 +15,7 @@ require('aframe-layout-component');
 require('aframe-animation-component');
 require('aframe-dev-components');
 require('aframe-look-at-component');
+require('aframe-rain');
 
 require('./globals.js');
 require('./renderers.js');

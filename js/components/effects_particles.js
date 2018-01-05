@@ -26,7 +26,7 @@ AFRAME.registerComponent('particles', {
     },
     tick: function(){
         
-        this.particleGroup.tick( this.timeDelta/2 )
+        this.particleGroup.tick( this.timeDelta/3 )
     },
     createDustCloud: function(){
  
@@ -42,26 +42,27 @@ AFRAME.registerComponent('particles', {
         });
 
         var emitter = new SPE.Emitter({
-            particleCount: 300,
+            particleCount: 750,
             maxAge: {
-                value: 30,
+                value: 3,
             },
             position: {
-                value: new THREE.Vector3( 0, -15, -50 ),
-                spread: new THREE.Vector3( 100, 30, 100 )
+                value: new THREE.Vector3( 0, 0, 0 ),
+                spread: new THREE.Vector3( 100, 10, 100 )
             },
             velocity: {
-                value: new THREE.Vector3( 0, 0, 2 )
+                value: new THREE.Vector3( -0.2, 0.1, 0.15 )
             },
             wiggle: {
+                value: 3,
                 spread: 10
             },
             size: {
-                value: 75,
-                spread: 50
+                value: 20,
+                spread: 40
             },
             opacity: {
-                value: [ 0, 0.2, 0 ]
+                value: [ 0,0.1,0.15,0.2,0.15,0.1,0 ]
             },
             color: {
                 value: new THREE.Color( 244, 206, 168 ),
