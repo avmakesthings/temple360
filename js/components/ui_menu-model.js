@@ -27,6 +27,12 @@ AFRAME.registerComponent('ui-menu-model', {
 		//menu toggle - TODO - add support for VR controller keypress
 		window.addEventListener('showModelMenu', (e)=>{
 			var menuState = this.el.getAttribute('visible')
+			
+			this.el.setAttribute('sound',{
+				src: menuState ? '#menu-close-audio' : '#menu-open-audio',
+			})
+			this.el.components.sound.playSound();
+
 			this.setPosition()
 			this.el.setAttribute('visible', (!menuState))
 		})

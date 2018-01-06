@@ -122,6 +122,7 @@ AFRAME.registerComponent('ui-menu-home', {
 			y:-0.625,
 			z:0
 		})
+
 		navButton.clickHandler = (e)=>{
 			this.el.emit('changeActiveScene',{ 
 				activeScene: 'scene3DModel'

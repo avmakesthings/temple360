@@ -77,9 +77,9 @@ AFRAME.registerComponent('ui-button', {
 			opacity: 0.1
 		})
 
-		//sound not working 
 		el.setAttribute('sound',{
-			src:'#button-click',
+			src:'#button-click-audio',
+			on: 'click'
 		})
 
 
