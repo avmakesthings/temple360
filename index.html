@@ -45,10 +45,18 @@
       <!-- managers--> 
       <a-entity id="managers" ui-manager></a-entity>
       <!-- controls--> 
-      <a-entity laser-controls="hand: left" line="color: red; opacity: 0.75"></a-entity>
+      <!--<a-entity laser-controls="hand: left" line="color: red; opacity: 0.75"></a-entity>--> 
+
+	  <!--
+	  <a-entity id="lefthand" auto-detect-controllers="hand:left"></a-entity>
+	  <a-entity id="righthand" auto-detect-controllers="hand:right"></a-entity>
+	  --> 
+
+	  <a-entity id="controls" auto-detect-controllers laser-controls="hand: right" raycaster="objects: .interactable; far: 15"></a-entity>
+
       <!-- camera--> 
       <a-camera>
-        <a-entity cursor="fuse: true; fuseTimeout: 1000"
+        <a-entity id="reticle" cursor="fuse: true; fuseTimeout: 1000"
         position="0 0 -1"
         geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
         material="color: black; shader: flat">
@@ -56,6 +64,7 @@
              fill="backwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
         <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale"
              fill="forwards" from="1 1 1" to="0.1 0.1 0.1"></a-animation>
+
        </a-entity>
        <a-entity camera-mask></a-entity>       
       </a-camera>
