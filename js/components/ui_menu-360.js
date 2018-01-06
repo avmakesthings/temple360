@@ -160,7 +160,7 @@ AFRAME.registerComponent('ui-menu-360', {
 		});
 		timeline.clickHandler = (e)=>{
 			this.el.emit('changeActiveDate',{ 
-				activeDate: e.key
+				activeDate: moment(e.key).format("YYYY-MM-DD")
 			});
 			this.el.emit('changeActiveThreeSixty',{ 
 				activeThreeSixty: e.children

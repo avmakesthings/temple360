@@ -81,7 +81,7 @@ AFRAME.registerComponent('ui-markers', {
 
     highlightMarkers: function(){
         this.markers.forEach((markerEl, i)=>{
-            markerEl.components['ui-marker-content'].highlight(i*500);
+            markerEl.components['ui-marker-content'].highlight(i*1000);
         })
     },
     

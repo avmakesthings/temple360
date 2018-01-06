@@ -83,7 +83,7 @@ AFRAME.registerComponent('ui-marker-content', {
 
 	highlight: function(delay){
 		const beacon = document.createElement('a-entity');
-		const visibleFor = 10000
+		const visibleFor = 4000
 
 		beacon.setAttribute('geometry',{
 			primitive: 'cone',
@@ -102,10 +102,10 @@ AFRAME.registerComponent('ui-marker-content', {
 		animation.setAttribute('attribute', 'material.opacity');
 		animation.setAttribute('direction', 'alternate')  
 		animation.setAttribute('easing', 'ease-cubic')  
-		animation.setAttribute('dur', visibleFor/4) 
+		animation.setAttribute('dur', visibleFor/2) 
 		animation.setAttribute('from', '0');
 		animation.setAttribute('to', '0.25');
-		animation.setAttribute('repeat', 4) 
+		animation.setAttribute('repeat', 2) 
 
 		setTimeout(()=>{
 			this.el.appendChild(beacon)

@@ -143,7 +143,7 @@ AFRAME.registerComponent('ui-menu-model', {
 		timeline.clickHandler = (e)=>{
 			console.log('just clicked a timeline element')
 			this.el.emit('changeActiveDate',{ 
-				activeDate: e.key
+				activeDate: moment(e.key).format("YYYY-MM-DD")
 			});
 			this.el.emit('changeActiveModel',{ 
 				activeModel: e.children.source
