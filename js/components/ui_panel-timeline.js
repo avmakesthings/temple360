@@ -160,15 +160,22 @@ AFRAME.registerComponent('ui-panel-timeline', {
 
 		el.appendChild(datesEl)
 
-		window.addEventListener('activeDateChanged', (e)=>{
+		this.highlightListener = (e)=>{
 			this.highlightActiveDate(e.detail.activeDate)
-		})
+		}
+		
+		window.addEventListener('activeDateChanged', this.highlightListener)
 
 		
 		setTimeout(()=>{
 			this.highlightActiveDate(getState('activeDate'))
 		}, 0)
 	},
+
+	remove: function () {
+		window.removeEventListener('activeDateChanged', this.highlightListener)
+	},
+
 	timelineDataToDateTree: function(timelineData, timeScales){
 		var dateTree = {
 			key: 'root',
@@ -240,8 +247,7 @@ AFRAME.registerComponent('ui-panel-timeline', {
 			anchor: 'left',
 			baseline: 'top'
 		})
-		
-		el.setAttribute('id', moment(nodeData.key).format('YYYY-MM-DD'))
+
 		// Ensure this is set for renderDateTree heights to work correctly
 		el.setAttribute('height', this.data.rowHeight)
 
@@ -275,33 +281,33 @@ AFRAME.registerComponent('ui-panel-timeline', {
 			el.appendChild(indicatorGeo)
 		}
 
-		setTimeout(()=>{
-			var boxEl = appendBoxEl(el)
-			boxEl.classList.add(window.globals.interactableClass)
+		if(nodeData.isLeaf){
+			el.setAttribute('id', moment(nodeData.key).format('YYYY-MM-DD'))
 
-			boxEl.addEventListener('click', (e)=>{
+			setTimeout(()=>{
+				var boxEl = appendBoxEl(el)
+				boxEl.classList.add(window.globals.interactableClass)
+	
+				boxEl.addEventListener('click', (e)=>{
+	
+					//this will be a problem if multiple instances
+					//of timeline exist in a scene - how do you access
+					//the component data from here? can set the id that way 
+					timelineEl = document.querySelector('#timeline')
+					timelineEl.setAttribute('sound',{
+						src:'#timeline-click-audio',
+						on: 'click'
+					})
+	
+					if(timelineEl.clickHandler){
+						timelineEl.clickHandler(nodeData)
+					} else {
+						console.warn("No click handler assigned")
+					}
+				});
+			},0)
 
-				
-				// console.log("Clicked: ", nodeData)
-				// e.stopPropagation()
-
-				//this will be a problem if multiple instances
-				//of timeline exist in a scene - how do you access
-				//the component data from here? can set the id that way 
-				timelineEl = document.querySelector('#timeline')
-				timelineEl.setAttribute('sound',{
-					src:'#timeline-click-audio',
-					on: 'click'
-				})
-
-				if(timelineEl.clickHandler){
-					timelineEl.clickHandler(nodeData)
-				} else {
-					console.warn("No click handler assigned")
-				}
-			});
-		},0)
-
+		}
 	},
 	highlightActiveDate: function(activeDate){
 		if(this.activeItem !== undefined && this.activeItem !== null){
@@ -317,26 +323,27 @@ AFRAME.registerComponent('ui-panel-timeline', {
 		} else {
 			console.warn("this.activeItem was null or undefined")
 		}
-		var dateID = moment(activeDate).format('YYYY-MM-DD')
-		var activeItem = this.activeItem = document.getElementById(dateID)
-		var activeItemPos = this.activeItemPos = activeItem.components.position.attrValue
-		var activeIndicator = this.activeIndicator = activeItem.querySelector('#indicator')
-		var activeIndicatorPos = this.activeIndicatorPos = activeIndicator.components.position.attrValue
-		activeItem.setAttribute('text',{
+
+		this.activeItem = document.getElementById(activeDate)
+		this.activeItemPos = this.activeItem.components.position.attrValue
+		this.activeIndicator = this.activeItem.querySelector('#indicator')
+		this.activeIndicatorPos = this.activeIndicator.components.position.attrValue
+
+		this.activeItem.setAttribute('text',{
 			opacity:1
 		})
-		activeItem.setAttribute('position',{
+		this.activeItem.setAttribute('position',{
 			x:0.137,
-			y:activeItemPos.y,
-			z:activeItemPos.z
+			y:this.activeItemPos.y,
+			z:this.activeItemPos.z
 		})			
 		
-		activeIndicator.setAttribute('position',{
+		this.activeIndicator.setAttribute('position',{
 			x: -0.069,
 			y: -0.023 + 0.005,
-			z: activeIndicatorPos.z
+			z: this.activeIndicatorPos.z
 		})
-		activeIndicator.setAttribute('geometry',{
+		this.activeIndicator.setAttribute('geometry',{
 			width: 0.12,
 			height: 0.02
 		})
