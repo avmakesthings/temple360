@@ -28,6 +28,7 @@
     "aframe-particle-system-component": "^1.0.11",
     "aframe-rain": "^1.0.2",
     "aframe-state-component": "^1.1.2",
+    "aframe-teleport-controls": "^0.3.1",
     "aframe-template-component": "^3.2.1",
     "aframe-text-geometry-component": "^0.5.1",
     "file-system": "^2.2.2",
