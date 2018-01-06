@@ -265,7 +265,11 @@ AFRAME.registerComponent('scene-manager', {
 		cameraEl.setAttribute('position', position)
 	},
 	set360: function(image){
-		var sky = document.createElement('a-sky')
+		var sky = document.querySelector('a-sky')
+		if(!sky){
+			sky = document.createElement('a-sky')
+		}
+		
 		var sceneEl = document.querySelector('a-scene')
 		sky.setAttribute('src', image)
 		this.el.appendChild(sky)

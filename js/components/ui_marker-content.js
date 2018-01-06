@@ -52,39 +52,42 @@ AFRAME.registerComponent('ui-marker-content', {
 	},
 
 	addClickCone: function(){
-		const clickCone = document.createElement('a-entity')
-		clickCone.classList.add(window.globals.interactableClass)
+		this.clickCone = document.createElement('a-entity')
+		this.clickCone.classList.add(window.globals.interactableClass)
 
-		clickCone.setAttribute('geometry',{
+		this.clickCone.setAttribute('geometry',{
 			primitive: 'cone',
-			radiusBottom: 0.20, 
-			radiusTop: 0.20,
-			height: 2
+			radiusBottom: 0.5, 
+			radiusTop: 0.15,
+			height: 2.6
 		})
-		clickCone.setAttribute('material',{
+		
+		// FIXME: Having a material with 'visible: false' looks better, 
+		// but may not work with tracked controls Raycaster. Investigate.
+		this.clickCone.setAttribute('material',{
 			color: '#000000',
 			transparent: true,
 			opacity: 0
 		})
 		
-		clickCone.addEventListener('click', (e)=>{
+		this.clickCone.addEventListener('click', (e)=>{
 			if(this.el.clickHandler){
 				this.el.clickHandler(e)
 			} else {
 				console.warn("No click handler assigned")
 			}
 		});
-		this.el.appendChild(clickCone)
+		this.el.appendChild(this.clickCone)
 	},
 
 	highlight: function(delay){
 		const beacon = document.createElement('a-entity');
-		const visibleFor = 15000
+		const visibleFor = 10000
 
 		beacon.setAttribute('geometry',{
 			primitive: 'cone',
-			radiusBottom: 0.25, 
-			radiusTop: 0.25,
+			radiusBottom: 0.55, 
+			radiusTop: 0.55,
 			height: 400
 		})
 
@@ -98,10 +101,10 @@ AFRAME.registerComponent('ui-marker-content', {
 		animation.setAttribute('attribute', 'material.opacity');
 		animation.setAttribute('direction', 'alternate')  
 		animation.setAttribute('easing', 'ease-cubic')  
-		animation.setAttribute('dur', visibleFor/6) 
+		animation.setAttribute('dur', visibleFor/4) 
 		animation.setAttribute('from', '0');
 		animation.setAttribute('to', '0.25');
-		animation.setAttribute('repeat', 6) 
+		animation.setAttribute('repeat', 4) 
 
 		setTimeout(()=>{
 			this.el.appendChild(beacon)
