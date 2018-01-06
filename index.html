@@ -12,12 +12,15 @@
     <a-scene app create-states scene-manager >
       <a-assets>        
         <a-asset-item id="temple-gltf" src="/assets/17-08-temple.gltf"></a-asset-item>
-        <!-- <audio id="home-audio" src="/assets/home-audio-2.mp3" preload="auto"></audio> -->
-        <!-- <audio id="model-audio" src="/assets/model-audio.mp3" preload="auto"></audio> -->
-        <!-- <audio id="button-click" src="/assets/button-click.mp3" preload="auto"></audio>
-        <audio id="timeline-click" src="/assets/timeline-click.mp3" preload="auto"></audio>
-        <audio id="menu-open" src="/assets/menu-open.mp3" preload="auto"></audio>
-        <audio id="menu-close" src="/assets/menu-close.mp3" preload="auto"></audio>         -->
+
+        <a-asset-item id="home-audio" src="/assets/home-audio-2.mp3" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="model-audio" src="/assets/model-audio.mp3" response-type="arraybuffer"></a-asset-item>
+
+        <a-asset-item id="button-click-audio" src="/assets/button-click.mp3" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="timeline-click-audio" src="/assets/timeline-click.mp3" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="menu-open-audio" src="/assets/menu-open.mp3" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="menu-close-audio" src="/assets/menu-close.mp3" response-type="arraybuffer"></a-asset-item>
+
         <a-asset-item id="scene-home" src="/assets/scene_home.gltf"></a-asset-item>
 
         <!-- content marker--> 
@@ -56,6 +59,8 @@
 
       <!-- camera--> 
 	  <a-entity id="cameraRig" >
+
+      <a-entity id="envAudio" sound="src: #home-audio"></a-entity>
 
 		  <a-entity id="head" camera="userHeight: 1.6;"  look-controls  wasd-controls>
 		  		<a-entity id="reticle" cursor="fuse: true; fuseTimeout: 1000"

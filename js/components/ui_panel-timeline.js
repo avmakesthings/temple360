@@ -280,6 +280,8 @@ AFRAME.registerComponent('ui-panel-timeline', {
 			boxEl.classList.add(window.globals.interactableClass)
 
 			boxEl.addEventListener('click', (e)=>{
+
+				
 				// console.log("Clicked: ", nodeData)
 				// e.stopPropagation()
 
@@ -287,6 +289,10 @@ AFRAME.registerComponent('ui-panel-timeline', {
 				//of timeline exist in a scene - how do you access
 				//the component data from here? can set the id that way 
 				timelineEl = document.querySelector('#timeline')
+				timelineEl.setAttribute('sound',{
+					src:'#timeline-click-audio',
+					on: 'click'
+				})
 
 				if(timelineEl.clickHandler){
 					timelineEl.clickHandler(nodeData)

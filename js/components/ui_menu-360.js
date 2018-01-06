@@ -54,9 +54,17 @@ AFRAME.registerComponent('ui-menu-360', {
 		this.el.setAttribute('visible', false)
 		this.createMenu()
 
+
+
 		//menu toggle - TODO - add support for VR controller keypress
 		window.addEventListener('show360Menu', (e)=>{
 			var menuState = this.el.getAttribute('visible')
+			
+			this.el.setAttribute('sound',{
+				src: menuState ? '#menu-close-audio' : '#menu-open-audio',
+			})
+			this.el.components.sound.playSound();
+
 			this.setPosition()
 			this.el.setAttribute('visible', (!menuState))
 		})
@@ -230,6 +238,7 @@ AFRAME.registerComponent('ui-menu-360', {
 			x: -0.695 
 		});
 		backButton.clickHandler = (e)=>{
+
 			this.el.emit('changeActiveScene',{ 
 				activeScene: 'scene3DModel'
 			});

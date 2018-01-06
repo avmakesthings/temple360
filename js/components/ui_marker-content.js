@@ -77,6 +77,7 @@ AFRAME.registerComponent('ui-marker-content', {
 				console.warn("No click handler assigned")
 			}
 		});
+
 		this.el.appendChild(this.clickCone)
 	},
 

@@ -229,7 +229,12 @@ AFRAME.registerComponent('scene-manager', {
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.sceneHome);
 			// this.setCameraPos(new THREE.Vector3(0,1.6,0))
-			
+
+			var entity = document.getElementById('envAudio')
+			entity.components.sound.stopSound();
+			entity.setAttribute('sound', "src: #home-audio")
+			entity.components.sound.playSound();
+
 		}if(nextScene == 'scene360'){
 			if(currentTemplate == this.data.scene3DModel){
 				this.resetEnv('scene3DModel');
@@ -246,9 +251,14 @@ AFRAME.registerComponent('scene-manager', {
 		}if(nextScene == 'scene3DModel'){
 			if(currentTemplate == this.data.sceneHome){
 				this.resetEnv('sceneHome');
+
+				var entity = document.getElementById('envAudio')
+				entity.components.sound.stopSound();
+				entity.setAttribute('sound', "src: #model-audio")
+				entity.components.sound.playSound();
 			}
 			sceneTemplate.setAttribute('template', 'src:' + this.data.scene3DModel);
-			// this.setCameraPos(new THREE.Vector3(0,1.6,40))	
+			// this.setCameraPos(new THREE.Vector3(0,1.6,40))
 		}
 	},
 	resetEnv: function(currentTemplate){
