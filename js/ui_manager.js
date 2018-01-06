@@ -18,15 +18,19 @@ require('./components/ui_marker-content.js');
 
 const delay = 2000
 
+
 AFRAME.registerComponent('ui-manager', {
 	schema: {
-    },
+	},
+	
     init: function() {
         
         this.currentScene
 
 		// TODO: Check that they are supported VR gamepads
-		this.gamepadCount = window.navigator.getGamepads().length
+		const initialGamepads = window.navigator.getGamepads()
+		this.gamepadCount = Object.values(initialGamepads).filter(this.isVRGamepad).length
+
 		this.reticleActive = true
 		this.controls = document.getElementById("controls")
 
@@ -60,6 +64,12 @@ AFRAME.registerComponent('ui-manager', {
 				}
 			}, delay)
 		}
+	},
+
+	isVRGamepad: function(gamepad){
+		if(!gamepad) return false
+		// TODO: Make this smarter...
+		return true
 	},
 
 	// Lots of hacks here...
@@ -134,9 +144,9 @@ AFRAME.registerComponent('ui-manager', {
 		this.reticleActive = !this.reticleActive
 		const reticle = document.getElementById("reticle")
 		if(this.reticleActive){
-			reticle.setAttribute('visible', true)			
+			// reticle.setAttribute('visible', "true")			
 		} else {
-			reticle.setAttribute('visible', false)			
+			reticle.setAttribute('visible', "false")			
 		}
 	}
 })
