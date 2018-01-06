@@ -298,7 +298,7 @@ AFRAME.registerComponent('ui-panel-timeline', {
 
 	},
 	highlightActiveDate: function(activeDate){
-		if(this.activeItem !== undefined){
+		if(this.activeItem !== undefined && this.activeItem !== null){
 			this.activeItem.setAttribute('position',this.activeItemPos)
 			this.activeItem.setAttribute('text', {
 				opacity:0.5
@@ -308,6 +308,8 @@ AFRAME.registerComponent('ui-panel-timeline', {
 				width: 0.04,
 				height: 0.002
 			})
+		} else {
+			console.warn("this.activeItem was null or undefined")
 		}
 		var dateID = moment(activeDate).format('YYYY-MM-DD')
 		var activeItem = this.activeItem = document.getElementById(dateID)
