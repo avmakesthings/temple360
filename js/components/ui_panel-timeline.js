@@ -277,6 +277,7 @@ AFRAME.registerComponent('ui-panel-timeline', {
 
 		setTimeout(()=>{
 			var boxEl = appendBoxEl(el)
+			boxEl.classList.add(window.globals.interactableClass)
 
 			boxEl.addEventListener('click', (e)=>{
 				// console.log("Clicked: ", nodeData)
