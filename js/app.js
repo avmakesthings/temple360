@@ -201,6 +201,7 @@ window.addEventListener("activeModelChanged", function(event) {
 
 /* * * + + + + + + + + + + + + + + + + + + + + 
 Scene Manager 
+
 + + + + + + + + + + + + + + + + + + + + * * */
 
 AFRAME.registerComponent("scene-manager", {
@@ -235,7 +236,8 @@ AFRAME.registerComponent("scene-manager", {
                 "template",
                 "src:" + this.data.sceneHome
             );
-            // this.setCameraPos(new THREE.Vector3(0,1.6,0))
+
+            this.setCameraPos({ x: 0, z: 0 });
 
             var entity = document.getElementById("envAudio");
             entity.components.sound.stopSound();
@@ -263,12 +265,13 @@ AFRAME.registerComponent("scene-manager", {
                 entity.components.sound.stopSound();
                 entity.setAttribute("sound", "src: #model-audio");
                 entity.components.sound.playSound();
+
+                this.setCameraPos({ x: 0, z: 40 });
             }
             sceneTemplate.setAttribute(
                 "template",
                 "src:" + this.data.scene3DModel
             );
-            // this.setCameraPos(new THREE.Vector3(0,1.6,40))
         }
     },
     resetEnv: function(currentTemplate) {
@@ -280,9 +283,12 @@ AFRAME.registerComponent("scene-manager", {
         }
         env.setAttribute("environment", { active: false });
     },
-    setCameraPos: function(position) {
-        var cameraEl = document.getElementById("cameraRig");
-        cameraEl.setAttribute("position", position);
+    // Accepts any partial positionChange argument:  {x:#, y:#, z:#},  {x:#, z:#},  {x:#} etc...
+    setCameraPos: function(positionChange) {
+        const cameraEl = document.getElementById("cameraRig");
+        const cameraPosition = cameraEl.getAttribute("position");
+        const nextPosition = Object.assign({}, cameraPosition, positionChange);
+        cameraEl.setAttribute("position", nextPosition);
     },
     set360: function(image) {
         var sky = document.querySelector("a-sky");

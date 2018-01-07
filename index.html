@@ -4,11 +4,155 @@
     <title>A forest in the desert</title>
     <meta name="" content="">
     <!-- <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script> -->
+    
+  </head>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    }
+
+    #preloader {
+      text-align: center
+    }
+
+    .loader,
+    .loader:before,
+    .loader:after {
+      background: #ebebeb;
+      -webkit-animation: load1 1s infinite ease-in-out;
+      animation: load1 1s infinite ease-in-out;
+      width: 1em;
+      height: 4em;
+    }
+    .loader {
+      color: #ebebeb;
+      text-indent: -9999em;
+      margin: 88px auto;
+      position: relative;
+      font-size: 11px;
+      -webkit-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation-delay: -0.16s;
+      animation-delay: -0.16s;
+    }
+    .loader:before,
+    .loader:after {
+      position: absolute;
+      top: 0;
+      content: '';
+    }
+    .loader:before {
+      left: -1.5em;
+      -webkit-animation-delay: -0.32s;
+      animation-delay: -0.32s;
+    }
+    .loader:after {
+      left: 1.5em;
+    }
+    @-webkit-keyframes load1 {
+      0%,
+      80%,
+      100% {
+        box-shadow: 0 0;
+        height: 4em;
+      }
+      40% {
+        box-shadow: 0 -2em;
+        height: 5em;
+      }
+    }
+    @keyframes load1 {
+      0%,
+      80%,
+      100% {
+        box-shadow: 0 0;
+        height: 4em;
+      }
+      40% {
+        box-shadow: 0 -2em;
+        height: 5em;
+      }
+    }
+
+    .onboarding {
+      font-size: 13px;
+      height: 400px;
+      width: 33%;
+      color: white;
+      font-weight: 300;
+      line-height: 16px;
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      background: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg…28.58C245.82%2C12.34%2C233.93%2C0%2C218.19%2C0H27.27Z%22%2F%3E%3C%2Fsvg%3E) 50% 50%/70% 70% no-repeat rgba(0,0,0,.35);
+      transition: background-color .05s ease;
+      -webkit-transition: background-color .05s ease;
+      z-index: 9999;
+      overflow: scroll;
+      visibility:hidden;
+      opacity:0;
+      transition:visibility 0s linear 0.5s,opacity 0.5s linear;
+    }
+
+    .onboarding.visible {
+      visibility:visible;
+      opacity:1;
+    }
+
+    .onboarding > div {
+      padding: 0 10px;
+    }
+
+
+  </style>
+ 
+  <body>
+    <div id="preloader">
+        <div class="loader"></div>
+        <span id="loading-message"></span>...
+    </div>
+    <script>
+
+      function showMessages(){
+        var messages = [
+          "reticulating splines",
+          "upshifting tectonic plates",
+          "smoothing, planing, leveling",
+          "touching inappropriately",
+          "collecting models",
+          "finalizing"
+        ]
+
+        showMessage = function(i){
+          window.setTimeout(()=>{
+            messageSpan = document.getElementById("loading-message")
+            if (messageSpan){
+              messageSpan.innerHTML = messages[i]
+          }}, i*2000)
+        }
+        
+        for (var i = 0; i < messages.length; i++){
+          showMessage(i)
+        }
+      }
+  
+      showMessages()
+  
+      window.addEventListener("load", function(){
+        document.body.removeChild(document.getElementById("preloader"))
+
+        var onboarding = document.getElementById("onboarding")
+        window.setTimeout(()=>{
+          onboarding.classList.toggle("visible");
+        }, 15000)
+
+      });
+  
+    </script>
     <script src="/js/app.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.js"></script>
-  </head>
 
-  <body>
     <a-scene app create-states scene-manager >
       <a-assets>        
         <a-asset-item id="temple-gltf" src="/assets/17-08-temple.gltf"></a-asset-item>
@@ -20,8 +164,12 @@
         <a-asset-item id="timeline-click-audio" src="/assets/timeline-click.mp3" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="menu-open-audio" src="/assets/menu-open.mp3" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="menu-close-audio" src="/assets/menu-close.mp3" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="content-hum-audio" src="/assets/content-hum.mp3" response-type="arraybuffer" preload=auto></a-asset-item>
 
-        <a-asset-item id="scene-home" src="/assets/scene_home.gltf"></a-asset-item>
+        <!-- <a-asset-item id="scene-home" src="/assets/scene_home.gltf"></a-asset-item> --> 
+        <a-asset-item id="scene-home-stacks" src="/assets/scene_home-stacks.gltf"></a-asset-item>
+        <a-asset-item id="scene-home-trees" src="/assets/scene_home-trees.gltf"></a-asset-item>
+
 
         <!-- content marker--> 
         <a-asset-item id="ui_content-marker-base" src="/assets/ui_content-marker-base.obj"></a-asset-item>
@@ -60,7 +208,7 @@
       <!-- camera--> 
 	  <a-entity id="cameraRig" >
 
-      <a-entity id="envAudio" sound="src: #home-audio"></a-entity>
+     
 
 		  <a-entity id="head" camera="userHeight: 1.6;"  look-controls  wasd-controls>
 		  		<a-entity id="reticle" cursor="fuse: true; fuseTimeout: 1000"
@@ -73,7 +221,8 @@
 					 fill="forwards" from="1 1 1" to="0.1 0.1 0.1"></a-animation>
 
 			   </a-entity>
-			   <a-entity camera-mask></a-entity>
+         <a-entity camera-mask></a-entity>
+         <a-entity id="envAudio" sound="src: #home-audio"></a-entity>
 		  </a-entity>
 		
 		
@@ -82,6 +231,28 @@
 	  </a-entity>
 
     </a-scene>
+
+
+    <div id="onboarding" class="onboarding visible">
+      <div>
+        <h4>HTC Vive on Chromium nightly</h4> 
+        <p>
+          Turn them on and click the button to the right.
+        </p><p>
+          You can teleport by hitting the 'up' button and activate elements with the trigger.
+        </p><p>
+          Hit to menu button to activate the menu after entering.
+        </p>
+        <h4>Standard</h4>
+        <p>
+          Use the arrow or WASD keys to move around and click and drag the mouse to rotate the camera.
+          </p><p> 
+          Fix the 'gaze' of the reticle in the center of the screen on interactive elements to activate them.
+          </p><p>
+          Hit 'm' to activate the menu after entering.
+        </p>      
+      </div>
+    </div>
 
   </body>
 </html>
