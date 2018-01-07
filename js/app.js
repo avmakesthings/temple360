@@ -219,7 +219,8 @@ AFRAME.registerComponent("scene-manager", {
         });
         window.addEventListener("activeThreeSixtyChanged", e => {
             next360 = `assets/${e.detail.activeThreeSixty.source}`;
-            this.change360(next360);
+            const phiStart = e.detail.activeThreeSixty.phiStart;
+            this.change360(next360, phiStart);
         });
     },
     setScene: function(nextScene) {
@@ -253,7 +254,8 @@ AFRAME.registerComponent("scene-manager", {
             setTimeout(() => {
                 const activeThreeSixty = getState("activeThreeSixty");
                 next360 = `assets/${activeThreeSixty.source}`;
-                this.set360(next360);
+                const phiStart = activeThreeSixty.phiStart;
+                this.set360(next360, phiStart);
             }, 0);
             // this.setCameraPos(new THREE.Vector3(0,1.6,0))
         }
@@ -290,22 +292,25 @@ AFRAME.registerComponent("scene-manager", {
         const nextPosition = Object.assign({}, cameraPosition, positionChange);
         cameraEl.setAttribute("position", nextPosition);
     },
-    set360: function(image) {
+    set360: function(image, phiStart) {
         var sky = document.querySelector("a-sky");
         if (!sky) {
             sky = document.createElement("a-sky");
         }
 
         var sceneEl = document.querySelector("a-scene");
+
         sky.setAttribute("src", image);
+        sky.setAttribute("phi-start", phiStart);
         this.el.appendChild(sky);
     },
     remove360: function() {
         var sky = document.querySelector("a-sky");
         sky.parentNode.removeChild(sky);
     },
-    change360: function(image) {
+    change360: function(image, phiStart) {
         var sky = document.querySelector("a-sky");
         sky.setAttribute("src", image);
+        sky.setAttribute("phi-start", phiStart);
     }
 });
