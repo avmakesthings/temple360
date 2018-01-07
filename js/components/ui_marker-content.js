@@ -23,7 +23,11 @@ AFRAME.registerComponent("ui-marker-content", {
         this.addOBJ("fill");
         this.addOBJ("top");
 
-        this.addClickCone();
+        // Delay making it interactable
+        // to prevent accidental activation by reticle on load
+        setTimeout(() => {
+            this.addClickCone();
+        }, 5000);
 
         this.animate();
     },
@@ -114,6 +118,17 @@ AFRAME.registerComponent("ui-marker-content", {
             setTimeout(() => {
                 this.el.removeChild(beacon);
             }, visibleFor + 1000);
+
+            // NOTE: Some aframe/web audio bug causes 'Cannot decode detached ArrayBuffer' errors
+            // if too many audio clips are attached at once.
+            // Putting this here to take advantage of the sequential delay built into the 'highlight' code.
+            this.el.setAttribute("sound", {
+                src: "#content-hum-audio",
+                autoplay: "true",
+                loop: "true",
+                poolSize: 30,
+                volume: 20
+            });
         }, delay);
     },
 
