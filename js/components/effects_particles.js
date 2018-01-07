@@ -1,57 +1,54 @@
 /**
  * @author AnastasiaVictor/ http://github.com/avmakesthings
- * 
+ *
  * A-frame Particle system component using Shader Particle Engine
  * by @squarefeet https://github.com/squarefeet/ShaderParticleEngine
  */
 
-var SPE = require('../scripts/SPE.min.js');
+var SPE = require("../scripts/SPE.min.js");
 
-AFRAME.registerComponent('particles', {
-	schema: {
-		preset: {type:'', default: 'dustCloud'}
+AFRAME.registerComponent("particles", {
+    schema: {
+        preset: { type: "", default: "dustCloud" }
     },
-    init: function(){
-
-        switch(this.data.preset){
-            case 'dustCloud':
-                this.createDustCloud()
-                break
-            case 'fireflies':
-                this.createFireflies()
-                break
+    init: function() {
+        switch (this.data.preset) {
+            case "dustCloud":
+                this.createDustCloud();
+                break;
+            case "fireflies":
+                this.createFireflies();
+                break;
             default:
-                console.log('no particle system preset selected')
+                console.log("no particle system preset selected");
         }
     },
-    tick: function(){
-        
-        this.particleGroup.tick( this.timeDelta/3 )
+    tick: function() {
+        this.particleGroup.tick(this.timeDelta / 3);
     },
-    createDustCloud: function(){
- 
-        var texture = new THREE.TextureLoader().load( '../assets/cloud.png' )
+    createDustCloud: function() {
+        var texture = new THREE.TextureLoader().load("../assets/cloud.png");
 
-        var particleGroup = this.particleGroup = new SPE.Group({
+        var particleGroup = (this.particleGroup = new SPE.Group({
             texture: {
                 value: texture
             },
             blending: THREE.NormalBlending,
             fog: true,
             maxParticleCount: 750
-        });
+        }));
 
         var emitter = new SPE.Emitter({
             particleCount: 750,
             maxAge: {
-                value: 3,
+                value: 3
             },
             position: {
-                value: new THREE.Vector3( 0, 0, 0 ),
-                spread: new THREE.Vector3( 100, 10, 100 )
+                value: new THREE.Vector3(0, 0, 0),
+                spread: new THREE.Vector3(100, 10, 100)
             },
             velocity: {
-                value: new THREE.Vector3( -0.2, 0.1, 0.15 )
+                value: new THREE.Vector3(-0.2, 0.1, 0.15)
             },
             wiggle: {
                 value: 3,
@@ -62,32 +59,31 @@ AFRAME.registerComponent('particles', {
                 spread: 40
             },
             opacity: {
-                value: [ 0,0.1,0.15,0.2,0.15,0.1,0 ]
+                value: [0, 0.1, 0.15, 0.2, 0.15, 0.1, 0]
             },
             color: {
-                value: new THREE.Color( 244, 206, 168 ),
-                spread: new THREE.Color( 0.1, 0.1, 0.1 )
+                value: new THREE.Color(244, 206, 168),
+                spread: new THREE.Color(0.1, 0.1, 0.1)
             },
             angle: {
-                value: [ 0, Math.PI * 0.125 ]
+                value: [0, Math.PI * 0.125]
             }
         });
 
-        particleGroup.addEmitter( emitter )
-        this.el.object3D.add( particleGroup.mesh )
-        
-        
+        particleGroup.addEmitter(emitter);
+        this.el.object3D.add(particleGroup.mesh);
     },
-    createFireflies: function(){
+    createFireflies: function() {
+        var thisTex = new THREE.TextureLoader().load(
+            "../assets/smokeparticle.png"
+        );
 
-        var thisTex = new THREE.TextureLoader().load( '../assets/smokeparticle.png' )
-
-        var particleGroup = this.particleGroup = new SPE.Group({
+        var particleGroup = (this.particleGroup = new SPE.Group({
             texture: {
                 value: thisTex
             },
             maxParticleCount: 200
-        });
+        }));
         var emitter = new SPE.Emitter({
             type: SPE.distributions.BOX,
             maxAge: {
@@ -95,18 +91,18 @@ AFRAME.registerComponent('particles', {
             },
             position: {
                 value: new THREE.Vector3(0, 10, 0),
-                spread: new THREE.Vector3( 100, 100, 100)
+                spread: new THREE.Vector3(100, 100, 100)
             },
             acceleration: {
                 value: new THREE.Vector3(0, 0, 0),
-                spread: new THREE.Vector3( 0, 0, 0 )
+                spread: new THREE.Vector3(0, 0, 0)
             },
             velocity: {
                 value: new THREE.Vector3(1, 0.3, 1),
                 spread: new THREE.Vector3(0.5, 1, 0.5)
             },
             color: {
-                value: new THREE.Color('white')
+                value: new THREE.Color("white")
             },
             size: {
                 value: 1
@@ -114,16 +110,15 @@ AFRAME.registerComponent('particles', {
             particleCount: 100,
             randomize: false,
             opacity: {
-                value: [ 1 ]
+                value: [1]
             },
             direction: 1,
-            rotationAxis:'x',
+            rotationAxis: "x",
             rotationAngle: 3.14,
             duration: null
         });
 
-        particleGroup.addEmitter( emitter )
-        this.el.object3D.add( particleGroup.mesh )
-
-    },
-})
+        particleGroup.addEmitter(emitter);
+        this.el.object3D.add(particleGroup.mesh);
+    }
+});

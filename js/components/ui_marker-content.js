@@ -11,129 +11,126 @@ onHover
 onClick
 
 
-+ + + + + + + + + + + + + + + + + + + + * * */ 
++ + + + + + + + + + + + + + + + + + + + * * */
 
-AFRAME.registerComponent('ui-marker-content', {
-	schema: {},
+AFRAME.registerComponent("ui-marker-content", {
+    schema: {},
 
-	init: function (){
-		
-		this.addOBJ('base')
-		this.addOBJ('bottom')
+    init: function() {
+        this.addOBJ("base");
+        this.addOBJ("bottom");
 
-		this.addOBJ('fill')
-		this.addOBJ('top')
-		
-		this.addClickCone()
+        this.addOBJ("fill");
+        this.addOBJ("top");
 
-		this.animate()
-	},
+        this.addClickCone();
 
+        this.animate();
+    },
 
-	addOBJ: function(type, prefix='ui_content-marker-'){
-		this[type] = document.createElement('a-entity');
+    addOBJ: function(type, prefix = "ui_content-marker-") {
+        this[type] = document.createElement("a-entity");
 
-		const solidObj = document.createElement('a-entity');
-		solidObj.setAttribute('obj-model', `obj: #${prefix}${type}`);
-		solidObj.addEventListener("model-loaded", (e)=>{
-			globals.setMaterial(solidObj.object3D, globals.transAmberMaterial)
-		});
-		this[type].appendChild(solidObj)
+        const solidObj = document.createElement("a-entity");
+        solidObj.setAttribute("obj-model", `obj: #${prefix}${type}`);
+        solidObj.addEventListener("model-loaded", e => {
+            globals.setMaterial(solidObj.object3D, globals.transAmberMaterial);
+        });
+        this[type].appendChild(solidObj);
 
-		const wireObj = document.createElement('a-entity');
-		wireObj.setAttribute('obj-model', `obj: #${prefix}${type}`);
-		wireObj.addEventListener("model-loaded", (e)=>{
-			globals.setMaterial(wireObj.object3D, globals.wireframeBasicMaterial)
-		});
-		this[type].appendChild(wireObj)
+        const wireObj = document.createElement("a-entity");
+        wireObj.setAttribute("obj-model", `obj: #${prefix}${type}`);
+        wireObj.addEventListener("model-loaded", e => {
+            globals.setMaterial(
+                wireObj.object3D,
+                globals.wireframeBasicMaterial
+            );
+        });
+        this[type].appendChild(wireObj);
 
+        return this.el.appendChild(this[type]);
+    },
 
-		return this.el.appendChild(this[type]);
-	},
+    addClickCone: function() {
+        this.clickCone = document.createElement("a-entity");
+        this.clickCone.classList.add(window.globals.interactableClass);
 
-	addClickCone: function(){
-		this.clickCone = document.createElement('a-entity')
-		this.clickCone.classList.add(window.globals.interactableClass)
+        this.clickCone.setAttribute("geometry", {
+            primitive: "cone",
+            radiusBottom: 0.5,
+            radiusTop: 0.15,
+            height: 2.6
+        });
 
-		this.clickCone.setAttribute('geometry',{
-			primitive: 'cone',
-			radiusBottom: 0.5, 
-			radiusTop: 0.15,
-			height: 2.6
-		})
-		
-		// FIXME: Having a material with 'visible: false' looks better, 
-		// but may not work with tracked controls Raycaster. Investigate.
-		this.clickCone.setAttribute('material',{
-			color: '#000000',
-			transparent: true,
-			opacity: 0
-		})
-		
-		this.clickCone.addEventListener('click', (e)=>{
-			if(this.el.clickHandler){
-				this.el.clickHandler(e)
-			} else {
-				console.warn("No click handler assigned")
-			}
-		});
+        // FIXME: Having a material with 'visible: false' looks better,
+        // but may not work with tracked controls Raycaster. Investigate.
+        this.clickCone.setAttribute("material", {
+            color: "#000000",
+            transparent: true,
+            opacity: 0
+        });
 
-		this.el.appendChild(this.clickCone)
-	},
+        this.clickCone.addEventListener("click", e => {
+            if (this.el.clickHandler) {
+                this.el.clickHandler(e);
+            } else {
+                console.warn("No click handler assigned");
+            }
+        });
 
-	highlight: function(delay){
-		const beacon = document.createElement('a-entity');
-		const visibleFor = 4000
+        this.el.appendChild(this.clickCone);
+    },
 
-		beacon.setAttribute('geometry',{
-			primitive: 'cone',
-			radiusBottom: 0.55, 
-			radiusTop: 0.55,
-			height: 400
-		})
+    highlight: function(delay) {
+        const beacon = document.createElement("a-entity");
+        const visibleFor = 4000;
 
-		beacon.setAttribute('material',{
-			color: '#f8ff44',
-			transparent: true,
-			opacity: 0
-		})
+        beacon.setAttribute("geometry", {
+            primitive: "cone",
+            radiusBottom: 0.55,
+            radiusTop: 0.55,
+            height: 400
+        });
 
-		const animation = document.createElement('a-animation');
-		animation.setAttribute('attribute', 'material.opacity');
-		animation.setAttribute('direction', 'alternate')  
-		animation.setAttribute('easing', 'ease-cubic')  
-		animation.setAttribute('dur', visibleFor/2) 
-		animation.setAttribute('from', '0');
-		animation.setAttribute('to', '0.25');
-		animation.setAttribute('repeat', 2) 
+        beacon.setAttribute("material", {
+            color: "#f8ff44",
+            transparent: true,
+            opacity: 0
+        });
 
-		setTimeout(()=>{
-			this.el.appendChild(beacon)
-			beacon.appendChild(animation)
+        const animation = document.createElement("a-animation");
+        animation.setAttribute("attribute", "material.opacity");
+        animation.setAttribute("direction", "alternate");
+        animation.setAttribute("easing", "ease-cubic");
+        animation.setAttribute("dur", visibleFor / 2);
+        animation.setAttribute("from", "0");
+        animation.setAttribute("to", "0.25");
+        animation.setAttribute("repeat", 2);
 
-			setTimeout(()=>{
-				this.el.removeChild(beacon)
-			}, visibleFor+1000)
+        setTimeout(() => {
+            this.el.appendChild(beacon);
+            beacon.appendChild(animation);
 
-		}, delay)
-	},
+            setTimeout(() => {
+                this.el.removeChild(beacon);
+            }, visibleFor + 1000);
+        }, delay);
+    },
 
-	animate: function(){
-		this.addRotationAnimation(this['fill'], 10000)
-		this.addRotationAnimation(this['top'], 5000)
-	},
+    animate: function() {
+        this.addRotationAnimation(this["fill"], 10000);
+        this.addRotationAnimation(this["top"], 5000);
+    },
 
-	addRotationAnimation: function(el, dur){
-		const animation = document.createElement('a-animation');
-		animation.setAttribute('attribute', 'rotation')   
-		animation.setAttribute('direction', 'normal')  
-		animation.setAttribute('easing', 'linear')  
-		animation.setAttribute('dur', dur) 
-		animation.setAttribute('fill', 'forwards') 
-		animation.setAttribute('to', '0 360 0') 
-		animation.setAttribute('repeat', 'indefinite') 
-		el.appendChild(animation)
-	}
-
-
+    addRotationAnimation: function(el, dur) {
+        const animation = document.createElement("a-animation");
+        animation.setAttribute("attribute", "rotation");
+        animation.setAttribute("direction", "normal");
+        animation.setAttribute("easing", "linear");
+        animation.setAttribute("dur", dur);
+        animation.setAttribute("fill", "forwards");
+        animation.setAttribute("to", "0 360 0");
+        animation.setAttribute("repeat", "indefinite");
+        el.appendChild(animation);
+    }
 });
