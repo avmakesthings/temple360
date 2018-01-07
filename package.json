@@ -1,58 +1,58 @@
 {
-  "name": "gltf-viewer",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/avmakesthings/gltf-viewer.git"
-  },
-  "author": "AV",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/avmakesthings/gltf-viewer/issues"
-  },
-  "homepage": "https://github.com/avmakesthings/gltf-viewer#readme",
-  "dependencies": {
-    "aframe": "^0.7.0",
-    "aframe-animation-component": "^3.2.5",
-    "aframe-auto-detect-controllers-component": "^0.1.4",
-    "aframe-dev-components": "^1.0.0",
-    "aframe-extras": "^3.12.1",
-    "aframe-layout": "^1.0.2",
-    "aframe-layout-component": "^4.3.0",
-    "aframe-look-at-component": "^0.6.0",
-    "aframe-particle-system-component": "^1.0.11",
-    "aframe-rain": "^1.0.2",
-    "aframe-state-component": "^1.1.2",
-    "aframe-teleport-controls": "^0.3.1",
-    "aframe-template-component": "^3.2.1",
-    "aframe-text-geometry-component": "^0.5.1",
-    "file-system": "^2.2.2",
-    "fs": "0.0.1-security",
-    "gulp": "^3.9.1",
-    "gulp-browserify": "^0.5.1",
-    "gulp-connect": "^5.0.0",
-    "gulp-flatten": "^0.3.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-serve": "^1.4.0",
-    "gulp-sourcemaps": "^2.6.1",
-    "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.8",
-    "gulp-yaml": "^1.0.1",
-    "husky": "^0.14.3",
-    "lint-staged": "^6.0.0",
-    "lodash.isequal": "^4.5.0",
-    "moment": "^2.18.1",
-    "prettier": "^1.9.2",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
-  }
+    "name": "gltf-viewer",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "precommit": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{js,json,css,md}": ["prettier --tab-width 4 --write", "git add"]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/avmakesthings/gltf-viewer.git"
+    },
+    "author": "AV",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/avmakesthings/gltf-viewer/issues"
+    },
+    "homepage": "https://github.com/avmakesthings/gltf-viewer#readme",
+    "dependencies": {
+        "aframe": "^0.7.0",
+        "aframe-animation-component": "^3.2.5",
+        "aframe-auto-detect-controllers-component": "^0.1.4",
+        "aframe-dev-components": "^1.0.0",
+        "aframe-extras": "^3.12.1",
+        "aframe-layout": "^1.0.2",
+        "aframe-layout-component": "^4.3.0",
+        "aframe-look-at-component": "^0.6.0",
+        "aframe-particle-system-component": "^1.0.11",
+        "aframe-rain": "^1.0.2",
+        "aframe-state-component": "^1.1.2",
+        "aframe-teleport-controls": "^0.3.1",
+        "aframe-template-component": "^3.2.1",
+        "aframe-text-geometry-component": "^0.5.1",
+        "file-system": "^2.2.2",
+        "fs": "0.0.1-security",
+        "gulp": "^3.9.1",
+        "gulp-browserify": "^0.5.1",
+        "gulp-connect": "^5.0.0",
+        "gulp-flatten": "^0.3.1",
+        "gulp-rename": "^1.2.2",
+        "gulp-serve": "^1.4.0",
+        "gulp-sourcemaps": "^2.6.1",
+        "gulp-uglify": "^3.0.0",
+        "gulp-util": "^3.0.8",
+        "gulp-yaml": "^1.0.1",
+        "husky": "^0.14.3",
+        "lint-staged": "^6.0.0",
+        "lodash.isequal": "^4.5.0",
+        "moment": "^2.18.1",
+        "prettier": "^1.9.2",
+        "vinyl-buffer": "^1.0.0",
+        "vinyl-source-stream": "^1.1.0"
+    }
 }
