@@ -272,25 +272,29 @@ module.exports = {
                 title: "image1",
                 description: "test6a",
                 location: "northEntry",
-                source: "SAM_100_0004.jpg"
+                source: "SAM_100_0004.jpg",
+                phiStart: 90
             },
             {
                 title: "image2",
                 description: "test6b",
                 location: "origin",
-                source: "SAM_100_0005.jpg"
+                source: "SAM_100_0005.jpg",
+                phiStart: 90
             },
             {
                 title: "image3",
                 description: "test6c",
                 location: "southCantilever",
-                source: "SAM_100_0006.jpg"
+                source: "SAM_100_0006.jpg",
+                phiStart: 270
             },
             {
                 title: "image4",
                 description: "test6c",
                 location: "southRoad",
-                source: "SAM_100_0007.jpg"
+                source: "SAM_100_0007.jpg",
+                phiStart: 270
             }
         ],
         "2017-08-19": [
@@ -298,37 +302,43 @@ module.exports = {
                 title: "image5",
                 description: "test7",
                 location: "northCantilever",
-                source: "SAM_100_0009.jpg"
+                source: "SAM_100_0009.jpg",
+                phiStart: 90
             },
             {
                 title: "image6",
                 description: "test7",
                 location: "northEntry",
-                source: "SAM_100_0010.jpg"
+                source: "SAM_100_0010.jpg",
+                phiStart: 90
             },
             {
                 title: "fdskjhs",
                 description: "test7",
                 location: "origin",
-                source: "SAM_100_0011.jpg"
+                source: "SAM_100_0011.jpg",
+                phiStart: 90
             },
             {
                 title: "image8",
                 description: "test7",
                 location: "southCantilever",
-                source: "SAM_100_0012.jpg"
+                source: "SAM_100_0012.jpg",
+                phiStart: 270
             },
             {
                 title: "image9",
                 description: "test7",
                 location: "southRoad",
-                source: "SAM_100_0013.jpg"
+                source: "SAM_100_0013.jpg",
+                phiStart: 270
             },
             {
                 title: "image10",
                 description: "test7",
                 location: "northGate",
-                source: "SAM_100_0016.jpg"
+                source: "SAM_100_0016.jpg",
+                phiStart: 90
             }
         ],
         "2017-08-21": [
@@ -336,31 +346,36 @@ module.exports = {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northGate",
-                source: "SAM_100_0018.jpg"
+                source: "SAM_100_0018.jpg",
+                phiStart: 270
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northCantilever",
-                source: "SAM_100_0019.jpg"
+                source: "SAM_100_0019.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "origin",
-                source: "SAM_100_0022.jpg"
+                source: "SAM_100_0022.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southCantilever",
-                source: "SAM_100_0024.jpg"
+                source: "SAM_100_0024.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southRoad",
-                source: "SAM_100_0025.jpg"
+                source: "SAM_100_0025.jpg",
+                phiStart: 90
             }
         ],
         "2017-08-22": [
@@ -368,31 +383,36 @@ module.exports = {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northGate",
-                source: "SAM_100_0027.jpg"
+                source: "SAM_100_0027.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northCantilever",
-                source: "SAM_100_0028.jpg"
+                source: "SAM_100_0028.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "origin",
-                source: "SAM_100_0029.jpg"
+                source: "SAM_100_0029.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southCantilever",
-                source: "SAM_100_0030.jpg"
+                source: "SAM_100_0030.jpg",
+                phiStart: 270
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southRoad",
-                source: "SAM_100_0031.jpg"
+                source: "SAM_100_0031.jpg",
+                phiStart: 270
             }
         ],
         "2017-08-23": [
@@ -400,31 +420,36 @@ module.exports = {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northGate",
-                source: "SAM_100_0032.jpg"
+                source: "SAM_100_0032.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northCantilever",
-                source: "SAM_100_0033.jpg"
+                source: "SAM_100_0033.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "origin",
-                source: "SAM_100_0034.jpg"
+                source: "SAM_100_0034.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southCantilever",
-                source: "SAM_100_0035.jpg"
+                source: "SAM_100_0035.jpg",
+                phiStart: 270
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southRoad",
-                source: "SAM_100_0036.jpg"
+                source: "SAM_100_0036.jpg",
+                phiStart: 270
             }
         ],
         "2017-08-24": [
@@ -432,37 +457,43 @@ module.exports = {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northEntry",
-                source: "SAM_100_0037.jpg"
+                source: "SAM_100_0037.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "origin",
-                source: "SAM_100_0039.jpg"
+                source: "SAM_100_0039.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southCantilever",
-                source: "SAM_100_0040.jpg"
+                source: "SAM_100_0040.jpg",
+                phiStart: 270
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southRoad",
-                source: "SAM_100_0041.jpg"
+                source: "SAM_100_0041.jpg",
+                phiStart: 270
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northCantilever",
-                source: "SAM_100_0042.jpg"
+                source: "SAM_100_0042.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northGate",
-                source: "SAM_100_0043.jpg"
+                source: "SAM_100_0043.jpg",
+                phiStart: 90
             }
         ],
         "2017-08-28": [
@@ -470,85 +501,99 @@ module.exports = {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northWestCantilever",
-                source: "SAM_100_0045.jpg"
+                source: "SAM_100_0045.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northEntry",
-                source: "SAM_100_0047.jpg"
+                source: "SAM_100_0047.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northCantilever",
-                source: "SAM_100_0048.jpg"
+                source: "SAM_100_0048.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northGate",
-                source: "SAM_100_0049.jpg"
+                source: "SAM_100_0049.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southGate",
-                source: "SAM_100_0051.jpg"
+                source: "SAM_100_0051.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southRoad",
-                source: "SAM_100_0053.jpg"
+                source: "SAM_100_0053.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "origin",
-                source: "SAM_100_0056.jpg"
+                source: "SAM_100_0056.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "interiorWest",
-                source: "SAM_100_0057.jpg"
+                source: "SAM_100_0057.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "westEntry",
-                source: "SAM_100_0058.jpg"
+                source: "SAM_100_0058.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "westCantilever",
-                source: "SAM_100_0059.jpg"
+                source: "SAM_100_0059.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "eastEntry",
-                source: "SAM_100_0060.jpg"
+                source: "SAM_100_0060.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "eastCantilever",
-                source: "SAM_100_0061.jpg"
+                source: "SAM_100_0061.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "eastGate",
-                source: "SAM_100_0062.jpg"
+                source: "SAM_100_0062.jpg",
+                phiStart: 0
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northRoad",
-                source: "SAM_100_0065.jpg"
+                source: "SAM_100_0065.jpg",
+                phiStart: 90
             }
         ],
         "2017-09-02": [
@@ -556,19 +601,22 @@ module.exports = {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "eastGate",
-                source: "SAM_100_0067.jpg"
+                source: "SAM_100_0067.jpg",
+                phiStart: 180
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northGate",
-                source: "SAM_100_0069.jpg"
+                source: "SAM_100_0069.jpg",
+                phiStart: 270
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "southRoad",
-                source: "SAM_100_0070.jpg"
+                source: "SAM_100_0070.jpg",
+                phiStart: 90
             }
         ],
         "2017-09-03": [
@@ -576,25 +624,29 @@ module.exports = {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "origin",
-                source: "SAM_100_0074.jpg"
+                source: "SAM_100_0074.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northEntry",
-                source: "SAM_100_0077.jpg"
+                source: "SAM_100_0077.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "eastCantilever",
-                source: "SAM_100_0078.jpg"
+                source: "SAM_100_0078.jpg",
+                phiStart: 90
             },
             {
                 title: "this is a title",
                 description: "this is a longer description with some words",
                 location: "northCantilever",
-                source: "SAM_100_0079.jpg"
+                source: "SAM_100_0079.jpg",
+                phiStart: 90
             }
         ]
     }
