@@ -86,7 +86,8 @@ AFRAME.registerComponent("ui-button", {
 
         el.setAttribute("sound", {
             src: "#button-click-audio",
-            on: "click"
+            on: "click",
+            volume: "0.5"
         });
 
         //animations
