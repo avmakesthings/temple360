@@ -9,12 +9,12 @@ var getState = require("../getState");
 // If no threeSixty is found for this date,
 // find the first match within the month if one exists
 // Note: assumes they're already sorted
-function getFirstThreeSixty(activeDate, threeSixtyImages) {
+function getFirstThreeSixtyDate(date, locations, threeSixtyImages) {
     var activeDateMonth = moment(activeDate).month();
-    var firstThreeSixty = Object.keys(threeSixtyImages).find(date => {
+    var firstThreeSixtyDate = Object.keys(threeSixtyImages).find(date => {
         return moment(date).month() === activeDateMonth;
     });
-    return firstThreeSixty;
+    return firstThreeSixtyDate;
 }
 
 AFRAME.registerComponent("ui-markers", {
@@ -22,11 +22,6 @@ AFRAME.registerComponent("ui-markers", {
         this.locations = getState("locations");
         this.threeSixtyImages = getState("threeSixtyImages");
         this.activeDate = getState("activeDate");
-
-        this.bestDate = getFirstThreeSixty(
-            this.activeDate,
-            this.threeSixtyImages
-        );
 
         this.markers = this.addMarkers();
         this.highlightMarkers();
@@ -38,44 +33,63 @@ AFRAME.registerComponent("ui-markers", {
             this.highlightMarkers();
         });
     },
-
-    getMarkerData: function() {
-        this.bestDate = getFirstThreeSixty(
-            this.activeDate,
-            this.threeSixtyImages
+    // Get all marker locations for the month
+    getMarkerLocations: function() {
+        var markerLocations = {};
+        var activeDateMonth = moment(this.activeDate).month();
+        var monthDateKeys = Object.keys(this.threeSixtyImages).filter(
+            dateKey => {
+                return moment(dateKey).month() === activeDateMonth;
+            }
         );
-        return this.threeSixtyImages[this.bestDate] || [];
+
+        monthDateKeys.forEach(dateKey => {
+            var dateImages = this.threeSixtyImages[dateKey];
+            dateImages.forEach(dateImage => {
+                var imageLocation = dateImage.location;
+                if (!markerLocations[imageLocation]) {
+                    markerLocations[imageLocation] = Object.assign(
+                        {},
+                        this.locations[imageLocation]
+                    );
+                    // Tacked on as a convenience later
+                    markerLocations[imageLocation].first360 = dateImage;
+                }
+            });
+        });
+
+        return markerLocations;
     },
 
     addMarkers: function() {
         var el = this.el;
         var markers = [];
-        var markerData = this.getMarkerData();
+        var locations = this.getMarkerLocations();
 
-        markerData.forEach(thisMarkerData => {
+        Object.keys(locations).forEach(locationKey => {
+            var location = locations[locationKey];
+            if (!location.coord) {
+                throw new Error("no coordinates for location: ", location);
+            }
             var marker = document.createElement("a-entity");
-            var coord = this.locations[thisMarkerData.location].coord;
+            var coord = location.coord;
             marker.setAttribute("position", coord);
 
-            marker.setAttribute("ui-marker-content", {
-                data: thisMarkerData
-            });
+            marker.setAttribute("ui-marker-content", {});
 
             marker.clickHandler = e => {
-                console.log("Clicked: ", thisMarkerData);
-
                 //should also emit active location change
                 this.el.emit("changeActiveLocation", {
-                    activeLocation: thisMarkerData.location
+                    activeLocation: locationKey
                 });
+
                 this.el.emit("changeActiveThreeSixty", {
-                    activeThreeSixty: thisMarkerData
+                    activeThreeSixty: location.first360
                 });
-                // setTimeout(()=>{
+
                 this.el.emit("changeActiveScene", {
                     activeScene: "scene360"
                 });
-                // }, 2000)
             };
 
             markers.push(el.appendChild(marker));
@@ -86,7 +100,9 @@ AFRAME.registerComponent("ui-markers", {
 
     highlightMarkers: function() {
         this.markers.forEach((markerEl, i) => {
-            markerEl.components["ui-marker-content"].highlight(i * 1000);
+            if (markerEl.components["ui-marker-content"]) {
+                markerEl.components["ui-marker-content"].highlight(i * 1000);
+            }
         });
     },
 
