@@ -304,7 +304,7 @@ module.exports = {
         "2017-08-19": [
             {
                 title: "image5",
-                description: "test7",
+                description: "Under construction",
                 location: "northCantilever",
                 source: "SAM_100_0009.jpg",
                 phiStart: 90
@@ -513,13 +513,6 @@ module.exports = {
             // }
         ],
         "2017-08-28": [
-            {
-                title: "this is a title",
-                description: "Under construction",
-                location: "northWestCantilever",
-                source: "SAM_100_0045.jpg",
-                phiStart: 90
-            },
             {
                 title: "this is a title",
                 description: "Construction wraps up.",

@@ -122,13 +122,13 @@ AFRAME.registerComponent("ui-marker-content", {
             // NOTE: Some aframe/web audio bug causes 'Cannot decode detached ArrayBuffer' errors
             // if too many audio clips are attached at once.
             // Putting this here to take advantage of the sequential delay built into the 'highlight' code.
-            this.el.setAttribute("sound", {
-                src: "#content-hum-audio",
-                autoplay: "true",
-                loop: "true",
-                poolSize: 30,
-                volume: 20
-            });
+            // this.el.setAttribute("sound", {
+            //     src: "#content-hum-audio",
+            //     autoplay: "true",
+            //     loop: "true",
+            //     poolSize: 30,
+            //     volume: 20
+            // });
         }, delay);
     },
 
