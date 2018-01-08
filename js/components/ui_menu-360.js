@@ -217,18 +217,32 @@ AFRAME.registerComponent("ui-menu-360", {
         activeDate = moment(activeDate).format("YYYY-MM-DD");
 
         var preHeadingEl = el.querySelector("#preHeading");
-        preHeadingEl.setAttribute("text", {
-            value: moment(activeDate).format("MM/DD/YYYY")
-        });
+        if (preHeadingEl) {
+            preHeadingEl.setAttribute("text", {
+                value: moment(activeDate).format("MM/DD/YYYY")
+            });
+        } else {
+            console.warn("expected preheading el, but none was found");
+        }
+
         var headingEl = el.querySelector("#heading");
-        headingEl.setAttribute("text", {
-            // value:this.menuData[activeDate].title
-            value: this.activeLocationTitle
-        });
+        if (headingEl) {
+            headingEl.setAttribute("text", {
+                // value:this.menuData[activeDate].title
+                value: this.activeLocationTitle
+            });
+        } else {
+            console.warn("expected heading el, but none was found");
+        }
+
         var descripEl = el.querySelector("#description");
-        descripEl.setAttribute("text", {
-            value: this.menuData[activeDate].description
-        });
+        if (this.menuData[activeDate]) {
+            descripEl.setAttribute("text", {
+                value: this.menuData[activeDate].description
+            });
+        } else {
+            console.warn("expected preheading el, but none was found");
+        }
     },
     createNavPanel: function(el) {
         var navPanel = document.createElement("a-entity");
