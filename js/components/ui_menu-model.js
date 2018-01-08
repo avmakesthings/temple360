@@ -25,7 +25,7 @@ AFRAME.registerComponent("ui-menu-model", {
         this.createMenu();
 
         //menu toggle - TODO - add support for VR controller keypress
-        window.addEventListener("showModelMenu", e => {
+        this.onShowModelMenu = window.addEventListener("showModelMenu", e => {
             var menuState = this.el.getAttribute("visible");
 
             if (window.globals.activateSound) {
@@ -44,6 +44,13 @@ AFRAME.registerComponent("ui-menu-model", {
         buildingEl.addEventListener("model-loaded", () => {
             this.hideLoading();
         });
+    },
+    remove: function() {
+        window.removeEventListener("showModelMenu", this.onShowModelMenu);
+        window.removeEventListener(
+            "activeDateChanged",
+            this.onActiveDateChanged
+        );
     },
     showLoading: function() {
         var el = document.getElementById("model-menu-container");
@@ -133,23 +140,33 @@ AFRAME.registerComponent("ui-menu-model", {
 
         this.el.appendChild(layout);
 
-        window.addEventListener("activeDateChanged", e => {
-            var activeScene = getState("activeScene");
-            if (activeScene === "scene3DModel") {
-                var activeDate = moment(e.detail.activeDate).format(
-                    "YYYY-MM-DD"
-                );
-                var preHeadingText = moment(activeDate).format("MM/DD/YYYY");
-                var headingText = mainData.models[activeDate].title;
-                var descriptionText = mainData.models[activeDate].description;
-                this.updateInfoPanel(
-                    info,
-                    preHeadingText,
-                    headingText,
-                    descriptionText
-                );
+        this.onActiveDateChanged = window.addEventListener(
+            "activeDateChanged",
+            e => {
+                var activeScene = getState("activeScene");
+                if (activeScene === "scene3DModel") {
+                    var activeDate = moment(e.detail.activeDate).format(
+                        "YYYY-MM-DD"
+                    );
+                    var preHeadingText = moment(activeDate).format(
+                        "MM/DD/YYYY"
+                    );
+                    var model = mainData.models[activeDate];
+                    if (!model) {
+                        console.warn("Expected a model, but didn't find on");
+                    } else {
+                        var headingText = model.title;
+                        var descriptionText = model.description;
+                        this.updateInfoPanel(
+                            info,
+                            preHeadingText,
+                            headingText,
+                            descriptionText
+                        );
+                    }
+                }
             }
-        });
+        );
     },
     createMenuGeo: function(el) {
         data = this.data;

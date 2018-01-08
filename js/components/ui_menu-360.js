@@ -48,17 +48,15 @@ AFRAME.registerComponent("ui-menu-360", {
         this.activeLocation = getState("activeLocation");
         this.activeLocationTitle =
             mainData.locations[this.activeLocation].title;
-        this.menuData = this.filter360sByLocation(
-            mainData.threeSixtyImages,
-            this.activeLocation
-        );
-        this.activeDate = this.setActiveDate(); //hack for dealing with date discrepencies
+        // this.activeDate = this.setActiveDate(); //hack for dealing with date discrepencies
+        this.activeDate = getState("activeDate");
+        this.menuData = this.getMenuData();
         this.setPosition();
         this.el.setAttribute("visible", false);
         this.createMenu();
 
         //menu toggle - TODO - add support for VR controller keypress
-        window.addEventListener("show360Menu", e => {
+        this.onShow360Menu = window.addEventListener("show360Menu", e => {
             var menuState = this.el.getAttribute("visible");
 
             if (window.globals.activateSound) {
@@ -79,6 +77,19 @@ AFRAME.registerComponent("ui-menu-360", {
                 this.hideLoading();
             }, 500);
         });
+    },
+    remove: function() {
+        window.removeEventListener(
+            "activeDateChanged",
+            this.onActiveDateChanged
+        );
+        window.removeEventListener("show360Menu", this.onShow360Menu);
+    },
+    getMenuData: function() {
+        return this.filter360sByLocation(
+            mainData.threeSixtyImages,
+            getState("activeLocation")
+        );
     },
     showLoading: function() {
         var el = document.getElementById("model-menu-container");
@@ -149,16 +160,21 @@ AFRAME.registerComponent("ui-menu-360", {
             y: -0.039,
             z: -0.032
         });
+        this.onActiveDateChanged = window.addEventListener(
+            "activeDateChanged",
+            e => {
+                var activeScene = getState("activeScene");
 
-        this.el.appendChild(layout);
+                if (activeScene === "scene360") {
+                    this.activeLocation = getState("activeLocation");
+                    this.activeDate = e.detail.activeDate;
 
-        window.addEventListener("activeDateChanged", e => {
-            this.activeDate = e.detail.activeDate;
-            var activeScene = getState("activeScene");
-            if (activeScene === "scene360") {
-                this.updateInfoPanel(info, this.activeDate);
+                    this.menuData = this.getMenuData();
+                    this.updateInfoPanel(info, this.activeDate);
+                }
             }
-        });
+        );
+        this.el.appendChild(layout);
     },
     createMenuGeo: function(el) {
         data = this.data;
@@ -221,8 +237,6 @@ AFRAME.registerComponent("ui-menu-360", {
             preHeadingEl.setAttribute("text", {
                 value: moment(activeDate).format("MM/DD/YYYY")
             });
-        } else {
-            console.warn("expected preheading el, but none was found");
         }
 
         var headingEl = el.querySelector("#heading");
@@ -231,17 +245,13 @@ AFRAME.registerComponent("ui-menu-360", {
                 // value:this.menuData[activeDate].title
                 value: this.activeLocationTitle
             });
-        } else {
-            console.warn("expected heading el, but none was found");
         }
 
         var descripEl = el.querySelector("#description");
-        if (this.menuData[activeDate]) {
+        if (this.menuData[activeDate] && descripEl) {
             descripEl.setAttribute("text", {
                 value: this.menuData[activeDate].description
             });
-        } else {
-            console.warn("expected preheading el, but none was found");
         }
     },
     createNavPanel: function(el) {
@@ -355,11 +365,6 @@ AFRAME.registerComponent("ui-menu-360", {
             }
         });
         return filteredData;
-    },
-    setActiveDate: function() {
-        var firstDate = Object.keys(this.menuData)[0];
-        el.emit("changeActiveDate", { activeDate: firstDate });
-        return firstDate;
     },
     getPreviousDate: function() {
         var prev360Key = getPreviousKey(this.menuData, this.activeDate);
