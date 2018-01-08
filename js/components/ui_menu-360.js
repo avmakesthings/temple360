@@ -73,8 +73,11 @@ AFRAME.registerComponent("ui-menu-360", {
         });
 
         var skyEl = document.querySelector("a-sky");
-        skyEl.addEventListener("loaded", () => {
-            this.hideLoading();
+        skyEl.addEventListener("componentchanged", () => {
+            // Fake loader - don't seem to have an event that works here.
+            setTimeout(() => {
+                this.hideLoading();
+            }, 500);
         });
     },
     showLoading: function() {
