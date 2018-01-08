@@ -270,28 +270,32 @@ module.exports = {
         "2017-08-18": [
             {
                 title: "image1",
-                description: "test6a",
+                description:
+                    "Atrium is finished, the dome is ready to be picked!",
                 location: "northEntry",
                 source: "SAM_100_0004.jpg",
                 phiStart: 90
             },
             {
                 title: "image2",
-                description: "test6b",
+                description:
+                    "View from inside the atrium - altars have been roughed in.",
                 location: "origin",
                 source: "SAM_100_0005.jpg",
                 phiStart: 90
             },
             {
                 title: "image3",
-                description: "test6c",
+                description:
+                    "To the south, the pedestals, which were prebuilt in Oakland, are prepared for placement.",
                 location: "southCantilever",
                 source: "SAM_100_0006.jpg",
                 phiStart: 270
             },
             {
                 title: "image4",
-                description: "test6c",
+                description:
+                    "Looking towards the temple, pedestals are in the foreground and the dome and crane beyond. Looking south, the man base is visible in the distance.",
                 location: "southRoad",
                 source: "SAM_100_0007.jpg",
                 phiStart: 270
@@ -307,72 +311,78 @@ module.exports = {
             },
             {
                 title: "image6",
-                description: "test7",
+                description: "The spire begins construction to the left.",
                 location: "northEntry",
                 source: "SAM_100_0010.jpg",
                 phiStart: 90
             },
             {
                 title: "fdskjhs",
-                description: "test7",
+                description:
+                    "The dome is in place! Pedestals under construction are visible in the distance.",
                 location: "origin",
                 source: "SAM_100_0011.jpg",
                 phiStart: 90
             },
             {
                 title: "image8",
-                description: "test7",
+                description: "The beam grid is layed out to the east.",
                 location: "southCantilever",
                 source: "SAM_100_0012.jpg",
                 phiStart: 270
             },
             {
                 title: "image9",
-                description: "test7",
+                description:
+                    "The dome is picked. Posts are placed along the south road.",
                 location: "southRoad",
                 source: "SAM_100_0013.jpg",
                 phiStart: 270
-            },
-            {
-                title: "image10",
-                description: "test7",
-                location: "northGate",
-                source: "SAM_100_0016.jpg",
-                phiStart: 90
             }
+            // Needs it's own location
+            // {
+            //     title: "image10",
+            //     description: "test7",
+            //     location: "northGate",
+            //     source: "SAM_100_0016.jpg",
+            //     phiStart: 90
+            // }
         ],
         "2017-08-21": [
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Under construction",
                 location: "northGate",
                 source: "SAM_100_0018.jpg",
                 phiStart: 270
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Under construction",
                 location: "northCantilever",
                 source: "SAM_100_0019.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description:
+                    "A scissor lift is parked inside while the pedestals are placed and attached.",
                 location: "origin",
                 source: "SAM_100_0022.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description:
+                    "More beam grid is assembled to the west. Fence posts are built and posiitoned. Many pedestals are positioned and tied down.",
                 location: "southCantilever",
                 source: "SAM_100_0024.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description:
+                    "A variable reach lift is used to lift the pedestals in place.",
                 location: "southRoad",
                 source: "SAM_100_0025.jpg",
                 phiStart: 90
@@ -381,35 +391,37 @@ module.exports = {
         "2017-08-22": [
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Under construction",
                 location: "northGate",
                 source: "SAM_100_0027.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Under construction",
                 location: "northCantilever",
                 source: "SAM_100_0028.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description:
+                    "Seems like it got a little taller in here - the lower spire has been picked!",
                 location: "origin",
                 source: "SAM_100_0029.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Lanterns are positioned near the fence posts.",
                 location: "southCantilever",
                 source: "SAM_100_0030.jpg",
                 phiStart: 270
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description:
+                    "Pedestals are placed, the lower spire is picked. The upper spire is under construction in the background.",
                 location: "southRoad",
                 source: "SAM_100_0031.jpg",
                 phiStart: 270
@@ -418,35 +430,36 @@ module.exports = {
         "2017-08-23": [
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Under construction",
                 location: "northGate",
                 source: "SAM_100_0032.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Under construction",
                 location: "northCantilever",
                 source: "SAM_100_0033.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Work on the beam grid continues.",
                 location: "origin",
                 source: "SAM_100_0034.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Lanterns are hung, the fence is assembled.",
                 location: "southCantilever",
                 source: "SAM_100_0035.jpg",
                 phiStart: 270
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description:
+                    "The pedestals are placed! The upper spire is ready to be picked.",
                 location: "southRoad",
                 source: "SAM_100_0036.jpg",
                 phiStart: 270
@@ -455,142 +468,145 @@ module.exports = {
         "2017-08-24": [
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description:
+                    "Tie-downs stabilize the pedestals while the beam grid is built connecting them.",
                 location: "northEntry",
                 source: "SAM_100_0037.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Look up! The upper spire has been picked.",
                 location: "origin",
                 source: "SAM_100_0039.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description:
+                    "The beam grid is in place, the spire is topped out!",
                 location: "southCantilever",
                 source: "SAM_100_0040.jpg",
                 phiStart: 270
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "The upper spire is picked!",
                 location: "southRoad",
                 source: "SAM_100_0041.jpg",
                 phiStart: 270
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Under construction",
                 location: "northCantilever",
                 source: "SAM_100_0042.jpg",
                 phiStart: 90
-            },
-            {
-                title: "this is a title",
-                description: "this is a longer description with some words",
-                location: "northGate",
-                source: "SAM_100_0043.jpg",
-                phiStart: 90
             }
+            // Needs it's own location
+            // {
+            //     title: "this is a title",
+            //     description: "Under construction",
+            //     location: "northGate",
+            //     source: "SAM_100_0043.jpg",
+            //     phiStart: 90
+            // }
         ],
         "2017-08-28": [
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Under construction",
                 location: "northWestCantilever",
                 source: "SAM_100_0045.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "northEntry",
                 source: "SAM_100_0047.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "northCantilever",
                 source: "SAM_100_0048.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "northGate",
                 source: "SAM_100_0049.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "southGate",
                 source: "SAM_100_0051.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "southRoad",
                 source: "SAM_100_0053.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "origin",
                 source: "SAM_100_0056.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "interiorWest",
                 source: "SAM_100_0057.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "westEntry",
                 source: "SAM_100_0058.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "westCantilever",
                 source: "SAM_100_0059.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "eastEntry",
                 source: "SAM_100_0060.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "eastCantilever",
                 source: "SAM_100_0061.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
-                location: "eastGate",
+                description: "Construction wraps up.",
+                location: "northGate",
                 source: "SAM_100_0062.jpg",
                 phiStart: 0
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "Construction wraps up.",
                 location: "northRoad",
                 source: "SAM_100_0065.jpg",
                 phiStart: 90
@@ -599,21 +615,21 @@ module.exports = {
         "2017-09-02": [
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
-                location: "eastGate",
-                source: "SAM_100_0067.jpg",
-                phiStart: 180
-            },
-            {
-                title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "During the event.",
                 location: "northGate",
-                source: "SAM_100_0069.jpg",
+                source: "SAM_100_0067.jpg",
                 phiStart: 270
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "During the event.",
+                location: "eastGate",
+                source: "SAM_100_0069.jpg",
+                phiStart: 180
+            },
+            {
+                title: "this is a title",
+                description: "During the event.",
                 location: "southRoad",
                 source: "SAM_100_0070.jpg",
                 phiStart: 90
@@ -622,28 +638,28 @@ module.exports = {
         "2017-09-03": [
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "During the event.",
                 location: "origin",
                 source: "SAM_100_0074.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "During the event.",
                 location: "northEntry",
                 source: "SAM_100_0077.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "During the event.",
                 location: "eastCantilever",
                 source: "SAM_100_0078.jpg",
                 phiStart: 90
             },
             {
                 title: "this is a title",
-                description: "this is a longer description with some words",
+                description: "During the event.",
                 location: "northCantilever",
                 source: "SAM_100_0079.jpg",
                 phiStart: 90
