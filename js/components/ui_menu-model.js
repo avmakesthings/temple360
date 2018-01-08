@@ -198,7 +198,7 @@ AFRAME.registerComponent("ui-menu-model", {
         el.appendChild(info);
         return info;
     },
-    updateInfoPanel: function(el, preHeading, title, description) {
+    updateInfoPanel: function(el, preHeading, title, description = "...") {
         var preHeadingEl = el.querySelector("#preHeading");
         preHeadingEl.setAttribute("text", { value: preHeading });
         var headingEl = el.querySelector("#heading");
