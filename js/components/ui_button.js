@@ -84,11 +84,13 @@ AFRAME.registerComponent("ui-button", {
             opacity: 0.1
         });
 
-        el.setAttribute("sound", {
-            src: "#button-click-audio",
-            on: "click",
-            volume: "0.5"
-        });
+        if (window.globals.activateSound) {
+            el.setAttribute("sound", {
+                src: "#button-click-audio",
+                on: "click",
+                volume: "0.5"
+            });
+        }
 
         //animations
         el.setAttribute("animation__enter", {

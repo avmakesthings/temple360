@@ -61,12 +61,13 @@ AFRAME.registerComponent("ui-menu-360", {
         window.addEventListener("show360Menu", e => {
             var menuState = this.el.getAttribute("visible");
 
-            this.el.setAttribute("sound", {
-                src: menuState ? "#menu-close-audio" : "#menu-open-audio",
-                volume: "0.5"
-            });
-            this.el.components.sound.playSound();
-
+            if (window.globals.activateSound) {
+                this.el.setAttribute("sound", {
+                    src: menuState ? "#menu-close-audio" : "#menu-open-audio",
+                    volume: "0.5"
+                });
+                this.el.components.sound.playSound();
+            }
             this.setPosition();
             this.el.setAttribute("visible", !menuState);
         });

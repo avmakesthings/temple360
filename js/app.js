@@ -240,10 +240,12 @@ AFRAME.registerComponent("scene-manager", {
 
             this.setCameraPos({ x: 0, z: 0 });
 
-            var entity = document.getElementById("envAudio");
-            entity.components.sound.stopSound();
-            entity.setAttribute("sound", "src: #home-audio; volume: 0.5;");
-            entity.components.sound.playSound();
+            if (window.globals.activateAmbient) {
+                var entity = document.getElementById("envAudio");
+                entity.components.sound.stopSound();
+                entity.setAttribute("sound", "src: #home-audio; volume: 0.5;");
+                entity.components.sound.playSound();
+            }
         }
         if (nextScene == "scene360") {
             if (currentTemplate == this.data.scene3DModel) {
@@ -263,10 +265,15 @@ AFRAME.registerComponent("scene-manager", {
             if (currentTemplate == this.data.sceneHome) {
                 this.resetEnv("sceneHome");
 
-                var entity = document.getElementById("envAudio");
-                entity.components.sound.stopSound();
-                entity.setAttribute("sound", "src: #model-audio; volume: 0.5;");
-                entity.components.sound.playSound();
+                if (window.globals.activateAmbient) {
+                    var entity = document.getElementById("envAudio");
+                    entity.components.sound.stopSound();
+                    entity.setAttribute(
+                        "sound",
+                        "src: #model-audio; volume: 0.5;"
+                    );
+                    entity.components.sound.playSound();
+                }
 
                 this.setCameraPos({ x: 0, z: 40 });
             }

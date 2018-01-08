@@ -13,6 +13,8 @@ var colWhite = 0xffffff,
 window.globals = window.globals || {
     //CONSTANTS
     interactableClass: "interactable",
+    activateSound: true,
+    activateAmbient: false,
 
     //FONTS
 

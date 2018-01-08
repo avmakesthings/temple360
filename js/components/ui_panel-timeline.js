@@ -298,11 +298,13 @@ AFRAME.registerComponent("ui-panel-timeline", {
                     //of timeline exist in a scene - how do you access
                     //the component data from here? can set the id that way
                     timelineEl = document.querySelector("#timeline");
-                    timelineEl.setAttribute("sound", {
-                        src: "#timeline-click-audio",
-                        on: "click",
-                        volume: "0.5"
-                    });
+                    if (window.globals.activateSound) {
+                        timelineEl.setAttribute("sound", {
+                            src: "#timeline-click-audio",
+                            on: "click",
+                            volume: "0.5"
+                        });
+                    }
 
                     if (timelineEl.clickHandler) {
                         timelineEl.clickHandler(nodeData);

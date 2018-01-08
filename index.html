@@ -222,16 +222,16 @@
 
 			   </a-entity>
          <a-entity camera-mask></a-entity>
-         <a-entity id="envAudio" sound="src: #home-audio; volume: 0.5;"></a-entity>
+         <a-entity id="envAudio" sound="volume: 0.5;"></a-entity>
 		  </a-entity>
 		
 		
 
       <a-entity   id="controls" 
-                  teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; curveShootingSpeed: 20; curveHitColor: #ffffff;" 
+                  teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; curveShootingSpeed: 20; curveHitColor: #ffffff; hitCylinderColor: #ffffff;" 
                   auto-detect-controllers 
                   laser-controls="hand: right" 
-                  raycaster="objects: .interactable; far: 15">
+                  raycaster="objects: .interactable; far: 2">
       </a-entity>
 	  </a-entity>
 
