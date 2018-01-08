@@ -93,23 +93,9 @@ AFRAME.registerComponent("ui-button", {
         }
 
         //animations
-        el.setAttribute("animation__enter", {
-            property: "material.opacity",
-            dur: 200,
-            to: 0.5,
-            easing: "easeInSine",
-            startEvents: "mouseenter",
-            pauseEvents: ["mouseleave", "click"]
-        });
+        el.setAttribute("animation__enter", window.globals.animationEnter);
 
-        el.setAttribute("animation__leave", {
-            property: "material.opacity",
-            dur: 100,
-            to: 0,
-            easing: "easeOutSine",
-            startEvents: "mouseleave"
-            // pauseEvents: ['mouseenter','click']
-        });
+        el.setAttribute("animation__leave", window.globals.animationLeave);
 
         // el.setAttribute('animation__clicked', {
         // 	property:'geometry',

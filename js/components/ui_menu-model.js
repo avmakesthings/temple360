@@ -39,6 +39,19 @@ AFRAME.registerComponent("ui-menu-model", {
             this.setPosition();
             this.el.setAttribute("visible", !menuState);
         });
+
+        var buildingEl = document.getElementById("building-model");
+        buildingEl.addEventListener("model-loaded", () => {
+            this.hideLoading();
+        });
+    },
+    showLoading: function() {
+        var el = document.getElementById("model-menu-container");
+        el.object3D.children[1].material.opacity = 0.2;
+    },
+    hideLoading: function() {
+        var el = document.getElementById("model-menu-container");
+        el.object3D.children[1].material.opacity = 0.6;
     },
     setPosition: function() {
         var cam = document.getElementById("cameraRig");
@@ -163,7 +176,7 @@ AFRAME.registerComponent("ui-menu-model", {
             active: true
         });
         timeline.clickHandler = e => {
-            console.log("just clicked a timeline element");
+            this.showLoading();
             this.el.emit("changeActiveDate", {
                 activeDate: moment(e.key).format("YYYY-MM-DD")
             });

@@ -69,7 +69,7 @@ AFRAME.registerComponent("ui-marker-content", {
         // FIXME: Having a material with 'visible: false' looks better,
         // but may not work with tracked controls Raycaster. Investigate.
         this.clickCone.setAttribute("material", {
-            color: "#000000",
+            color: "#f8ff44",
             transparent: true,
             opacity: 0
         });
@@ -81,6 +81,15 @@ AFRAME.registerComponent("ui-marker-content", {
                 console.warn("No click handler assigned");
             }
         });
+
+        this.clickCone.setAttribute(
+            "animation__enter",
+            window.globals.animationEnter
+        );
+        this.clickCone.setAttribute(
+            "animation__leave",
+            window.globals.animationLeave
+        );
 
         this.el.appendChild(this.clickCone);
     },

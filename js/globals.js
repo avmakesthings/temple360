@@ -38,6 +38,22 @@ window.globals = window.globals || {
         opacity: 0.6
     }),
 
+    animationEnter: {
+        property: "material.opacity",
+        dur: 200,
+        to: 0.35,
+        easing: "easeInSine",
+        startEvents: "mouseenter",
+        pauseEvents: ["mouseleave", "click"]
+    },
+    animationLeave: {
+        property: "material.opacity",
+        dur: 100,
+        to: 0,
+        easing: "easeOutSine",
+        startEvents: "mouseleave"
+    },
+
     //PHONG MATERIALS
     modelTransMaterial: new THREE.MeshPhongMaterial({
         //ambient: 0x555555,

@@ -24,13 +24,13 @@ AFRAME.registerComponent("ui-markers", {
         this.activeDate = getState("activeDate");
 
         this.markers = this.addMarkers();
-        this.highlightMarkers();
+        // this.highlightMarkers();
 
         window.addEventListener("activeDateChanged", e => {
             this.activeDate = e.detail.activeDate;
             this.clearMarkers();
             this.markers = this.addMarkers();
-            this.highlightMarkers();
+            // this.highlightMarkers();
         });
     },
     // Get all marker locations for the month

@@ -291,7 +291,17 @@ AFRAME.registerComponent("ui-panel-timeline", {
 
             setTimeout(() => {
                 var boxEl = appendBoxEl(el);
+
                 boxEl.classList.add(window.globals.interactableClass);
+
+                boxEl.setAttribute(
+                    "animation__enter",
+                    window.globals.animationEnter
+                );
+                boxEl.setAttribute(
+                    "animation__leave",
+                    window.globals.animationLeave
+                );
 
                 boxEl.addEventListener("click", e => {
                     //this will be a problem if multiple instances

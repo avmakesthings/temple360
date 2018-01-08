@@ -71,6 +71,19 @@ AFRAME.registerComponent("ui-menu-360", {
             this.setPosition();
             this.el.setAttribute("visible", !menuState);
         });
+
+        var skyEl = document.querySelector("a-sky");
+        skyEl.addEventListener("loaded", () => {
+            this.hideLoading();
+        });
+    },
+    showLoading: function() {
+        var el = document.getElementById("model-menu-container");
+        el.object3D.children[1].material.opacity = 0.2;
+    },
+    hideLoading: function() {
+        var el = document.getElementById("model-menu-container");
+        el.object3D.children[1].material.opacity = 0.6;
     },
     setPosition: function() {
         var cam = document.getElementById("cameraRig");
@@ -170,6 +183,7 @@ AFRAME.registerComponent("ui-menu-360", {
             active: true
         });
         timeline.clickHandler = e => {
+            this.showLoading();
             this.el.emit("changeActiveDate", {
                 activeDate: moment(e.key).format("YYYY-MM-DD")
             });
@@ -271,6 +285,7 @@ AFRAME.registerComponent("ui-menu-360", {
             console.log("Previous clicked!");
             var prevDate = this.getPreviousDate();
             if (prevDate != this.activeDate) {
+                this.showLoading();
                 this.el.emit("changeActiveDate", {
                     activeDate: prevDate
                 });
@@ -298,6 +313,7 @@ AFRAME.registerComponent("ui-menu-360", {
             console.log("Next clicked!");
             var nextDate = this.getNextDate();
             if (nextDate != this.activeDate) {
+                this.showLoading();
                 this.el.emit("changeActiveDate", {
                     activeDate: nextDate
                 });
