@@ -300,7 +300,8 @@ AFRAME.registerComponent("ui-panel-timeline", {
                     timelineEl = document.querySelector("#timeline");
                     timelineEl.setAttribute("sound", {
                         src: "#timeline-click-audio",
-                        on: "click"
+                        on: "click",
+                        volume: "0.5"
                     });
 
                     if (timelineEl.clickHandler) {

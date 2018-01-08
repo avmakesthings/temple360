@@ -62,7 +62,8 @@ AFRAME.registerComponent("ui-menu-360", {
             var menuState = this.el.getAttribute("visible");
 
             this.el.setAttribute("sound", {
-                src: menuState ? "#menu-close-audio" : "#menu-open-audio"
+                src: menuState ? "#menu-close-audio" : "#menu-open-audio",
+                volume: "0.5"
             });
             this.el.components.sound.playSound();
 

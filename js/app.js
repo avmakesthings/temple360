@@ -242,7 +242,7 @@ AFRAME.registerComponent("scene-manager", {
 
             var entity = document.getElementById("envAudio");
             entity.components.sound.stopSound();
-            entity.setAttribute("sound", "src: #home-audio");
+            entity.setAttribute("sound", "src: #home-audio; volume: 0.5;");
             entity.components.sound.playSound();
         }
         if (nextScene == "scene360") {
@@ -265,7 +265,7 @@ AFRAME.registerComponent("scene-manager", {
 
                 var entity = document.getElementById("envAudio");
                 entity.components.sound.stopSound();
-                entity.setAttribute("sound", "src: #model-audio");
+                entity.setAttribute("sound", "src: #model-audio; volume: 0.5;");
                 entity.components.sound.playSound();
 
                 this.setCameraPos({ x: 0, z: 40 });
