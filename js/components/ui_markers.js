@@ -53,6 +53,7 @@ AFRAME.registerComponent("ui-markers", {
                         this.locations[imageLocation]
                     );
                     // Tacked on as a convenience later
+                    markerLocations[imageLocation].firstDate = dateKey;
                     markerLocations[imageLocation].first360 = dateImage;
                 }
             });
@@ -81,6 +82,10 @@ AFRAME.registerComponent("ui-markers", {
                 //should also emit active location change
                 this.el.emit("changeActiveLocation", {
                     activeLocation: locationKey
+                });
+
+                this.el.emit("changeActiveDate", {
+                    activeDate: location.firstDate
                 });
 
                 this.el.emit("changeActiveThreeSixty", {

@@ -344,27 +344,29 @@ AFRAME.registerComponent("ui-panel-timeline", {
         }
 
         this.activeItem = document.getElementById(activeDate);
-        this.activeItemPos = this.activeItem.components.position.attrValue;
-        this.activeIndicator = this.activeItem.querySelector("#indicator");
-        this.activeIndicatorPos = this.activeIndicator.components.position.attrValue;
+        if (this.activeItem) {
+            this.activeItemPos = this.activeItem.components.position.attrValue;
+            this.activeIndicator = this.activeItem.querySelector("#indicator");
+            this.activeIndicatorPos = this.activeIndicator.components.position.attrValue;
 
-        this.activeItem.setAttribute("text", {
-            opacity: 1
-        });
-        this.activeItem.setAttribute("position", {
-            x: 0.137,
-            y: this.activeItemPos.y,
-            z: this.activeItemPos.z
-        });
+            this.activeItem.setAttribute("text", {
+                opacity: 1
+            });
+            this.activeItem.setAttribute("position", {
+                x: 0.137,
+                y: this.activeItemPos.y,
+                z: this.activeItemPos.z
+            });
 
-        this.activeIndicator.setAttribute("position", {
-            x: -0.069,
-            y: -0.023 + 0.005,
-            z: this.activeIndicatorPos.z
-        });
-        this.activeIndicator.setAttribute("geometry", {
-            width: 0.12,
-            height: 0.02
-        });
+            this.activeIndicator.setAttribute("position", {
+                x: -0.069,
+                y: -0.023 + 0.005,
+                z: this.activeIndicatorPos.z
+            });
+            this.activeIndicator.setAttribute("geometry", {
+                width: 0.12,
+                height: 0.02
+            });
+        }
     }
 });
